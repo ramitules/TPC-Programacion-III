@@ -57,5 +57,10 @@ TestResult.xml
 nunit-*.xml
 
 
+
 .vs/
 **/.[vV]s/
+
+# Agregados extra
+
+.vs/
