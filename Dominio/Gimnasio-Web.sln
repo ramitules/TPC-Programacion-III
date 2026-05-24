@@ -1,11 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
+VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gimnasio-app", "Gimnasio-app\Gimnasio-app.csproj", "{B77D988B-B91E-46EA-A4DE-9265E25B9B80}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.csproj", "{78A352EE-C958-41F1-801B-E5A9AB7D666A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script DB", "Script DB", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		ScriptDB.txt = ScriptDB.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDB", "AccesoDB\AccesoDB.csproj", "{AB0F1397-FC85-44C6-9849-AC697AA1D9E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{1991E8E4-78EF-4999-B360-4BF8DC4D093F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +32,14 @@ Global
 		{78A352EE-C958-41F1-801B-E5A9AB7D666A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78A352EE-C958-41F1-801B-E5A9AB7D666A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78A352EE-C958-41F1-801B-E5A9AB7D666A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB0F1397-FC85-44C6-9849-AC697AA1D9E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB0F1397-FC85-44C6-9849-AC697AA1D9E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB0F1397-FC85-44C6-9849-AC697AA1D9E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB0F1397-FC85-44C6-9849-AC697AA1D9E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
