@@ -64,3 +64,4 @@ nunit-*.xml
 # Agregados extra
 
 .vs/
+appSettings.config
