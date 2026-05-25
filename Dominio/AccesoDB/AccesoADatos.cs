@@ -10,9 +10,9 @@ namespace AccesoDB
 {
     public class AccesoADatos
     {
-        SqlConnection conexion;
-        SqlCommand comando;
-        SqlDataReader lector;
+        private SqlConnection conexion;
+        private SqlCommand comando;
+        private SqlDataReader lector;
 
         public AccesoADatos()
         {
