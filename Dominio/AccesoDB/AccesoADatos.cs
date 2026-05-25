@@ -25,7 +25,7 @@ namespace AccesoDB
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al conectar a la base de datos: (Intancia de acceso a datos) " + e.Message);
+                Console.WriteLine("Error al conectar a la base de datos: (Instancia de acceso a datos) " + e.Message);
             }
         }
 
@@ -45,6 +45,23 @@ namespace AccesoDB
             catch (Exception e)
             {
                 Console.WriteLine("Error al ejecutar la consulta: " + e.Message);
+            }
+        }
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor);
+        }
+        public void ejecutarAccion()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;  // PENDIENTE
             }
         }
         public SqlDataReader Lector
