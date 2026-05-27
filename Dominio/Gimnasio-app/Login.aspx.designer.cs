@@ -11,43 +11,34 @@ namespace Gimnasio_app
 {
 
 
-    public partial class _Default
+    public partial class Login
     {
 
         /// <summary>
-        /// Control dgvCliente.
+        /// Control tbxEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvCliente;
+        protected global::System.Web.UI.WebControls.TextBox tbxEmail;
 
         /// <summary>
-        /// Control dgvProfesor.
+        /// Control tbxPass.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvProfesor;
+        protected global::System.Web.UI.WebControls.TextBox tbxPass;
 
         /// <summary>
-        /// Control dgvAdministrador.
+        /// Control btnLogin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvAdministrador;
-
-        /// <summary>
-        /// Control dgvAdmin.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvAdmin;
+        protected global::System.Web.UI.WebControls.Button btnLogin;
     }
 }

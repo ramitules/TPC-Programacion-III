@@ -101,6 +101,7 @@
   <ItemGroup>
     <Content Include="Ejercicios.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
+    <Content Include="Login.aspx" />
     <Content Include="Planes.aspx" />
     <Content Include="Socios.aspx" />
     <Content Include="Rutinas.aspx" />
@@ -204,6 +205,13 @@
     </Compile>
     <Compile Include="HistorialDeEntrenamiento.aspx.designer.cs">
       <DependentUpon>HistorialDeEntrenamiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Planes.aspx.cs">
       <DependentUpon>Planes.aspx</DependentUpon>

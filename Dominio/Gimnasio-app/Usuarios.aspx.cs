@@ -19,6 +19,7 @@ namespace Gimnasio_app
                 {
                     NegocioGimnasio negocio = new NegocioGimnasio();
                     List<Usuario> lista = negocio.listarTodosLosUsuarios("sp_ObtenerUsuarios");
+                    Session["listaUsuarios"] = lista;
                     gdvUsuario.DataSource = lista;
                     gdvUsuario.DataBind();
                 }
