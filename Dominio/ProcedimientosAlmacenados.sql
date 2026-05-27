@@ -18,6 +18,8 @@ BEGIN
 END
 GO
 
+
+
 -- Obtener un solo usuario
 CREATE PROCEDURE sp_ObtenerUsuario (@ID INT)
 AS

@@ -18,7 +18,7 @@ namespace Gimnasio_app
                 if (!IsPostBack)
                 {
                     NegocioGimnasio negocio = new NegocioGimnasio();
-                    List<Cliente> lista = negocio.listarTodosLosUsuarios("SP_ListarTodosLosUsuarios");
+                    List<Usuario> lista = negocio.listarTodosLosUsuarios("sp_ObtenerUsuarios");
                     gdvUsuario.DataSource = lista;
                     gdvUsuario.DataBind();
                 }

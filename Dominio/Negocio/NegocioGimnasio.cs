@@ -16,9 +16,9 @@ namespace Negocio
 
         }
 
-        public List<Cliente> listarTodosLosUsuarios(string sp)
+        public List<Usuario> listarTodosLosUsuarios(string sp)
         {
-            List<Cliente> lista = new List<Cliente>();
+            List<Usuario> lista = new List<Usuario>();
             AccesoADatos datos = new AccesoADatos();
             try
             {
@@ -26,15 +26,34 @@ namespace Negocio
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
-                    Cliente cl = new Cliente();
-                    cl.IdUsuario = (int)datos.Lector["ID"];
-                    cl.Nombre = (string)datos.Lector["NombreCompleto"];
-                    cl.Email = (string)datos.Lector["Email"];
-                    cl.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
-                    cl.PesoCorporal = (decimal)datos.Lector["PesoCorporalKG"];
-                    cl.IdRol = Convert.ToInt32(datos.Lector["IdRol"]);
-                    cl.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
-                    lista.Add(cl);
+                    int rol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    Usuario us;   
+                    if (rol == 3)
+                    {
+                        Cliente cl = new Cliente();
+                        cl.PesoCorporal = (decimal)datos.Lector["PesoCorporalKG"];
+                        us = cl;
+                    }
+                    else if (rol == 1)
+                    {
+                        us = new Admin();
+                    }
+                    else if (rol == 2)
+                    {
+                        us = new Profesor();
+                    }
+                    else
+                    {
+                        us = new Administrativo();
+                    }
+                    us.IdUsuario = (int)datos.Lector["IdUsuario"];
+                    us.Nombre = (string)datos.Lector["Nombre"];
+                    us.Apellido = (string)datos.Lector["Apellido"];
+                    us.Email = (string)datos.Lector["Email"];
+                    us.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    us.IdRol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    us.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
+                    lista.Add(us);
                 }
                 return lista;
             }
