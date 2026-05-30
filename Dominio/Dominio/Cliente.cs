@@ -11,10 +11,8 @@ namespace Dominio
     {
         public decimal PesoCorporal { get; set; }
         public Suscripcion SuscripcionCliente { get; set; }
-        public Plan PlanCliente { get; set; }
         public Rutinas RutinasCliente { get; set; }
-
-        public int MyProperty { get; set; }
+        public int MyProperty { get; set; } // ¿Esto que funcion cumple...?
 
     }
 }
