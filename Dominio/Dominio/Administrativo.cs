@@ -8,7 +8,10 @@ namespace Dominio
 {
     public class Administrativo : Usuario
     {
-        public Administrativo() { Rol = "Administrativo"; }
+        public Administrativo()
+        {
+            EsAdmin = false;
+        }
         public bool EsAdmin { get; set; }
     }
 }

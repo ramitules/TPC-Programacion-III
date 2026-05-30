@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Administrativo.cs" />
     <Compile Include="Cliente.cs" />
-    <Compile Include="Dia.cs" />
     <Compile Include="DiaRutina.cs" />
     <Compile Include="Ejercicio.cs" />
     <Compile Include="GrupoMuscular.cs" />

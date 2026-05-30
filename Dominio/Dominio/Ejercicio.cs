@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    //Esta clase representa un ejercicio específico, que tiene un identificador, un nombre y un grupo muscular al que pertenece.
+    /// <summary>
+    /// Representa un ejercicio específico, que tiene un identificador, 
+    /// un nombre y un grupo muscular al que pertenece.
+    /// </summary>
     public class Ejercicio
     {
+        public Ejercicio()
+        {
+            IdEjercicio = 0;
+        }
         public int IdEjercicio { get; set; }
         public string NombreEjercicio { get; set; }
         public GrupoMuscular GrupoMuscular { get; set; }    

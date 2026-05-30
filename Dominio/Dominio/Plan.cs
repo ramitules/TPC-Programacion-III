@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    //Esta clase representa un plan de suscripción que un usuario puede elegir, con detalles como el nombre del plan, su precio y la duración en días.
+    /// <summary>
+    /// Representa un plan de suscripción que un usuario puede elegir,
+    /// con detalles como el nombre del plan, su precio y la duración en días.
+    /// </summary>
     public class Plan
     {
+        public Plan() { IdPlan = 0; }
         public int IdPlan { get; set; }
         public string NombrePlan { get; set; }
         public decimal PrecioPlan { get; set; }

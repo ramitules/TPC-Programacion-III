@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Usuario
+    /// <summary>
+    /// Clase abstracta con propiedades base del Usuario
+    /// </summary>
+    public abstract class Usuario
     {
+        public Usuario()
+        {
+            IdUsuario = 0;
+        }
         public int IdUsuario { get; set; }
-        public string Rol { get; set; } // Propiedad para almacenar el nombre del tipo de usuario (Administrador, Entrenador, Cliente)
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }

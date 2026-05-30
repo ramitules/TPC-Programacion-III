@@ -8,6 +8,6 @@ namespace Dominio
 {
     public class Entrenador : Usuario
     {
-        public Entrenador() { Rol = "Entrenador"; }
+
     }
 }
