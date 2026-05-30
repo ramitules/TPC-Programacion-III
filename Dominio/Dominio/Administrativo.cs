@@ -8,5 +8,6 @@ namespace Dominio
 {
     public class Administrativo : Usuario
     {
+        public bool EsAdmin { get; set; }
     }
 }
