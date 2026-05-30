@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Administrativo : Usuario
+    public class Entrenador : Usuario
     {
-        public Administrativo() { Rol = "Administrativo"; }
-        public bool EsAdmin { get; set; }
+        public Entrenador() { Rol = "Entrenador"; }
     }
 }
