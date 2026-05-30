@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.cs" />
     <Compile Include="Administrativo.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="Dia.cs" />
@@ -49,7 +48,7 @@
     <Compile Include="Ejercicio.cs" />
     <Compile Include="GrupoMuscular.cs" />
     <Compile Include="Plan.cs" />
-    <Compile Include="Profesor.cs" />
+    <Compile Include="Entrenador.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RutinaEjercicio.cs" />
     <Compile Include="Rutinas.cs" />

@@ -14,5 +14,7 @@ namespace Dominio
         public int? ObjetivoSeries { get; set; }
         public int? ObjetivoRepeticiones { get; set; }
         public int? OrdenEjercicio { get; set; }
+
+        //
     }
 }
