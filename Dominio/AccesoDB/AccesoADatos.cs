@@ -34,6 +34,28 @@ namespace AccesoDB
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
         }
+        public void SetearConsulta(string sp)
+        {
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = sp;
+        }
+        /// <summary>
+        /// Ejecuta query y devuelve primera fila de primera columna.
+        /// Util para ejecutar y devolver el ID del registro insertado, modificado o eliminado
+        /// </summary>
+        public int EjecutarScalar()
+        {
+            comando.Connection = conexion;
+            try
+            {
+                conexion.Open();
+                return int.Parse(comando.ExecuteScalar().ToString());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public void ejecutarLectura()
         {
             comando.Connection = conexion;
@@ -67,6 +89,11 @@ namespace AccesoDB
         public SqlDataReader Lector
         {
             get { return lector; }
+        }
+        public void cerrarConexion()
+        {
+            lector?.Close();
+            conexion.Close();
         }
     }
 }

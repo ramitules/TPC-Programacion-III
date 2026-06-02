@@ -4,12 +4,12 @@ AS
 BEGIN
 	IF @Rol = 'TODOS'
 		BEGIN
-			SELECT ID, Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso
+			SELECT IdUsuarios, Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso, Activo
 			FROM Usuarios
 		END
 	ELSE
 		BEGIN
-			SELECT ID, Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso
+			SELECT IdUsuarios, Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso, Activo
 			FROM Usuarios
 			INNER JOIN Roles
 			ON Roles.ID = Usuarios.IdRol
@@ -18,15 +18,24 @@ BEGIN
 END
 GO
 
-
-
--- Obtener un solo usuario
-CREATE PROCEDURE sp_ObtenerUsuario (@ID INT)
+-- Obtener datos completos de las suscripciones de un usuario
+CREATE PROCEDURE sp_SuscripcionCompleta (@ID INTEGER)
 AS
 BEGIN
-	SELECT ID, Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso
-	FROM Usuarios
-	WHERE ID = @ID
+	SELECT TOP 1
+		S.IdSuscripciones as IdSuscripcion,
+		S.FechaInicio as FechaInicio,
+		S.FechaVencimiento as FechaVencimiento,
+		S.IdPlan as IdPlan,
+		S.IdEstado as IdEstado,
+		P.Nombre as NombrePlan,
+		P.PrecioMensual as PrecioPlan,
+		P.DuracionDias as DuracionPlan
+	FROM Suscripciones S
+	LEFT JOIN Planes P
+		ON Suscripciones.IdPlan = P.IdPlanes
+	WHERE S.IdUsuario = @ID
+	ORDER BY S.FechaVencimiento ASC
 END
 GO
 
