@@ -13,8 +13,13 @@ namespace Dominio
     /// </summary>
     public class Cliente : Usuario
     {
+        public Cliente()
+        {
+            Rol = Roles.CLIENTE;
+        }
         public decimal PesoCorporal { get; set; }
         public Suscripcion SuscripcionCliente { get; set; }
         public Rutina RutinaCliente { get; set; }
+        public List<Records> RecordsPersonales = new List<Records>();
     }
 }
