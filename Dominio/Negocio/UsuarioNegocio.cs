@@ -27,7 +27,7 @@ namespace Negocio
                 return new Usuario()
                 {
                     IdUsuario = (int)datos.Lector["ID"],
-                    IdRol = (int)datos.Lector["IdRol"],
+                    Rol = (int)datos.Lector["IdRol"],
                     Nombre = datos.Lector["Nombre"].ToString(),
                     Apellido = datos.Lector["Apellido"].ToString(),
                     Email = datos.Lector["Email"].ToString(),
@@ -60,7 +60,7 @@ namespace Negocio
                     lista.Add(new Usuario()
                     {
                         IdUsuario = (int)datos.Lector["ID"],
-                        IdRol = (int)datos.Lector["IdRol"],
+                        Rol = (int)datos.Lector["IdRol"],
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Apellido = datos.Lector["Apellido"].ToString(),
                         Email = datos.Lector["Email"].ToString(),
@@ -98,7 +98,7 @@ namespace Negocio
             datos.setearParametro("@Email", usuario.Email);
             datos.setearParametro("@FechaNacimiento", usuario.FechaNacimiento);
             // datos.setearParametro("@PesoCorporalKG", usuario.PesoCorporalKG);  FALTA PROPIEDAD
-            datos.setearParametro("@IdRol", usuario.IdRol);
+            datos.setearParametro("@IdRol", usuario.Rol);
             datos.setearParametro("@FechaIngreso", usuario.FechaIngreso);
 
             datos.ejecutarAccion();

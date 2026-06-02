@@ -27,7 +27,7 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     int rol = Convert.ToInt32(datos.Lector["IdRol"]);
-                    Usuario us;   
+                    Usuario us;
                     if (rol == 3)
                     {
                         Cliente cl = new Cliente();
@@ -51,7 +51,7 @@ namespace Negocio
                     us.Apellido = (string)datos.Lector["Apellido"];
                     us.Email = (string)datos.Lector["Email"];
                     us.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
-                    us.IdRol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    us.Rol = Convert.ToInt32(datos.Lector["IdRol"]);
                     us.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     lista.Add(us);
                 }
