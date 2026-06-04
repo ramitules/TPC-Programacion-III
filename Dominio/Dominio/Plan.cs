@@ -15,7 +15,7 @@ namespace Dominio
         public Plan() { IdPlan = 0; }
         public int IdPlan { get; set; }
         public string NombrePlan { get; set; }
-        public decimal PrecioPlan { get; set; }
+        public float PrecioPlan { get; set; }
         public int DuracionDiasPlan { get; set; }
     }
 }

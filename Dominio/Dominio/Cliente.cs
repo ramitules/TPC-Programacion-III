@@ -16,10 +16,13 @@ namespace Dominio
         public Cliente()
         {
             Rol = Roles.CLIENTE;
+            SuscripcionCliente = null;
+            RutinasCliente = new List<Rutina>();
+            RecordsPersonales = new List<Records>();
         }
-        public decimal PesoCorporal { get; set; }
+        public float PesoCorporal { get; set; }
         public Suscripcion SuscripcionCliente { get; set; }
-        public Rutina RutinaCliente { get; set; }
-        public List<Records> RecordsPersonales = new List<Records>();
+        public List<Rutina> RutinasCliente { get; set; }
+        public List<Records> RecordsPersonales { get; set; }
     }
 }

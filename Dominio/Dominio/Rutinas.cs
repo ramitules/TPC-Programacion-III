@@ -14,8 +14,21 @@ namespace Dominio
             IdRutina = 0;
             Activo = true;
         }
+        public Rutina(int idRutina, string nombre, int idUsuario, DateTime fechaCreacion, string dia, bool activo)
+        {
+            IdRutina = idRutina;
+            Nombre = nombre;
+            IdUsuario = idUsuario;
+            FechaCreacion = fechaCreacion;
+            Dia = dia;
+            Activo = activo;
+        }
+
         public int IdRutina { get; set; }
-        public List<DiaRutina> listaDeRutinas = new List<DiaRutina>();
+        public string Nombre { get; set; }
+        public int IdUsuario { get; set; }
+        public DateTime FechaCreacion { get; set; }
+        public string Dia { get; set; }
         public bool Activo { get; set; }
     }
 }
