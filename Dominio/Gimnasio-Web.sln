@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccesoDB", "AccesoDB\Acceso
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Negocio", "Negocio\Negocio.csproj", "{1991E8E4-78EF-4999-B360-4BF8DC4D093F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{239CAABA-C990-450E-AA02-4D9834E07EF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1991E8E4-78EF-4999-B360-4BF8DC4D093F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{239CAABA-C990-450E-AA02-4D9834E07EF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{239CAABA-C990-450E-AA02-4D9834E07EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{239CAABA-C990-450E-AA02-4D9834E07EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{239CAABA-C990-450E-AA02-4D9834E07EF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
