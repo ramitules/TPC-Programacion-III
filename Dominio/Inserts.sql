@@ -1,10 +1,7 @@
-﻿INSERT INTO Roles 
-	(Nombre) 
-VALUES
-	('Admin'),
-	('Administrativo'),
-	('Cliente'),
-	('Entrenador');
+﻿USE GestionGimnasio;
+GO
+
+--DATOS PARA CARGAR EN LAS TABLAS--
 
 INSERT INTO GruposMusculares (Nombre)
 VALUES 
@@ -14,12 +11,23 @@ VALUES
 ('Hombros / Deltoides'),
 ('Brazos (Bíceps/Tríceps)'),
 ('Core / Abdominales');
+GO
 
 INSERT INTO SuscripcionesEstados (Nombre)
 VALUES 
 ('Activa'),
 ('Vencida'),
 ('Cancelada');
+GO
+
+INSERT INTO Roles 
+	(Nombre) 
+VALUES
+	('Admin'),
+	('Administrativo'),
+	('Cliente'),
+	('Entrenador');
+GO
 
 INSERT INTO Planes (Nombre, PrecioMensual, DuracionDias)
 VALUES 
@@ -28,29 +36,36 @@ VALUES
 ('Plan Mensual Pase Libre', 22000.00, 30),
 ('Trimestre Promocional', 15000.00, 90),
 ('Pase Libre Semestral', 13500.00, 180);
+GO
 
-INSERT INTO Usuarios (NombreCompleto, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso)
+INSERT INTO Usuarios (Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso, Activo)
 VALUES 
-('Alejandro Rossi', 'alejandro.rossi@email.com', '1988-04-12', 82.50, 1, '2025-01-10 09:00:00'),
-('Mariana Fernández', 'mariana.f@email.com', '1992-09-25', 64.20, 2, '2025-02-15 14:30:00'),
-('Carlos Mendoza', 'carlos.mendoza@email.com', '1985-11-05', 91.80, 2, '2025-03-01 08:15:00'),
-('Sofía Benítez', 'sofia.b@email.com', '1998-07-19', 58.70, 3, '2026-01-05 10:00:00'),
-('Lucas Giménez', 'lucas.gimenez@email.com', '1994-02-28', 78.40, 3, '2026-01-12 18:20:00'),
-('Florencia Herrera', 'flor.herrera@email.com', '1991-05-14', 61.10, 3, '2026-01-20 11:45:00'),
-('Diego Romero', 'diego.romero@email.com', '1990-12-01', 85.30, 3, '2026-02-02 16:00:00'),
-('Camila Maidana', 'camila.m@email.com', '2000-03-22', 55.00, 3, '2026-02-10 09:30:00'),
-('Martín Silva', 'martin.silva@email.com', '1987-08-30', 95.20, 3, '2026-02-18 20:15:00'),
-('Valentina Ríos', 'vale.rios@email.com', '1996-10-10', 67.80, 3, '2026-03-01 07:00:00'),
-('Facundo Castro', 'facu.castro@email.com', '1993-01-15', 73.90, 3, '2026-03-05 15:30:00'),
-('Agustina Álvarez', 'agus.alvarez@email.com', '1995-06-08', 62.40, 3, '2026-03-12 19:00:00'),
-('Gonzalo Pereyra', 'gonza.p@email.com', '1989-11-23', 88.10, 3, '2026-03-20 08:00:00'),
-('Natalia Torres', 'natalia.torres@email.com', '1997-04-04', 59.50, 3, '2026-04-02 12:15:00'),
-('Joaquín Domínguez', 'joaco.d@email.com', '1992-02-17', 81.00, 3, '2026-04-10 17:45:00'),
-('Elena Acosta', 'elena.acosta@email.com', '1986-07-29', 70.30, 3, '2026-04-18 10:30:00'),
-('Bautista Morales', 'bauti.morales@email.com', '2001-09-05', 76.60, 3, '2026-04-25 16:20:00'),
-('Victoria Ortega', 'viqui.ortega@email.com', '1994-12-12', 63.80, 3, '2026-05-02 09:00:00'),
-('Juan Pablo López', 'juanpi.lopez@email.com', '1991-03-27', 89.40, 3, '2026-05-10 14:00:00'),
-('Micaela Núñez', 'mica.nunez@email.com', '1999-05-18', 57.20, 3, '2026-05-15 11:10:00');
+
+-- Administradores (IdRol = 1, Peso = 0)
+('Alejandro', 'Rossi', 'a.rossi@gym.com', '1988-04-12', 0.00, 1, '2025-01-10 09:00:00', 1),
+('Mariana', 'Fernández', 'm.fernandez@gym.com', '1992-09-25', 0.00, 1, '2025-02-15 14:30:00', 1),
+-- Profesores / Entrenadores (IdRol = 4, Peso = 0)
+('Carlos', 'Mendoza', 'c.mendoza@gym.com', '1985-11-05', 0.00, 4, '2025-03-01 08:15:00', 1),
+('Laura', 'Gómez', 'l.gomez@gym.com', '1990-06-20', 0.00, 4, '2025-06-10 16:00:00', 1),
+('Christian', 'Díaz', 'c.diaz@gym.com', '1993-03-14', 0.00, 4, '2025-08-22 07:30:00', 1),
+-- Administrativos / Recepción (IdRol = 2, Peso = 0)
+('Florencia', 'Herrera', 'f.herrera@gym.com', '1995-05-14', 0.00, 2, '2026-01-20 11:45:00', 1),
+('Diego', 'Romero', 'd.romero@gym.com', '1991-12-01', 0.00, 2, '2026-02-02 16:00:00', 1),
+-- Clientes (IdRol = 3, Poseen Peso Corporal Real)
+('Sofía', 'Benítez', 'sofia.b@email.com', '1998-07-19', 58.70, 3, '2026-01-05 10:00:00', 1),
+('Lucas', 'Giménez', 'lucas.g@email.com', '1994-02-28', 78.40, 3, '2026-01-12 18:20:00', 1),
+('Camila', 'Maidana', 'camila.m@email.com', '2000-03-22', 55.20, 3, '2026-02-10 09:30:00', 1),
+('Martín', 'Silva', 'martin.s@email.com', '1987-08-30', 95.10, 3, '2026-02-18 20:15:00', 1),
+('Valentina', 'Ríos', 'vale.rios@email.com', '1996-10-10', 64.80, 3, '2026-03-01 07:00:00', 1),
+('Facundo', 'Castro', 'facu.c@email.com', '1993-01-15', 83.90, 3, '2026-03-05 15:30:00', 1),
+('Julieta', 'Acosta', 'juli.acosta@email.com', '1997-11-23', 61.30, 3, '2026-03-12 08:00:00', 1),
+('Gonzalo', 'Pereyra', 'gonza.p@email.com', '1991-04-05', 89.50, 3, '2026-03-18 19:45:00', 1),
+('Agustina', 'Sánchez', 'agus.s@email.com', '1999-09-02', 53.40, 3, '2026-03-25 10:30:00', 1),
+('Ezequiel', 'López', 'eze.lopez@email.com', '1990-02-17', 102.60, 3, '2026-04-02 21:00:00', 1),
+('Micaela', 'Suárez', 'mica.s@email.com', '2001-01-28', 57.00, 3, '2026-04-10 14:15:00', 1),
+('Tomás', 'Verón', 'tomas.v@email.com', '1989-06-11', 76.20, 3, '2026-04-15 17:00:00', 1),
+('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1);
+GO
 
 INSERT INTO Ejercicios (Nombre, IdGrupoMuscular)
 VALUES 
@@ -77,20 +92,22 @@ VALUES
 ('Fondos en Paralelas para Tríceps', 5),
 
 ('Plancha Abdominal Isométrica', 6);
+GO
 
-INSERT INTO Rutinas (Nombre, IdUsuario, FechaCreacion)
+INSERT INTO Rutinas (Nombre, IdUsuario, FechaCreacion, Dia, Activo)
 VALUES 
 -- Rutinas generales (IdUsuario es NULL)
-('Rutina Fullbody Principiantes', NULL, '2025-01-15 10:00:00'),
-('Torso / Pierna Avanzado', NULL, '2025-02-20 11:30:00'),
-('Rutina de Fuerza (5x5)', NULL, '2025-03-05 09:15:00'),
+('Rutina Fullbody Principiantes', NULL, '2025-01-15 10:00:00', 'Lunes', 1),
+('Torso / Pierna Avanzado', NULL, '2025-02-20 11:30:00', 'Martes', 1),
+('Rutina de Fuerza (5x5)', NULL, '2025-03-05 09:15:00', NULL, 1),
 
 -- Rutinas personalizadas (IDs del script de Usuarios)
-('Hipertrofia Piernas - Sofía', 4, '2026-01-06 18:00:00'),
-('Acondicionamiento General - Lucas', 5, '2026-01-13 19:45:00'),
-('Definición / Quema Calórica - Florencia', 6, '2026-01-22 15:30:00'),
-('Fuerza Máxima - Diego', 7, '2026-02-03 20:00:00'),
-('Rutina Adaptada - Martín', 9, '2026-02-19 10:20:00');
+('Hipertrofia Piernas - Sofía', 4, '2026-01-06 18:00:00', 'Lunes', 1),
+('Acondicionamiento General - Lucas', 5, '2026-01-13 19:45:00', NULL, 1),
+('Definición / Quema Calórica - Florencia', 6, '2026-01-22 15:30:00', NULL, 1),
+('Fuerza Máxima - Diego', 7, '2026-02-03 20:00:00', NULL, 1),
+('Rutina Adaptada - Martín', 9, '2026-02-19 10:20:00', NULL, 1);
+GO
 
 INSERT INTO Suscripciones (IdUsuario, IdPlan, IdEstado, FechaInicio, FechaVencimiento)
 VALUES 
@@ -109,28 +126,30 @@ VALUES
 (13, 2, 1, '2026-05-15', '2026-06-14'), 
 (14, 1, 2, '2026-04-02', '2026-04-03'),
 (15, 1, 2, '2026-04-10', '2026-04-11');
+GO
 
 
 
-INSERT INTO RutinaEjercicios (IdEjercicio, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio)
+INSERT INTO RutinaEjercicios (IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio)
 VALUES 
-(7,  3, 10, 1),
-(1,  3, 12, 2),
-(6,  3, 10, 3),
-(12, 2, 12, 4),
-(18, 3, 45, 5),
-(1,  4, 8,  1),
-(5,  4, 8,  2),
-(11, 3, 10, 3),
-(14, 3, 12, 4),
-(16, 3, 12, 5),
-(7,  4, 8,  1),
-(8,  3, 12, 2),
-(10, 4, 10, 3),
-(9,  3, 15, 4),
-(7,  5, 5,  1),
-(1,  5, 5,  2),
-(5,  5, 5,  3);
+(7,  3, 10,	4, 10, 1),
+(1,  3, 10,	4, 12, 2),
+(6,  3, 10,	4, 10, 3),
+(12, 2, 10,	4, 12, 4),
+(18, 3, 10,	4, 45, 5),
+(1,  4, 10,	4, 8,  1),
+(5,  4, 10,	4, 8,  2),
+(11, 3, 10,	4, 10, 3),
+(14, 3, 10,	4, 12, 4),
+(16, 3, 10,	4, 12, 5),
+(7,  4, 10,	4, 8,  1),
+(8,  3, 10,	4, 12, 2),
+(10, 4, 10,	4, 10, 3),
+(9,  3, 10,	4, 15, 4),
+(7,  5, 10,	4, 5,  1),
+(1,  5, 10,	4, 5,  2),
+(5,  5, 10,	4, 5,  3);
+GO
 
 INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
 VALUES 
@@ -146,6 +165,7 @@ VALUES
 (4, 1, '2026-05-02 10:00:00', '2026-05-02 11:15:00'),
 (11, 2, '2026-05-08 17:00:00', '2026-05-08 18:20:00'),
 (12, 2, '2026-05-14 19:15:00', '2026-05-14 20:30:00');
+GO
 
 INSERT INTO SeriesCompletadas (IdSesion, IdEjercicio, PesoLevantadoKG, RepeticionesLogradas, RIR, EsRecordPersonal)
 VALUES 
@@ -178,3 +198,4 @@ VALUES
 (11, 5, 50, 10, 2, 0),
 (11, 5, 55, 10, 1, 0),
 (11, 5, 60, 8,  0, 0);
+GO
