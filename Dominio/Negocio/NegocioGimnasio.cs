@@ -15,7 +15,7 @@ namespace Negocio
             
 
         }
-
+       
         public List<Usuario> listarTodosLosUsuarios(string sp)
         {
             List<Usuario> lista = new List<Usuario>();
@@ -26,32 +26,33 @@ namespace Negocio
                 datos.ejecutarLectura();
                 while (datos.Lector.Read())
                 {
-                    int rol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    Roles rol = (Roles)Convert.ToInt32(datos.Lector["IdRol"]);
                     Usuario us;
-                    if (rol == 3)
+                    switch (rol)
                     {
-                        Cliente cl = new Cliente();
-                        cl.PesoCorporal = (decimal)datos.Lector["PesoCorporalKG"];
-                        us = cl;
-                    }
-                    else if (rol == 1)
-                    {
-                        us = new Admin();
-                    }
-                    else if (rol == 2)
-                    {
-                        us = new Profesor();
-                    }
-                    else
-                    {
-                        us = new Administrativo();
+                        case Roles.CLIENTE:
+                            Cliente cl = new Cliente();
+                            cl.PesoCorporal = (float)datos.Lector["PesoCorporalKG"];
+                            us = cl;
+                            break;
+                        case Roles.ADMIN:
+                            us = new Admin();
+                            break;
+                        case Roles.RECEPCIONISTA:
+                            us = new Recepcionista();
+                            break;
+                        case Roles.ENTRENADOR:
+                            us = new Entrenador();
+                            break;
+                        default:
+                            throw new Exception("Rol no reconocido");
                     }
                     us.IdUsuario = (int)datos.Lector["IdUsuario"];
                     us.Nombre = (string)datos.Lector["Nombre"];
                     us.Apellido = (string)datos.Lector["Apellido"];
                     us.Email = (string)datos.Lector["Email"];
                     us.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
-                    us.Rol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    us.Rol.RolDescripcion = (string)datos.Lector["Nombre"];
                     us.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     lista.Add(us);
                 }
@@ -59,7 +60,7 @@ namespace Negocio
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error al listar los usuarios: (modulo Negocio listarTodosLosUsuarios)" + e.Message);
+                Console.WriteLine("Error al listar los usuarios: (modulo Negocio listarTodosLosUsuarios)" + e.Message); //Esto hay que cambiarlo por un mensaje de error en la interfaz grafica al momento de presentar la app
                 return lista;
             }
         }
