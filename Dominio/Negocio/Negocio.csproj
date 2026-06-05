@@ -42,9 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministrativoNegocio.cs" />
+    <Compile Include="ClienteNegocio.cs" />
     <Compile Include="NegocioGimnasio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UsuarioNegocio.cs" />
+    <Compile Include="RecordsNegocio.cs" />
+    <Compile Include="RutinasNegocio.cs" />
+    <Compile Include="SuscripcionNegocio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AccesoDB\AccesoDB.csproj">
