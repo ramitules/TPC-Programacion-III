@@ -9,7 +9,7 @@ namespace Dominio
     public enum Roles
     {
         ADMIN = 1,
-        ADMINISTRATIVO = 2,
+        RECEPCIONISTA = 2,
         CLIENTE = 3,
         ENTRENADOR = 4
     }
@@ -24,7 +24,7 @@ namespace Dominio
             Activo = true;
         }
         public int IdUsuario { get; set; }
-        public Roles Rol { get; set; }
+        public RolUsuario Rol { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Email { get; set; }

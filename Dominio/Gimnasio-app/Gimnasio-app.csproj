@@ -102,6 +102,7 @@
     <Content Include="Ejercicios.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Perfil.aspx" />
     <Content Include="Planes.aspx" />
     <Content Include="Socios.aspx" />
     <Content Include="Rutinas.aspx" />
@@ -212,6 +213,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Perfil.aspx.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Perfil.aspx.designer.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
     </Compile>
     <Compile Include="Planes.aspx.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
