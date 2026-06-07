@@ -16,17 +16,9 @@ namespace AccesoDB
 
         public AccesoADatos()
         {
-            try
-            {
-                string cadenaConexion = ConfigurationManager.ConnectionStrings["MiBaseDatos"].ConnectionString;
-                conexion = new SqlConnection(cadenaConexion);
-                comando = new SqlCommand();
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error al conectar a la base de datos: (Instancia de acceso a datos) " + e.Message);
-            }
+            string cadenaConexion = ConfigurationManager.ConnectionStrings["MiBaseDatos"].ConnectionString;
+            conexion = new SqlConnection(cadenaConexion);
+            comando = new SqlCommand();
         }
 
         public void SetearConsultaSP(string sp)
@@ -34,10 +26,10 @@ namespace AccesoDB
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
         }
-        public void SetearConsulta(string sp)
+        public void SetearConsulta(string consulta)
         {
-            comando.CommandType = System.Data.CommandType.StoredProcedure;
-            comando.CommandText = sp;
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
         }
         /// <summary>
         /// Ejecuta query y devuelve primera fila de primera columna.

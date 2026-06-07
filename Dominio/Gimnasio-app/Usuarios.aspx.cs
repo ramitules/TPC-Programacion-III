@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,8 +17,7 @@ namespace Gimnasio_app
             {
                 if (!IsPostBack)
                 {
-                    NegocioGimnasio negocio = new NegocioGimnasio();
-                    List<Usuario> lista = negocio.listarTodosLosUsuarios("sp_ObtenerUsuarios");
+                    List<Cliente> lista = new ClienteNegocio().ListarClientes();
                     Session["listaUsuarios"] = lista;
                     gdvUsuario.DataSource = lista;
                     gdvUsuario.DataBind();
