@@ -46,8 +46,18 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-white" runat="server" href="~/Usuarios">
-                        <i class="bi bi-journal-text"></i>Usuarios
+                    <a class="nav-link text-white" runat="server" href="~/Clientes">
+                        <i class="bi bi-journal-text"></i>Clientes(Admin)
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/Entrenadores">
+                        <i class="bi bi-journal-text"></i>Entrenadores(Admin)
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/Recepcionistas">
+                        <i class="bi bi-journal-text"></i>Recepcionistas(Admin)
                     </a>
                 </li>
                 <li class="nav-item mb-2">
@@ -85,7 +95,9 @@
                                 <i class="bi bi-person me-2"></i>Mi perfil
                             </a>
                         </li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li>
                             <a class="dropdown-item text-danger" runat="server" href="~/Logout">
                                 <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión

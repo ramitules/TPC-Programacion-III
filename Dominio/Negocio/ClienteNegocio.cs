@@ -40,7 +40,6 @@ namespace Negocio
 
                     return cliente;
                 }
-
             }
             catch (Exception ex)
             {
@@ -53,9 +52,9 @@ namespace Negocio
             return new Cliente();
         }
 
-        /// <summary>
-        /// Obtener todos los clientes. Opcionalmente solo los activos
-        /// </summary>
+            /// <summary>
+            /// Obtener todos los clientes.Opcionalmente solo los activos
+            /// </summary>
         public List<Cliente> ListarClientes(bool activos = true)
         {
             string Excepcion = "Ocurrio un error al obtener una lista de clientes (ClienteNegocio.ListarClientes())\n";
@@ -97,7 +96,7 @@ namespace Negocio
             }
 
             return lista;
-        }
+            }
         private void AltaOModificacion(Cliente cliente, AccesoADatos datos)
         {
             // Creacion

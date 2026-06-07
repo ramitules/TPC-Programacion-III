@@ -99,11 +99,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdminControl.aspx" />
+    <Content Include="Admins.aspx" />
+    <Content Include="Clientes.aspx" />
     <Content Include="Ejercicios.aspx" />
+    <Content Include="FormularioAdmins.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="Perfil.aspx" />
     <Content Include="Planes.aspx" />
+    <Content Include="Entrenadores.aspx" />
+    <Content Include="Recepcionistas.aspx" />
     <Content Include="Socios.aspx" />
     <Content Include="Rutinas.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -192,13 +197,41 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminControl.aspx.cs">
+      <DependentUpon>AdminControl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminControl.aspx.designer.cs">
+      <DependentUpon>AdminControl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admins.aspx.cs">
+      <DependentUpon>Admins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admins.aspx.designer.cs">
+      <DependentUpon>Admins.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="Clientes.aspx.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Clientes.aspx.designer.cs">
+      <DependentUpon>Clientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Ejercicios.aspx.cs">
       <DependentUpon>Ejercicios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Ejercicios.aspx.designer.cs">
       <DependentUpon>Ejercicios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioAdmins.aspx.cs">
+      <DependentUpon>FormularioAdmins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioAdmins.aspx.designer.cs">
+      <DependentUpon>FormularioAdmins.aspx</DependentUpon>
     </Compile>
     <Compile Include="HistorialDeEntrenamiento.aspx.cs">
       <DependentUpon>HistorialDeEntrenamiento.aspx</DependentUpon>
@@ -214,19 +247,26 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Perfil.aspx.cs">
-      <DependentUpon>Perfil.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Perfil.aspx.designer.cs">
-      <DependentUpon>Perfil.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Planes.aspx.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Planes.aspx.designer.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Entrenadores.aspx.cs">
+      <DependentUpon>Entrenadores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Entrenadores.aspx.designer.cs">
+      <DependentUpon>Entrenadores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Recepcionistas.aspx.cs">
+      <DependentUpon>Recepcionistas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recepcionistas.aspx.designer.cs">
+      <DependentUpon>Recepcionistas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Socios.aspx.cs">
       <DependentUpon>Socios.aspx</DependentUpon>

@@ -8,9 +8,10 @@ namespace Dominio
 {
     public abstract class Gestor: Usuario
     {
-        public Cliente buscarCliente() { return new Cliente(); }
-        public List<Cliente> clienteSuscripcionPorVencer() { return new List<Cliente>(); }
-        public void agregarSuscripcion() { }
-        public List<Plan> verPlanes() { return new List<Plan>(); }
+        public List<Cliente> ObtenerClientes()
+        {
+            // Lógica para obtener la lista de clientes desde la base de datos
+            return new List<Cliente>();
+        }
     }
 }

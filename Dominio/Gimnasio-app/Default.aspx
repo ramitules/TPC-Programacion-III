@@ -9,25 +9,7 @@
             <p><a href="http://www.asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
         </section>
 
-        <div class="row">
-            <h1>Clientes</h1>
-            <asp:GridView ID="dgvCliente" runat="server" CssClass="table"></asp:GridView>
-        </div>
-
-        <div class="row">
-            <h1>Profesores</h1>
-            <asp:GridView ID="dgvProfesor" runat="server" CssClass="table"></asp:GridView>
-        </div>
-
-        <div class="row">
-            <h1>Administrativos</h1>
-            <asp:GridView ID="dgvAdministrador" runat="server" CssClass="table"></asp:GridView>
-        </div>
-
-        <div class="row">
-            <h1>Admin</h1>
-            <asp:GridView ID="dgvAdmin" runat="server" CssClass="table"></asp:GridView>
-        </div>
+        
 
     </main>
 
