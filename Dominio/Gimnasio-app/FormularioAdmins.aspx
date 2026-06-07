@@ -39,8 +39,8 @@
                             <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" placeholder="Ej. González"></asp:TextBox>
                         </div>
                         <div class="col-12">
-                            <label for="txtDni" class="form-label">Documento (DNI)</label>
-                            <asp:TextBox ID="txtDni" runat="server" CssClass="form-control" placeholder="Sin puntos ni espacios"></asp:TextBox>
+                            <label for="txtFechaNacimiento" class="form-label">Fecha de nacimiento</label>
+                            <asp:TextBox TextMode="Date" ID="txtFechaNacimiento" runat="server" CssClass="form-control" placeholder="Seleccione fecha"></asp:TextBox>
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label for="ddlEstadoAdmin" class="form-label">Estado de la Cuenta</label>
-                            <asp:DropDownList ID="ddlEstadoAdmin" runat="server" CssClass="form-select">
+                            <asp:DropDownList ID="ddlEstadoAdmin" runat="server" CssClass="form-select" Enabled="false">
                                 <asp:ListItem Value="true" Selected="True">Activo (Acceso Permitido)</asp:ListItem>
                                 <asp:ListItem Value="false">Inactivo (Acceso Bloqueado)</asp:ListItem>
                             </asp:DropDownList>
@@ -73,7 +73,7 @@
                         
                         <a href="Admins.aspx" class="btn btn-light order-2 text-muted">Cancelar</a>
                         
-                        <asp:Button ID="btnGuardar" runat="server" Text="Registrar Alta" CssClass="btn btn-danger px-4 order-1 shadow-sm"/>
+                        <asp:Button ID="btnGuardar" runat="server" Text="Registrar Alta" CssClass="btn btn-danger px-4 order-1 shadow-sm" OnClick="btnGuardar_Click"/>
                             
                     </div>
 

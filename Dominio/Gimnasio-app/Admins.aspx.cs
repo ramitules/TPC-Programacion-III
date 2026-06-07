@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,29 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            AdminNegocio adminNegocio = new AdminNegocio();
+            try
+            {
+                dgvAdmins.DataSource = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins");
+                dgvAdmins.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
+        protected void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Response.Redirect("FormularioAdmins", false);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }
