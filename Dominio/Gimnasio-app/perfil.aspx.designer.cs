@@ -87,13 +87,13 @@ namespace Gimnasio_app
         protected global::System.Web.UI.WebControls.Button btnCancelarDatos;
 
         /// <summary>
-        /// Control txtPlan.
+        /// Control ddlPlan.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtPlan;
+        protected global::System.Web.UI.WebControls.DropDownList ddlPlan;
 
         /// <summary>
         /// Control btnCambiarPlan.
@@ -130,6 +130,24 @@ namespace Gimnasio_app
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblVencimiento;
+
+        /// <summary>
+        /// Control txtProximoPlan.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtProximoPlan;
+
+        /// <summary>
+        /// Control txtVencimientoProximo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtVencimientoProximo;
 
         /// <summary>
         /// Control btnCancelarSuscripcion.

@@ -67,23 +67,44 @@
         <div class="tab-pane fade" id="datosSuscripcion" role="tabpanel" aria-labelledby="suscripcion-tab">
             <div class="row">
                 <div class="col-md-4">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <div class="mb-3">
+                                <label class="form-label">Plan Actual</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <asp:DropDownList runat="server" CssClass="form-select" ID="ddlPlan" Enabled="false"></asp:DropDownList>
+                                    <asp:Button ID="btnCambiarPlan" OnClick="btnCambiarPlan_click" Text="Cambiar plan" CssClass="btn btn-outline-info" runat="server" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Vencimiento</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtVencimiento" TextMode="Date" ReadOnly="true" />
+                                    <asp:Button ID="btnRenovarPlan" OnClick="btnRenovarPlan_click" Text="Renovar suscripcion" CssClass="btn btn-outline-secondary" runat="server" Enabled="false" />
+                                </div>
+                                <asp:Label Text="" ID="lblVencimiento" runat="server" ForeColor="LightBlue" />
+                            </div>
+
+                            <%if (TienePlanProximo) {%>
+                            <div class="mb-3">
+                                <label class="form-label">Proximo plan pagado</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtProximoPlan" ReadOnly="true" />
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Vencimiento</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <asp:TextBox runat="server" CssClass="form-control" ID="txtVencimientoProximo" TextMode="Date" ReadOnly="true" />
+                                </div>
+                            </div>
+                            <% } %>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+
                     <div class="mb-3">
-                        <label class="form-label">Plan Actual</label>
-                        <div class="input-group">
-                            <asp:TextBox runat="server" CssClass="form-control" ID="txtPlan" ReadOnly="true" Text="Plan Premium" />
-                            <asp:Button ID="btnCambiarPlan" OnClick="btnCambiarPlan_click" Text="Cambiar plan" CssClass="btn btn-outline-info" runat="server" />
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Vencimiento</label>
-                        <div class="input-group">
-                            <asp:TextBox runat="server" CssClass="form-control" ID="txtVencimiento" TextMode="Date" ReadOnly="true" />
-                            <asp:Button ID="btnRenovarPlan" OnClick="btnRenovarPlan_click" Text="Renovar suscripcion" CssClass="btn btn-outline-info" runat="server" Enabled="false" />
-                        </div>
-                        <asp:Label Text="" ID="lblVencimiento" runat="server" ForeColor="LightBlue" />
-                    </div>
-                    <div class="mb-3">
-                        <asp:Button ID="btnCancelarSuscripcion" runat="server" Text="Cancelar Suscripcion" CssClass="btn btn-outline-danger" />
+                        <asp:Button ID="btnCancelarSuscripcion" OnClick="btnCancelarSuscripcion_click" runat="server" Text="Cancelar Suscripcion" CssClass="btn btn-outline-danger" />
                     </div>
                 </div>
 
