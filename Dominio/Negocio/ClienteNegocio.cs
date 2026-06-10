@@ -12,9 +12,10 @@ namespace Negocio
     public class ClienteNegocio
     {
         /// <summary>
-        /// Obtener un cliente especifico utilizando su ID
+        /// Obtener un cliente especifico utilizando su ID.
+        /// full = true: devuelve el usuario con su suscripcion activa actual, rutinas y records personales.
         /// </summary>
-        public Cliente Get(string id = "")
+        public Cliente Get(string id = "", bool full = false)
         {
             string Excepcion = "Ocurrio un error al obtener el cliente (ClienteNegocio.Get())\n";
 
@@ -38,6 +39,13 @@ namespace Negocio
                     cliente.Activo = (bool)datos.Lector["Activo"];
                     cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
 
+                    if (full)
+                    {
+                        cliente.SuscripcionCliente = new SuscripcionNegocio().GetSuscripcionCliente(id, EstadoSuscripcion.ACTIVA);
+                        cliente.RutinasCliente = new RutinasNegocio().GetRutinasUsuario(id);
+                        cliente.RecordsPersonales = new RecordsNegocio().GetRecordsUsuario(id);
+                    }
+
                     return cliente;
                 }
 
@@ -50,7 +58,7 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
-            return new Cliente();
+            return cliente;
         }
 
         /// <summary>
@@ -102,9 +110,7 @@ namespace Negocio
         {
             // Creacion
             if (cliente.IdUsuario == 0)
-            {
                 datos.SetearConsultaSP("sp_CrearUsuario");
-            }
             // Modificacion
             else
             {
