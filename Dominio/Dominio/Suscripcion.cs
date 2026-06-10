@@ -10,7 +10,8 @@ namespace Dominio
     {
         ACTIVA = 1,
         VENCIDA = 2,
-        CANCELADA = 3
+        CANCELADA = 3,
+        VIGENTE_PENDIENTE = 4
     }
     public class Suscripcion
     {
