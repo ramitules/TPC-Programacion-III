@@ -116,8 +116,8 @@ BEGIN
 END
 GO
 
--- Obtener datos completos de las suscripciones de un usuario
-CREATE PROCEDURE sp_SuscripcionCompleta (@ID INTEGER)
+-- Obtener datos completos de la suscripcion de un usuario
+CREATE PROCEDURE sp_SuscripcionCompleta (@ID INTEGER, @IdEstado INTEGER)
 AS
 BEGIN
 	SELECT TOP 1
@@ -132,7 +132,7 @@ BEGIN
 	FROM Suscripciones S
 	LEFT JOIN Planes P
 		ON S.IdPlan = P.IdPlanes
-	WHERE S.IdUsuario = @ID
+	WHERE S.IdUsuario = @ID AND S.IdEstado = @IdEstado
 	ORDER BY S.FechaVencimiento ASC
 END
 GO
@@ -198,4 +198,41 @@ BEGIN
 		FechaIngreso = @FechaIngreso
 	WHERE IdUsuarios = @IdUsuario
 END
+GO
 
+-- Crear suscripcion
+CREATE PROCEDURE sp_CrearSuscripcion (
+	@IdUsuario INT,
+	@IdPlan SMALLINT,
+	@IdEstado TINYINT,
+	@FechaInicio DATE,
+	@FechaVencimiento DATE
+)
+AS
+BEGIN
+	INSERT INTO Suscripciones (IdUsuario, IdPlan, IdEstado, FechaInicio, FechaVencimiento)
+	VALUES (@IdUsuario, @IdPlan, @IdEstado, @FechaInicio, @FechaVencimiento)
+END
+GO
+
+
+-- Modificar suscripcion
+CREATE PROCEDURE sp_ModificarSuscripcion (
+	@IdUsuario INT,
+	@IdPlan SMALLINT,
+	@IdEstado TINYINT,
+	@FechaInicio DATE,
+	@FechaVencimiento DATE,
+	@IdSuscripcion INT
+)
+AS
+BEGIN
+	UPDATE Suscripciones SET
+		IdUsuario = @IdUsuario,
+		IdPlan = @IdPlan,
+		IdEstado = @IdEstado,
+		FechaInicio = @FechaInicio,
+		FechaVencimiento = @FechaVencimiento
+	WHERE IdSuscripciones = @IdSuscripcion
+END
+GO
