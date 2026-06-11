@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +14,27 @@ namespace Gimnasio_app
         protected void Page_Load(object sender, EventArgs e)
         {
             AdminNegocio adminNegocio = new AdminNegocio();
+            List<Usuario> admins = new List<Usuario>();
             try
             {
-                dgvAdmins.DataSource = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins");
-                dgvAdmins.DataBind();
+                if (!IsPostBack)
+                {
+                    if (Session["litaAdmins"] == null)
+                    {
+                        admins = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins");
+                        Session.Add("listaAdmins", admins);
+                    }
+                    else
+                    {
+                        admins = (List<Usuario>)Session["listaAdmins"];
+                    }
+                    dgvAdmins.DataSource = admins != null ? admins : new List<Usuario>();
+                    dgvAdmins.DataBind();
+                }
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 

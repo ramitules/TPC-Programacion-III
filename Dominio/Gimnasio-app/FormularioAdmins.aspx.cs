@@ -17,7 +17,21 @@ namespace Gimnasio_app
             {
                 if (!IsPostBack)
                 {
-                    if (Request.QueryString["id"] == null) { }
+                    if (Request.QueryString["id"] != null) 
+                    {
+                        int id = int.Parse(Request.QueryString["id"]);
+                        List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                        Usuario adminBuscado = admins.Find(a => a.IdUsuario == id);
+                        if (adminBuscado != null)
+                        {
+                            txtNombre.Text = adminBuscado.Nombre;
+                            txtApellido.Text = adminBuscado.Apellido;
+                            txtEmail.Text = adminBuscado.Email;
+                            txtFechaNacimiento.Text = adminBuscado.FechaNacimiento.ToString("yyyy-MM-dd");
+                            btnGuardar.Text = "Modificar Usuario";
+                            ddlEstadoAdmin.Enabled = true;
+                        }
+                    }
                 }
             }
             catch (Exception)
@@ -33,12 +47,30 @@ namespace Gimnasio_app
             Admin admin = new Admin();
             try
             {
-                admin.Nombre = txtNombre.Text;
-                admin.Apellido = txtApellido.Text;
-                admin.Email = txtEmail.Text;
-                admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                 var pass = txtPassword.Text;
-                negocio.crearAdmin(admin, pass);
+                if (Request.QueryString["id"] != null)
+                {
+                    int id = int.Parse(Request.QueryString["id"]);
+                    List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                    Usuario adminAModificar = admins.Find(a => a.IdUsuario == id);
+                    if (adminAModificar != null)
+                    {
+                        admin.Nombre = txtNombre.Text;
+                        admin.Apellido = txtApellido.Text;
+                        admin.Email = txtEmail.Text;
+                        admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                        pass = txtPassword.Text;
+                        //funcion para modificar con sp_Modificar_Admin
+                    }
+                }
+                else
+                {
+                    admin.Nombre = txtNombre.Text;
+                    admin.Apellido = txtApellido.Text;
+                    admin.Email = txtEmail.Text;
+                    admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                    negocio.crearAdmin(admin, pass);
+                }
                 Session.Add("listaAdmins", negocio.ObtenerUsuarioPorRol("sp_Traer_Admins")); //esta linea actualiza la lista de Admins que esta guardada en Session
                 string scriptNativo = @"
                     alert('¡Administrador registrado con éxito!');
