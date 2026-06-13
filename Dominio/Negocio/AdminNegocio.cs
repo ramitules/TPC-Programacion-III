@@ -93,6 +93,38 @@ namespace Negocio
             {
                 throw new Exception("Ocurrio un problema al crear el admin en la base de datos - AdminNegocio/createAdmin");
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void modificarAdmin(Admin admin, string pass) 
+        { 
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_ModificarUsuario");
+                datos.setearParametro("@Nombre", admin.Nombre);
+                datos.setearParametro("@Apellido", admin.Apellido);
+                datos.setearParametro("@Email", admin.Email);
+                datos.setearParametro("@FechaNacimiento", admin.FechaNacimiento);
+                datos.setearParametro("@PesoCorporal", 0);
+                datos.setearParametro("@IdRol", admin.Rol.IdRol);
+                datos.setearParametro("@FechaIngreso", admin.FechaIngreso);
+                datos.setearParametro("@Activo", admin.Activo);
+                //datos.setearParametro("@Pass", pass);
+                datos.setearParametro("@IdUsuario", admin.IdUsuario);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
         //Este bloque es para gestionar cada tipo de Rol
         //Métodos para administrar clientes

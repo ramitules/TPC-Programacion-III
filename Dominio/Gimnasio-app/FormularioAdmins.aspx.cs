@@ -55,12 +55,13 @@ namespace Gimnasio_app
                     Usuario adminAModificar = admins.Find(a => a.IdUsuario == id);
                     if (adminAModificar != null)
                     {
-                        admin.Nombre = txtNombre.Text;
-                        admin.Apellido = txtApellido.Text;
-                        admin.Email = txtEmail.Text;
-                        admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                        adminAModificar.Nombre = txtNombre.Text;
+                        adminAModificar.Apellido = txtApellido.Text;
+                        adminAModificar.Email = txtEmail.Text;
+                        adminAModificar.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                        adminAModificar.Activo = bool.Parse(ddlEstadoAdmin.SelectedValue);
                         pass = txtPassword.Text;
-                        //funcion para modificar con sp_Modificar_Admin
+                        negocio.modificarAdmin((Admin)adminAModificar, pass);
                     }
                 }
                 else
@@ -74,7 +75,7 @@ namespace Gimnasio_app
                 Session.Add("listaAdmins", negocio.ObtenerUsuarioPorRol("sp_Traer_Admins")); //esta linea actualiza la lista de Admins que esta guardada en Session
                 string scriptNativo = @"
                     alert('¡Administrador registrado con éxito!');
-                    window.location.href = 'Admins.aspx';"; /* Tu página del listado */
+                    window.location.href = 'Admins.aspx';"; 
 
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "alertNativo", scriptNativo, true);
             }
