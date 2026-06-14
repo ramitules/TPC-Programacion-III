@@ -53,6 +53,8 @@
     <Compile Include="Records.cs" />
     <Compile Include="RutinaEjercicio.cs" />
     <Compile Include="Rutinas.cs" />
+    <Compile Include="SerieCompletada.cs" />
+    <Compile Include="SesionEntrenamiento.cs" />
     <Compile Include="Suscripcion.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>

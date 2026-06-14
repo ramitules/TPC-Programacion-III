@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace Dominio
 {
     /// <summary>
-    /// Representa un día específico de la rutina, que contiene una lista de ejercicios asignados para ese día.
+    /// Representa un día específico de la rutina, que contiene una lista de rutinas
     /// </summary>
     public class DiaRutina  
     {
-        public DayOfWeek DiaDeRutina { get; set; }
-        public List<Ejercicio> rutina = new List<Ejercicio>();
+        public string DiaDeRutina { get; set; }
+        public List<Rutina> Rutinas { get; set; }
+        public bool TieneRutinas { get { return Rutinas != null && Rutinas.Count > 0; } }
     }
 }
