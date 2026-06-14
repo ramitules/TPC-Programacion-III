@@ -45,6 +45,7 @@ namespace Gimnasio_app
         {
             AdminNegocio negocio = new AdminNegocio();
             Admin admin = new Admin();
+            EmailService emailService = new EmailService();
             try
             {
                 var pass = txtPassword.Text;
@@ -71,6 +72,8 @@ namespace Gimnasio_app
                     admin.Email = txtEmail.Text;
                     admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                     negocio.crearAdmin(admin, pass);
+                    emailService.armarCorreo(admin.Email, "Bienvenido al Gimnasio", $"Hola {admin.Nombre}, tu cuenta de administrador ha sido creada exitosamente. Tu contraseña es: {pass}");
+                    emailService.enviarCorreo();
                 }
                 Session.Add("listaAdmins", negocio.ObtenerUsuarioPorRol("sp_Traer_Admins")); //esta linea actualiza la lista de Admins que esta guardada en Session
                 string scriptNativo = @"
