@@ -105,6 +105,7 @@
     <Content Include="Login.aspx" />
     <Content Include="perfil.aspx" />
     <Content Include="Planes.aspx" />
+    <Content Include="Records.aspx" />
     <Content Include="Socios.aspx" />
     <Content Include="Rutinas.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -234,6 +235,13 @@
     </Compile>
     <Compile Include="Planes.aspx.designer.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Records.aspx.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Records.aspx.designer.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
     </Compile>
     <Compile Include="Socios.aspx.cs">
       <DependentUpon>Socios.aspx</DependentUpon>
