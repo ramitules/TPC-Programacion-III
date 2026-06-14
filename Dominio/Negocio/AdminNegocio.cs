@@ -112,7 +112,7 @@ namespace Negocio
                 datos.setearParametro("@IdRol", admin.Rol.IdRol);
                 datos.setearParametro("@FechaIngreso", admin.FechaIngreso);
                 datos.setearParametro("@Activo", admin.Activo);
-                //datos.setearParametro("@Pass", pass);
+                datos.setearParametro("@Pass", pass);
                 datos.setearParametro("@IdUsuario", admin.IdUsuario);
                 datos.ejecutarAccion();
             }

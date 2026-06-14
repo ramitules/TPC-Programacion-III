@@ -60,7 +60,7 @@ namespace Gimnasio_app
                         adminAModificar.Email = txtEmail.Text;
                         adminAModificar.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                         adminAModificar.Activo = bool.Parse(ddlEstadoAdmin.SelectedValue);
-                        pass = txtPassword.Text;
+                        pass = string.IsNullOrEmpty(txtPassword.Text) ? "" : txtPassword.Text;
                         negocio.modificarAdmin((Admin)adminAModificar, pass);
                     }
                 }
