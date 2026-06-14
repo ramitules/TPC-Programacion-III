@@ -165,5 +165,30 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public void SetRecordPersonal(Ejercicio ejercicio, Cliente cliente)
+        {
+            Records record = new Records();
+            record.Ejercicio = ejercicio;
+            
+            if (cliente.RecordsPersonales is null)
+                cliente.RecordsPersonales = new List<Records>();
+
+            // PENDIENTE
+        }
+        /// <summary>
+        /// Chequea si se esta estableciendo un nuevo record en el ejercicio que el
+        /// cliente esta realizando
+        /// </summary>
+        /// <returns></returns>
+        public bool EsRecordPersonal(Cliente cliente)
+        { // PENDIENTE
+            if (cliente.RecordsPersonales is null)
+            {  // No habia records registrados (nuevo usuario tal vez)
+                cliente.RecordsPersonales = new List<Records>();
+                return true;
+            }
+
+            return false;
+        }
     }
 }
