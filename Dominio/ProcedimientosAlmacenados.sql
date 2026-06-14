@@ -40,7 +40,6 @@ END;
 
 GO
 
-
 --
 
 --Modificar rutina general
@@ -234,5 +233,62 @@ BEGIN
 		FechaInicio = @FechaInicio,
 		FechaVencimiento = @FechaVencimiento
 	WHERE IdSuscripciones = @IdSuscripcion
+END
+GO
+
+-- RECORDS
+
+-- Obtener records personales de un cliente
+CREATE PROCEDURE sp_GetRecordsPersonales (@IdUsuario INT)
+AS
+BEGIN
+	SELECT 
+		SC.PesoLevantadoKG	AS PesoKG,
+		SC.IdEjercicio		AS IdEjercicio,
+		E.Nombre			AS NombreEjercicio,
+		E.IdGrupoMuscular	AS IdGrupoMuscular,
+		GM.Nombre			AS NombreGrupoMuscular
+	FROM SeriesCompletadas SC
+	LEFT JOIN SesionesEntrenamiento SE
+		ON SE.IdSesionesEntrenamiento = SC.IdSesion
+	LEFT JOIN Ejercicios E
+		ON E.IdEjercicios = SC.IdEjercicio
+	LEFT JOIN GruposMusculares GM
+		ON E.IdGrupoMuscular = GM.IdGruposMusculares
+	WHERE EsRecordPersonal = 1 AND SE.IdUsuario = @IdUsuario
+END
+GO
+
+-- Sesiones de entrenamiento
+-- Creacion
+CREATE PROCEDURE sp_CrearSesionEntrenamiento (
+	@IdUsuario INT,
+	@IdRutina INT,
+	@FechaHoraInicio DATETIME,
+	@FechaHoraFin DATETIME
+)
+AS
+BEGIN
+	INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
+	VALUES (@IdUsuario, @IdRutina, @FechaHoraInicio, @FechaHoraFin)
+END
+GO
+
+-- Modificacion
+CREATE PROCEDURE sp_ModificarSesionEntrenamiento (
+	@IdSesion INT,
+	@IdUsuario INT,
+	@IdRutina INT,
+	@FechaHoraInicio DATETIME,
+	@FechaHoraFin DATETIME
+)
+AS
+BEGIN
+	UPDATE SesionesEntrenamiento SET 
+		IdUsuario = @IdUsuario, 
+		IdRutina = @IdRutina, 
+		FechaHoraInicio = @FechaHoraInicio, 
+		FechaHoraFin = @FechaHoraFin
+	WHERE IdSesionesEntrenamiento = @IdSesion
 END
 GO
