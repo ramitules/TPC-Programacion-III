@@ -41,6 +41,11 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/EntrenadorPanel">
+                        <i class="bi bi-people"></i>Entrenador: Panel
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">
                         <i class="bi bi-journal-text"></i>Rutinas
                     </a>
