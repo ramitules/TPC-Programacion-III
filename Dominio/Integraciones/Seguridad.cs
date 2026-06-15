@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Integraciones
 {
@@ -23,6 +26,21 @@ namespace Integraciones
             {
                 return false;
             }
+        }
+        //Este se encarga no solo de verificar si el usuario esta logueado o no, sino que tambien, implementado en el Page_load de cada pagina, permite evaluar si el usuario logueado tiene acceso o no. 
+        //recibe como argumento el usuario de Session, y un ENUM de tipo Roles, que se corresponde con el rol que se requiere para acceder a la pagina.
+        public static bool accesoYPermisos(Usuario user, Roles nombreRolPermiso)
+        {
+            if (user == null)
+            {
+                return false;
+            }
+
+            if (user.Rol.IdRol != (int)nombreRolPermiso)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
