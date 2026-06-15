@@ -9,7 +9,7 @@ using Negocio;
 
 namespace Gimnasio_app
 {
-    public partial class EntrenadorPanel : Page
+    public partial class PanelEntrenador : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
