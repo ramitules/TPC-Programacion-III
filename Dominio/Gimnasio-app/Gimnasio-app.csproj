@@ -103,10 +103,14 @@
     <Content Include="Admins.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Ejercicios.aspx" />
-    <Content Include="FormularioAdmins.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="perfil.aspx" />
     <Content Include="Planes.aspx" />
+    <Content Include="Records.aspx" />
+    <Content Include="FormularioAdmins.aspx" />
+    <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Entrenadores.aspx" />
     <Content Include="Recepcionistas.aspx" />
     <Content Include="Socios.aspx" />
@@ -159,7 +163,6 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="appSettings.ejemplo.config" />
     <Content Include="appSettings.config" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
@@ -226,6 +229,12 @@
     <Compile Include="Ejercicios.aspx.designer.cs">
       <DependentUpon>Ejercicios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     <Compile Include="FormularioAdmins.aspx.cs">
       <DependentUpon>FormularioAdmins.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -247,6 +256,13 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="perfil.aspx.cs">
+      <DependentUpon>perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="perfil.aspx.designer.cs">
+      <DependentUpon>perfil.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Planes.aspx.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -254,6 +270,12 @@
     <Compile Include="Planes.aspx.designer.cs">
       <DependentUpon>Planes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Records.aspx.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Records.aspx.designer.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
     <Compile Include="Entrenadores.aspx.cs">
       <DependentUpon>Entrenadores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -348,6 +370,10 @@
     <ProjectReference Include="..\Dominio\Dominio.csproj">
       <Project>{78a352ee-c958-41f1-801b-e5a9ab7d666a}</Project>
       <Name>Dominio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Integraciones\Integraciones.csproj">
+      <Project>{22474639-c496-4c22-9454-a5e5bac5a6d7}</Project>
+      <Name>Integraciones</Name>
     </ProjectReference>
     <ProjectReference Include="..\Negocio\Negocio.csproj">
       <Project>{1991e8e4-78ef-4999-b360-4bf8dc4d093f}</Project>

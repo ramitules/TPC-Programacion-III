@@ -1,4 +1,4 @@
-﻿using AccesoDB;
+using AccesoDB;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -31,16 +31,16 @@ namespace Negocio
                     GrupoMuscular grupo = new GrupoMuscular();
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
-                        grupo.IdGrupoMuscular = (int)datos.Lector["IdGrupoMuscular"];
+                        grupo.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
                         grupo.NombreGrupoMuscular = datos.Lector["GrupoMuscularNombre"].ToString();
                     }
 
-                    ejercicio.IdEjercicio = (int)datos.Lector["IdEjercicio"];
+                    ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
                     ejercicio.NombreEjercicio = datos.Lector["EjercicioNombre"].ToString();
                     ejercicio.GrupoMuscular = grupo;
 
                     record.Ejercicio = ejercicio;
-                    record.PesoKG = (float)datos.Lector["PesoKG"];
+                    record.PesoKG = float.Parse(datos.Lector["PesoKG"].ToString());
                 }
             }
             catch (Exception ex)

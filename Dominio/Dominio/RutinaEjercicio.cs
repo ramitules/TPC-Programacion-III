@@ -16,6 +16,7 @@ namespace Dominio
         public RutinaEjercicio() { IdRutinaEjercicio = 0; }
         public int IdRutinaEjercicio { get; set; }
         public Ejercicio Ejercicio { get; set; }
+        public int ObjetivoKG { get; set; }
         public int ObjetivoSeries { get; set; }
         public int ObjetivoRepeticiones { get; set; }
         public int OrdenEjercicio { get; set; }

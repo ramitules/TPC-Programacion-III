@@ -1,4 +1,4 @@
-﻿using AccesoDB;
+using AccesoDB;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -11,46 +11,35 @@ namespace Negocio
     public class SuscripcionNegocio
     {
         /// <summary>
-        /// Obtiene la utlima suscripcion del cliente, vigente o no
+        /// Obtiene la utlima suscripcion del cliente filtrando por el estado de la suscripcion
         /// </summary>
         /// <param name="id"> Id de cliente</param>
-        public Suscripcion GetSuscripcionCliente(string id)
+        public Suscripcion GetSuscripcionCliente(string id, EstadoSuscripcion estado)
         {
             string Excepcion = "Ocurrio un error al obtener la suscripcion (SuscripcionNegocio.GetSuscripcionCliente())\n";
 
             AccesoADatos datos = new AccesoADatos();
             Suscripcion suscripcion = new Suscripcion();
+
             try
             {
                 datos.SetearConsultaSP("sp_SuscripcionCompleta");
                 datos.setearParametro("@Id", id);
+                datos.setearParametro("@IdEstado", estado);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    suscripcion.IdSuscripcion = (int)datos.Lector["IdSuscripcion"];
-                    suscripcion.FechaInicio = (DateTime)datos.Lector["FechaInicio"];
-                    suscripcion.FechaFin = (DateTime)datos.Lector["FechaVencimiento"];
-                    switch ((int)datos.Lector["IdEstado"])
-                    {
-                        case 1:
-                            suscripcion.Estado = EstadoSuscripcion.ACTIVA;
-                            break;
-                        case 2:
-                            suscripcion.Estado = EstadoSuscripcion.VENCIDA;
-                            break;
-                        case 3:
-                            suscripcion.Estado = EstadoSuscripcion.CANCELADA;
-                            break;
-                        default:
-                            break;
-                    }
+                    suscripcion.IdSuscripcion = int.Parse(datos.Lector["IdSuscripcion"].ToString());
+                    suscripcion.FechaInicio = DateTime.Parse(datos.Lector["FechaInicio"].ToString());
+                    suscripcion.FechaFin = DateTime.Parse(datos.Lector["FechaVencimiento"].ToString());
+                    suscripcion.Estado = estado;
                     suscripcion.Plan = new Plan()
                     {
-                        IdPlan = (int)datos.Lector["IdPlan"],
+                        IdPlan = int.Parse(datos.Lector["IdPlan"].ToString()),
                         NombrePlan = datos.Lector["NombrePlan"].ToString(),
-                        PrecioPlan = (float)datos.Lector["PrecioPlan"],
-                        DuracionDiasPlan = (int)datos.Lector["DuracionPlan"]
+                        PrecioPlan = float.Parse(datos.Lector["PrecioPlan"].ToString()),
+                        DuracionDiasPlan = int.Parse(datos.Lector["DuracionPlan"].ToString())
                     };
                 }
             }
@@ -64,6 +53,62 @@ namespace Negocio
             }
 
             return suscripcion;
+        }
+        private void AltaOModificacion(Suscripcion suscripcion, AccesoADatos datos, Cliente cliente)
+        {
+            // Creacion
+            if (suscripcion.IdSuscripcion == 0)
+                datos.SetearConsultaSP("sp_CrearSuscripcion");
+            // Modificacion
+            else
+            {
+                datos.SetearConsultaSP("sp_ModificarSuscripcion");
+                datos.setearParametro("@IdSuscripcion", suscripcion.IdSuscripcion);
+            }
+
+            datos.setearParametro("@IdUsuario", cliente.IdUsuario);
+            datos.setearParametro("@IdPlan", suscripcion.Plan.IdPlan);
+            datos.setearParametro("@IdEstado", suscripcion.Estado);
+            datos.setearParametro("@FechaInicio", suscripcion.FechaInicio);
+            datos.setearParametro("@FechaVencimiento", suscripcion.FechaFin);
+
+            datos.ejecutarAccion();
+        }
+        public void Agregar(Suscripcion suscripcion, Cliente cliente)
+        {
+            string Excepcion = "Ocurrio un error al agregar una suscripcion (SuscripcionNegocio.Agregar())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                AltaOModificacion(suscripcion, datos, cliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void Modificar(Suscripcion suscripcion, Cliente cliente)
+        {
+            string Excepcion = "Ocurrio un error al modificar una suscripcion (SuscripcionNegocio.Modificar())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                AltaOModificacion(suscripcion, datos, cliente);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using AccesoDB;
+using AccesoDB;
 using Dominio;
 using System;
 using System.Collections.Generic;
@@ -12,88 +12,97 @@ namespace Negocio
     public class ClienteNegocio
     {
         /// <summary>
-        /// Obtener un cliente especifico utilizando su ID
+        /// Obtener un cliente especifico utilizando su ID.
+        /// full = true: devuelve el usuario con su suscripcion activa actual, rutinas y records personales.
         /// </summary>
-        public Cliente Get(string id = "")
+        public Cliente Get(string id = "", bool full = false)
         {
-            //string Excepcion = "Ocurrio un error al obtener el cliente (ClienteNegocio.Get())\n";
+            string Excepcion = "Ocurrio un error al obtener el cliente (ClienteNegocio.Get())\n";
 
-            //AccesoADatos datos = new AccesoADatos();
-            //Cliente cliente = new Cliente();
-            //try
-            //{
-            //    datos.SetearConsulta("SELECT * FROM Usuarios WHERE IdUsuarios = @ID");
-            //    datos.setearParametro("@ID", id);
-            //    datos.ejecutarLectura();
+            AccesoADatos datos = new AccesoADatos();
+            Cliente cliente = new Cliente();
+            try
+            {
+                datos.SetearConsulta("SELECT * FROM Usuarios WHERE IdUsuarios = @ID");
+                datos.setearParametro("@ID", id);
+                datos.ejecutarLectura();
 
-            //    while (datos.Lector.Read())
-            //    {
-            //        cliente.IdUsuario = (int)datos.Lector["IdUsuarios"];
-            //        cliente.Rol = Roles.CLIENTE;
-            //        cliente.Nombre = datos.Lector["Nombre"].ToString();
-            //        cliente.Apellido = datos.Lector["Apellido"].ToString();
-            //        cliente.Email = datos.Lector["Email"].ToString();
-            //        cliente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
-            //        cliente.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
-            //        cliente.Activo = (bool)datos.Lector["Activo"];
-            //        cliente.PesoCorporal = (float)datos.Lector["PesoCorporalKG"];
+                while (datos.Lector.Read())
+                {
+                    cliente.IdUsuario = (int)datos.Lector["IdUsuarios"];
+                    cliente.Rol = Roles.CLIENTE;
+                    cliente.Nombre = datos.Lector["Nombre"].ToString();
+                    cliente.Apellido = datos.Lector["Apellido"].ToString();
+                    cliente.Email = datos.Lector["Email"].ToString();
+                    cliente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    cliente.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
+                    cliente.Activo = (bool)datos.Lector["Activo"];
+                    cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
 
-            //        return cliente;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception(Excepcion + ex.ToString());
-            //}
-            //finally
-            //{
-            //    datos.cerrarConexion();
-            //}
-            return new Cliente();
+                    if (full)
+                    {
+                        cliente.SuscripcionCliente = new SuscripcionNegocio().GetSuscripcionCliente(id, EstadoSuscripcion.ACTIVA);
+                        cliente.RutinasCliente = new RutinasNegocio().GetRutinasUsuario(id);
+                        cliente.RecordsPersonales = new RecordsNegocio().GetRecordsUsuario(id);
+                    }
+
+                    return cliente;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return cliente;
         }
 
         /// <summary>
-        /// Obtener todos los clientes.Opcionalmente solo los activos
+        /// Obtener todos los clientes. Opcionalmente solo los activos
         /// </summary>
         public List<Cliente> ListarClientes(bool activos = true)
         {
-            //string Excepcion = "Ocurrio un error al obtener una lista de clientes (ClienteNegocio.ListarClientes())\n";
-            //string query = "SELECT * FROM Usuarios WHERE IdRol = @Rol" + (activos ? " AND Activo = 1" : "");
+            string Excepcion = "Ocurrio un error al obtener una lista de clientes (ClienteNegocio.ListarClientes())\n";
+            string query = "SELECT * FROM Usuarios WHERE IdRol = @Rol" + (activos ? " AND Activo = 1" : "");
 
-            //AccesoADatos datos = new AccesoADatos();
+            AccesoADatos datos = new AccesoADatos();
             List<Cliente> lista = new List<Cliente>();
-            //try
-            //{
-            //    datos.SetearConsulta(query);
-            //    datos.setearParametro("@Rol", Roles.CLIENTE);
-            //    datos.ejecutarLectura();
+            try
+            {
+                datos.SetearConsulta(query);
+                datos.setearParametro("@Rol", Roles.CLIENTE);
+                datos.ejecutarLectura();
 
-            //    while (datos.Lector.Read())
-            //    {
-            //        Cliente cliente = new Cliente
-            //        {
-            //            IdUsuario = (int)datos.Lector["IdUsuarios"],
-            //            Rol = Roles.CLIENTE,
-            //            Nombre = datos.Lector["Nombre"].ToString(),
-            //            Apellido = datos.Lector["Apellido"].ToString(),
-            //            Email = datos.Lector["Email"].ToString(),
-            //            FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"],
-            //            FechaIngreso = (DateTime)datos.Lector["FechaIngreso"],
-            //            Activo = (bool)datos.Lector["Activo"],
-            //            PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
-            //        };
+                while (datos.Lector.Read())
+                {
+                    Cliente cliente = new Cliente
+                    {
+                        IdUsuario = (int)datos.Lector["IdUsuarios"],
+                        Rol = Roles.CLIENTE,
+                        Nombre = datos.Lector["Nombre"].ToString(),
+                        Apellido = datos.Lector["Apellido"].ToString(),
+                        Email = datos.Lector["Email"].ToString(),
+                        FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"],
+                        FechaIngreso = (DateTime)datos.Lector["FechaIngreso"],
+                        Activo = (bool)datos.Lector["Activo"],
+                        PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
+                    };
 
-            //        lista.Add(cliente);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new Exception(Excepcion + ex.ToString());
-            //}
-            //finally
-            //{
-            //    datos.cerrarConexion();
-            //}
+                    lista.Add(cliente);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
 
             return lista;
         }
@@ -101,9 +110,7 @@ namespace Negocio
         {
             // Creacion
             if (cliente.IdUsuario == 0)
-            {
                 datos.SetearConsultaSP("sp_CrearUsuario");
-            }
             // Modificacion
             else
             {
@@ -157,6 +164,31 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
+        }
+        public void SetRecordPersonal(Ejercicio ejercicio, Cliente cliente)
+        {
+            Records record = new Records();
+            record.Ejercicio = ejercicio;
+            
+            if (cliente.RecordsPersonales is null)
+                cliente.RecordsPersonales = new List<Records>();
+
+            // PENDIENTE
+        }
+        /// <summary>
+        /// Chequea si se esta estableciendo un nuevo record en el ejercicio que el
+        /// cliente esta realizando
+        /// </summary>
+        /// <returns></returns>
+        public bool EsRecordPersonal(Cliente cliente)
+        { // PENDIENTE
+            if (cliente.RecordsPersonales is null)
+            {  // No habia records registrados (nuevo usuario tal vez)
+                cliente.RecordsPersonales = new List<Records>();
+                return true;
+            }
+
+            return false;
         }
     }
 }
