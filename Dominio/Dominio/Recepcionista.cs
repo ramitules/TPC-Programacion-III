@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Administrativo : Usuario
+    public class Recepcionista : Gestor
     {
-        public Administrativo(bool esAdmin)
+        public Recepcionista()
         {
-            Rol = esAdmin ? Roles.ADMIN : Roles.ADMINISTRATIVO;
+            this.Rol = new RolUsuario();
+            Rol.IdRol = (int)Roles.RECEPCIONISTA;
         }
     }
 }

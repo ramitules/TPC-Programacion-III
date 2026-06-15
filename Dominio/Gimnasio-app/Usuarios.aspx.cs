@@ -13,22 +13,22 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                if (!IsPostBack)
-                {
-                    List<Cliente> lista = new ClienteNegocio().ListarClientes();
-                    Session["listaUsuarios"] = lista;
-                    gdvUsuario.DataSource = lista;
-                    gdvUsuario.DataBind();
-                }
+            //try
+            //{
+            //    if (!IsPostBack)
+            //    {
+            //        List<Cliente> lista = new ClienteNegocio().ListarClientes();
+            //        Session["listaUsuarios"] = lista;
+            //        gdvUsuario.DataSource = lista;
+            //        gdvUsuario.DataBind();
+            //    }
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                throw ex;
-            }
+            //    throw ex;
+            //}
         }
     }
 }

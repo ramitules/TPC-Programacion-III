@@ -15,6 +15,7 @@ namespace Dominio
         public Ejercicio()
         {
             IdEjercicio = 0;
+            GrupoMuscular = new GrupoMuscular();
         }
         public int IdEjercicio { get; set; }
         public string NombreEjercicio { get; set; }

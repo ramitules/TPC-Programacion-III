@@ -42,13 +42,28 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/EntrenadorPanel">
+                        <i class="bi bi-people"></i>Entrenador: Panel
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">
                         <i class="bi bi-journal-text"></i>Rutinas
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-white" runat="server" href="~/Usuarios">
-                        <i class="bi bi-journal-text"></i>Usuarios
+                    <a class="nav-link text-white" runat="server" href="~/Clientes">
+                        <i class="bi bi-journal-text"></i>Clientes(Admin)
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/Entrenadores">
+                        <i class="bi bi-journal-text"></i>Entrenadores(Admin)
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="nav-link text-white" runat="server" href="~/Recepcionistas">
+                        <i class="bi bi-journal-text"></i>Recepcionistas(Admin)
                     </a>
                 </li>
                 <li class="nav-item mb-2">
