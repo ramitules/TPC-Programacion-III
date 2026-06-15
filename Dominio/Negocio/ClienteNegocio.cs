@@ -30,7 +30,6 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     cliente.IdUsuario = (int)datos.Lector["IdUsuarios"];
-                    cliente.Rol = Roles.CLIENTE;
                     cliente.Nombre = datos.Lector["Nombre"].ToString();
                     cliente.Apellido = datos.Lector["Apellido"].ToString();
                     cliente.Email = datos.Lector["Email"].ToString();
@@ -82,7 +81,6 @@ namespace Negocio
                     Cliente cliente = new Cliente
                     {
                         IdUsuario = (int)datos.Lector["IdUsuarios"],
-                        Rol = Roles.CLIENTE,
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Apellido = datos.Lector["Apellido"].ToString(),
                         Email = datos.Lector["Email"].ToString(),
