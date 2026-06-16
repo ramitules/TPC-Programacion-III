@@ -18,12 +18,10 @@ namespace Dominio
             this.Rol = new RolUsuario();
             Rol.IdRol = (int)Roles.CLIENTE;
             SuscripcionCliente = null;
-            RutinasCliente = new List<Rutina>();
             RecordsPersonales = new List<Records>();
         }
         public float PesoCorporal { get; set; }
         public Suscripcion SuscripcionCliente { get; set; }
-        public List<Rutina> RutinasCliente { get; set; }
         public List<Records> RecordsPersonales { get; set; }
 
         public List<Plan> elegirPlan() { return new List<Plan>(); }

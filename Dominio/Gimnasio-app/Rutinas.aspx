@@ -89,7 +89,7 @@
                                             <p class="card-text small text-muted mb-2">
                                                 <%# Eval("FechaCreacion", "{0:dd/MM/yyyy}") %>
                                             </p>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                            <a href='DetalleRutina.aspx?id=<%# Eval("IdRutina") %>' class="btn btn-sm btn-outline-secondary">Ver</a>
                                         </div>
                                     </div>
                                 </ItemTemplate>
@@ -118,7 +118,7 @@
                                             <p class="card-text small text-muted mb-2">
                                                 <%# Eval("FechaCreacion", "{0:dd/MM/yyyy}") %>
                                             </p>
-                                            <a href="#" class="btn btn-sm btn-outline-secondary">Ver</a>
+                                            <a href='DetalleRutina.aspx?id=<%# Eval("IdRutina") %>' class="btn btn-sm btn-outline-secondary">Ver</a>
                                         </div>
                                     </div>
                                 </ItemTemplate>

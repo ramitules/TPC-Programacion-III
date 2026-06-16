@@ -118,6 +118,7 @@
     <Content Include="Recepcionistas.aspx" />
     <Content Include="Socios.aspx" />
     <Content Include="Rutinas.aspx" />
+    <Content Include="DetalleRutina.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -332,6 +333,13 @@
     </Compile>
     <Compile Include="Rutinas.aspx.designer.cs">
       <DependentUpon>Rutinas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleRutina.aspx.cs">
+      <DependentUpon>DetalleRutina.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleRutina.aspx.designer.cs">
+      <DependentUpon>DetalleRutina.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
