@@ -29,9 +29,9 @@ namespace Negocio
                 {
                     Ejercicio ejercicio = new Ejercicio();
 
-                    ejercicio.IdEjercicio = (int)datos.Lector["IdEjercicios"];
+                    ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicios"].ToString());
                     ejercicio.NombreEjercicio = datos.Lector["NombreEjercicio"].ToString();
-                    ejercicio.GrupoMuscular.IdGrupoMuscular = (int)datos.Lector["IdGrupoMuscular"];
+                    ejercicio.GrupoMuscular.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
                     ejercicio.GrupoMuscular.NombreGrupoMuscular = datos.Lector["NombreGM"].ToString();
 
                     listaEjercicios.Add(ejercicio);
