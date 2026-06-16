@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Panel de Entrenador" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EntrenadorPanel.aspx.cs" Inherits="Gimnasio_app._Default" %>
+﻿<%@ Page Title="Panel de Entrenador" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PanelEntrenador.aspx.cs" Inherits="Gimnasio_app.PanelEntrenador" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="card shadow-sm mb-4">
-                <di class="card-body">
+                <div class="card-body">
                     <h5 class="card-title">Buscar Cliente</h5>
                     <div class="input-group">
                         <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" 
@@ -32,6 +32,7 @@
                         <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary" 
                             Text="Buscar" />
                     </div>
+                </div>
             </div>
         </section>
 

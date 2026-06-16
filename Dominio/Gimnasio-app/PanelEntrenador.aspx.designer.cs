@@ -11,7 +11,7 @@ namespace Gimnasio_app
 {
 
 
-    public partial class _Default
+    public partial class PanelEntrenador
     {
 
         /// <summary>

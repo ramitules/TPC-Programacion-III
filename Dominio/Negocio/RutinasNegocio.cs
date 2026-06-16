@@ -2,6 +2,7 @@ using AccesoDB;
 using Dominio;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -133,6 +134,63 @@ namespace Negocio
             }
             return rutina;
         }
+
+        public int CrearRutinaGeneral(string nombre, List<RutinaEjercicio> ejercicios)
+        {
+            AccesoADatos datos = new AccesoADatos();
+            int idRutina = 0;
+
+            string excepcion = "Ocurrio un error al guardar la rutina completa;\n\n (RutinasNegocio.CrearRutinaGeneral()): ";
+
+            try
+            {
+                // Primero guardo en la tabla rutina y capturo el Id generado.
+                
+                datos.SetearConsulta(("INSERT INTO Rutinas (Nombre, FechaCreacion, Dia, Activo) OUTPUT INSERTED.IdRutinas VALUES (@Nombre, GETDATE(), NULL, 1)"));
+                datos.setearParametro("@Nombre", nombre);
+                idRutina = datos.EjecutarScalar();
+
+                if (ejercicios != null)
+                { 
+                    foreach (RutinaEjercicio re in ejercicios)
+                    {
+                        AccesoADatos datosEjercicios = new AccesoADatos();
+
+                        //Agrego solo el finally para asegurar el cierre de conexion.
+
+                        try
+                        {
+                            datosEjercicios.SetearConsulta("INSERT INTO RutinaEjercicios (IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio) VALUES (@IdEjercicio, @IdRutina, @ObjetivoKG, @ObjetivoSeries, @ObjetivoRepeticiones, @Orden)");
+
+                            datosEjercicios.setearParametro("@IdEjercicio", re.Ejercicio.IdEjercicio);
+                            datosEjercicios.setearParametro("@IdRutina", idRutina);
+                            datosEjercicios.setearParametro("@ObjetivoKG", re.ObjetivoKG);
+                            datosEjercicios.setearParametro("@ObjetivoSeries", re.ObjetivoSeries);
+                            datosEjercicios.setearParametro("@ObjetivoRepeticiones", re.ObjetivoRepeticiones);
+                            datosEjercicios.setearParametro("@Orden", re.OrdenEjercicio);
+
+                            datosEjercicios.ejecutarAccion();
+                        }
+                        finally
+                        {
+                            datosEjercicios.cerrarConexion
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return idRutina;
+        }
+
         public List<DiaRutina> AgruparPorDia(List<Rutina> rutinas)
         {
             string[] dias = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
