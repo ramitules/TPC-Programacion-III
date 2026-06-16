@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-2">
                     <label class="form-label">Repeticiones</label>
-                    <asp:TextBox ID="txtReps" runat="server" CssClass="form-control" TextMode="Number" Text="10" />
+                    <asp:TextBox ID="txtRepeticiones" runat="server" CssClass="form-control" TextMode="Number" Text="10" />
                 </div>
                 <div class="col-md-2">
                     <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary w-100" Text="Agregar" OnClick="btnAgregar_Click" />

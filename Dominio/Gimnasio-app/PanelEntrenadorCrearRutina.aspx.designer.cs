@@ -51,13 +51,13 @@ namespace Gimnasio_app
         protected global::System.Web.UI.WebControls.TextBox txtSeries;
 
         /// <summary>
-        /// Control txtReps.
+        /// Control txtRepeticiones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtReps;
+        protected global::System.Web.UI.WebControls.TextBox txtRepeticiones;
 
         /// <summary>
         /// Control btnAgregar.
