@@ -27,7 +27,7 @@ namespace Gimnasio_app
             {
                 Cliente cliente = (Cliente)Session["cliente"];
                 RutinasNegocio negocio = new RutinasNegocio();
-                rptPropias.DataSource = negocio.AgruparPorDia(negocio.GetRutinasUsuario(cliente.IdUsuario.ToString()));
+                rptPropias.DataSource = negocio.AgruparPorDia(negocio.GetRutinasUsuario(cliente));
                 rptPropias.DataBind();
 
                 rptGenerales.DataSource = negocio.AgruparPorDia(negocio.GetRutinasGenerales());
