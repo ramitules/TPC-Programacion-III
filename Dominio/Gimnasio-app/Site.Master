@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li class="nav-item mb-2">
-                    <a class="nav-link text-white" runat="server" href="~/EntrenadorPanel">
+                    <a class="nav-link text-white" runat="server" href="~/PanelEntrenador">
                         <i class="bi bi-people"></i>Entrenador: Panel
                     </a>
                 </li>

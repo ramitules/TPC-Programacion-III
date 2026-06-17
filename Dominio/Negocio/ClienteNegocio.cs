@@ -41,7 +41,6 @@ namespace Negocio
                     if (full)
                     {
                         cliente.SuscripcionCliente = new SuscripcionNegocio().GetSuscripcionCliente(id, EstadoSuscripcion.ACTIVA);
-                        cliente.RutinasCliente = new RutinasNegocio().GetRutinasUsuario(id);
                         cliente.RecordsPersonales = new RecordsNegocio().GetRecordsUsuario(id);
                     }
 
