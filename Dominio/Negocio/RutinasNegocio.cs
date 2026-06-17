@@ -199,7 +199,7 @@ namespace Negocio
         /// </summary>
         public List<RutinaEjercicio> GetEjerciciosDeRutina(string idRutina)
         {
-            string Excepcion = "Ocurrio un error al obtener los ejercicios de la rutina (RutinasNegocio.GetEjerciciosDeRutina())\n";
+            string excepcion = "Ocurrio un error al obtener los ejercicios de la rutina (RutinasNegocio.GetEjerciciosDeRutina())\n";
 
             AccesoADatos datos = new AccesoADatos();
             List<RutinaEjercicio> ejercicios = new List<RutinaEjercicio>();
@@ -235,7 +235,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(excepcion + ex.ToString());
             }
             finally
             {
@@ -265,6 +265,29 @@ namespace Negocio
             });
 
             return resultado;
+        }
+
+        public void EliminarRutina(int idRutina)
+        {
+            AccesoADatos Datos = new AccesoADatos();
+
+            string excepcion = "Ocurrio un error al desactivar la rutina\n\n(RutinasNegocio.EliminarRutina()): ";
+
+            try
+            {
+                Datos.SetearConsulta("UPDATE Rutinas SET Activo = 0 WHERE IdRutinas = @Id");
+                Datos.setearParametro("@Id", idRutina);
+                Datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(excepcion + ex.ToString());
+                    
+            }
+            finally
+            {
+
+            }
         }
 
     }
