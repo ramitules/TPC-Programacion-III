@@ -20,5 +20,18 @@ namespace Gimnasio_app
                 gvRutinas.DataBind();
             }
         }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            GridViewRow row = (GridViewRow)btn.NamingContainer; //capturo fila
+            int idRutina = int.Parse(gvRutinas.DataKeys[row.RowIndex].Value.ToString());
+
+            RutinasNegocio negocio = new RutinasNegocio();
+            negocio.EliminarRutina(idRutina);
+
+            gvRutinas.DataSource = negocio.GetRutinasGenerales();
+            gvRutinas.DataBind();
+        }
     }
 }
