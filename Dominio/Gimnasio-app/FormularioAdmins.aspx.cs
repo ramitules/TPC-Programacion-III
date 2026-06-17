@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace Gimnasio_app
 {
     public partial class FormularioAdmins : System.Web.UI.Page

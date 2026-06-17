@@ -10,7 +10,7 @@
                 <p class="text-muted mb-0">Listado general, búsqueda y gestión de estados de admins.</p>
             </div>
             <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary shadow-sm" Text="Registrar Nuevo Admin" OnClick="btnRegistrar_Click"/>
+                <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary shadow-sm" Text="Registrar Nuevo Admin" OnClick="btnRegistrar_Click" />
             </div>
         </div>
 
@@ -22,7 +22,7 @@
                             <span class="input-group-text bg-white text-muted">
                                 <i class="bi bi-search"></i>
                             </span>
-                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre, Apellido o DNI..." />
+                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre y/o Apellido" OnTextChanged="txtBuscar_TextChanged" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -46,55 +46,60 @@
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <asp:GridView ID="dgvAdmins" runat="server" AutoGenerateColumns="false"
+                            CssClass="table table-hover align-middle mb-0"
+                            HeaderStyle-CssClass="table-primary text-white"
+                            GridLines="None">
 
-                <asp:GridView ID="dgvAdmins" runat="server" AutoGenerateColumns="false"
-                    CssClass="table table-hover align-middle mb-0"
-                    HeaderStyle-CssClass="table-primary text-white"
-                    GridLines="None">
+                            <Columns>
 
-                    <Columns>
+                                <%-- Columna ID --%>
+                                <asp:BoundField DataField="IdUsuario" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
 
-                        <%-- Columna ID --%>
-                        <asp:BoundField DataField="IdUsuario" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
+                                <%-- Columna Nombre --%>
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
 
-                        <%-- Columna Nombre --%>
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                                <%-- Columna Apellido --%>
+                                <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
 
-                        <%-- Columna Apellido --%>
-                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                                <%-- Columna Email --%>
+                                <asp:BoundField DataField="Email" HeaderText="Email" />
 
-                        <%-- Columna Email --%>
-                        <asp:BoundField DataField="Email" HeaderText="Email" />
+                                <%-- Columna Fecha de nacimiento --%>
+                                <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de Nacimiento" />
 
-                        <%-- Columna Fecha de nacimiento --%>
-                        <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de Nacimiento" />
+                                <%-- Columna Rol --%>
+                                <asp:BoundField DataField="Rol.RolDescripcion" HeaderText="Nombre Rol" />
 
-                        <%-- Columna Rol --%>
-                        <asp:BoundField DataField="Rol.RolDescripcion" HeaderText="Nombre Rol" />
+                                <%-- Columna Fecha de ingresp --%>
+                                <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" />
 
-                        <%-- Columna Fecha de ingresp --%>
-                        <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" />
+                                <%-- Columna Estado (Podés meter lógica en el code-behind para el look) --%>
+                                <asp:TemplateField HeaderText="Activo" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <span class="badge <%# Convert.ToBoolean(Eval("Activo")) ? "bg-success" : "bg-danger" %>">
+                                            <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
+                                        </span>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
 
-                        <%-- Columna Estado (Podés meter lógica en el code-behind para el look) --%>
-                        <asp:TemplateField HeaderText="Activo" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
-                            <ItemTemplate>
-                                <span class="badge <%# Convert.ToBoolean(Eval("Activo")) ? "bg-success" : "bg-danger" %>">
-                                    <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
-                                </span>
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                                <%-- Columna Acciones (Última columna con el botón de Bootstrap) --%>
+                                <asp:TemplateField HeaderText="Acciones" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                                    <ItemTemplate>
+                                        <a href='FormularioAdmins.aspx?id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                                            <i class="bi bi-pencil-square me-1"></i>Ver Detalle
+                                        </a>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
+                    </ContentTemplate>
+                    
+                </asp:UpdatePanel>
 
-                        <%-- Columna Acciones (Última columna con el botón de Bootstrap) --%>
-                        <asp:TemplateField HeaderText="Acciones" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
-                            <ItemTemplate>
-                                <a href='FormularioAdmins.aspx?id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
-                                    <i class="bi bi-pencil-square me-1"></i>Ver Detalle
-                                </a>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
             </div>
-        </div>
+    </div>
     </div>
 </asp:Content>
