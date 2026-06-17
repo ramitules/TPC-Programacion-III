@@ -67,6 +67,24 @@ namespace Gimnasio_app
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            string nombre = txtNombre.Text.Trim();
+
+            if (string.IsNullOrEmpty(nombre)) return; //validacion minima por ahora
+            if (Session["EjerciciosRutina"] == null) return;
+
+            List<RutinaEjercicio> ejercicios = (List<RutinaEjercicio>)Session["EjerciciosRutina"];
+            if (ejercicios.Count == 0) return;
+
+            RutinasNegocio rutinasNegocio = new RutinasNegocio();
+            rutinasNegocio.CrearRutinaGeneral(nombre, ejercicios);
+
+            lblAgregar.Text = "Rutina guardada OK";
+            lblAgregar.Visible = true;
+
+            Session["EjerciciosRutina"] = null;
+            txtNombre.Text = "";
+            gvEjercicios.DataSource = null;
+            gvEjercicios.DataBind();
 
         }
 

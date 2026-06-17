@@ -34,6 +34,7 @@
                 </div>
                 <div class="col-md-2">
                     <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary w-100" Text="Agregar" OnClick="btnAgregar_Click" />
+                    <asp:Label ID="lblAgregar" runat="server" CssClass="text-success fw-bold" Visible="false" />
                 </div>
             </div>
         </div>
