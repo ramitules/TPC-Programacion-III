@@ -178,8 +178,11 @@ namespace Negocio
             AccesoADatos datos = new AccesoADatos();
             try
             {
+                datos.SetearConsultaSP("sp_EliminarCliente");
+                datos.setearParametro("@IdUsuario", cliente.IdUsuario);
+                datos.ejecutarAccion();
+
                 cliente.Activo = false;
-                AltaOModificacion(cliente, datos, "");
             }
             catch (Exception ex)
             {

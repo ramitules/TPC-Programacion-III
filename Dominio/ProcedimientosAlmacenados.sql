@@ -201,6 +201,20 @@ BEGIN
 END
 GO
 
+-- Eliminar cliente (baja logica del usuario + borrado de sus dependencias)
+CREATE PROCEDURE sp_EliminarCliente (
+	@IdUsuario INTEGER
+)
+AS
+BEGIN
+	UPDATE Usuarios SET Activo = 0 WHERE IdUsuarios = @IdUsuario;
+	DELETE FROM SeriesCompletadas WHERE IdSesion IN (SELECT IdSesionesEntrenamiento FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario);
+	DELETE FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario;
+	DELETE FROM RutinaEjercicios WHERE IdRutina IN (SELECT IdRutinas FROM Rutinas WHERE IdUsuario = @IdUsuario);
+	DELETE FROM Rutinas WHERE IdUsuario = @IdUsuario;
+END
+GO
+
 -- Crear suscripcion
 CREATE PROCEDURE sp_CrearSuscripcion (
 	@IdUsuario INT,
