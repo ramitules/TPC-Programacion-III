@@ -183,18 +183,20 @@ CREATE PROCEDURE sp_ModificarUsuario (
 	@PesoCorporal DECIMAL(5, 2),
 	@IdRol TINYINT,
 	@FechaIngreso DATETIME,
-	@IdUsuario INT
+	@IdUsuario INT,
+	@Activo BIT = 1
 )
 AS
 BEGIN
 	UPDATE Usuarios SET
-		Nombre = @Nombre, 
-		Apellido = @Apellido, 
-		Email = @Email, 
+		Nombre = @Nombre,
+		Apellido = @Apellido,
+		Email = @Email,
 		FechaNacimiento = @FechaNacimiento,
-		PesoCorporalKG = @PesoCorporal, 
-		IdRol = @IdRol, 
-		FechaIngreso = @FechaIngreso
+		PesoCorporalKG = @PesoCorporal,
+		IdRol = @IdRol,
+		FechaIngreso = @FechaIngreso,
+		Activo = @Activo
 	WHERE IdUsuarios = @IdUsuario
 END
 GO
