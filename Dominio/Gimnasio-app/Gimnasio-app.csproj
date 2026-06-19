@@ -110,6 +110,7 @@
     <Content Include="Planes.aspx" />
     <Content Include="Records.aspx" />
     <Content Include="FormularioAdmins.aspx" />
+    <Content Include="RegistrarUsuario.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Entrenadores.aspx" />
     <Content Include="Recepcionistas.aspx" />
@@ -241,6 +242,13 @@
     </Compile>
     <Compile Include="FormularioAdmins.aspx.designer.cs">
       <DependentUpon>FormularioAdmins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarUsuario.aspx.cs">
+      <DependentUpon>RegistrarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistrarUsuario.aspx.designer.cs">
+      <DependentUpon>RegistrarUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="HistorialDeEntrenamiento.aspx.cs">
       <DependentUpon>HistorialDeEntrenamiento.aspx</DependentUpon>

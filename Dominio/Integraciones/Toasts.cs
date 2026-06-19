@@ -6,7 +6,7 @@ namespace Integraciones
 {
     /// <summary>
     /// Clase para mostrar toasts al momento de generarse un problema, modificar, o guardar algo de forma exitosa.
-    /// Sirve como reemplazo a Console.WriteLine()
+    /// Sirve como reemplazo a Console.WriteLine() y alert
     /// </summary>
     public static class Toasts
     {
