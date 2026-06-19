@@ -103,6 +103,24 @@ namespace Gimnasio_app
         {
             SetReadOnly();
         }
+
+        protected void btnDarDeBaja_click(object sender, EventArgs e)
+        {
+            if (Session["cliente"] == null) return;
+            Cliente cliente = (Cliente)Session["cliente"];
+            try
+            {
+                new ClienteNegocio().DarBaja(cliente);
+                Session.Clear();
+                Toasts.MostrarToast(this, "Tu cuenta ha sido dada de baja.", "success", "Hasta pronto");
+                Response.Redirect("Default", false);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error", false);
+            }
+        }
         
         protected void CambioTab(object sender, EventArgs e)
         {

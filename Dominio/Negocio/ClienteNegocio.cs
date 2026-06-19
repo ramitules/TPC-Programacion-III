@@ -170,6 +170,26 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void DarBaja(Cliente cliente)
+        {
+            string Excepcion = "Ocurrio un error al dar de baja al cliente (ClienteNegocio.DarBaja())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                cliente.Activo = false;
+                AltaOModificacion(cliente, datos, "");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
         public void SetRecordPersonal(Ejercicio ejercicio, Cliente cliente)
         {
             Records record = new Records();

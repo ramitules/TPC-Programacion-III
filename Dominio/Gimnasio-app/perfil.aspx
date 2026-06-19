@@ -59,6 +59,10 @@
                         <asp:Button ID="btnCancelarDatos" OnClick="btnCancelarDatos_click" Text="Cancelar" CssClass="btn btn-outline-warning" runat="server" />
                         <%} %>
                     </div>
+                    <div class="mb-3 mt-4">
+                        <asp:Button ID="btnDarDeBaja" OnClick="btnDarDeBaja_click" Text="Dar de baja mi cuenta" CssClass="btn btn-outline-danger" runat="server"
+                            OnClientClick="return confirm('¿Estas seguro que deseas dar de baja tu cuenta? Esta accion no se puede deshacer.');" />
+                    </div>
 
                 </div>
             </div>
