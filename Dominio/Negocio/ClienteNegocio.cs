@@ -106,36 +106,41 @@ namespace Negocio
 
             return lista;
         }
-        private void AltaOModificacion(Cliente cliente, AccesoADatos datos)
+        private void AltaOModificacion(Cliente cliente, AccesoADatos datos, string pass)
         {
             // Creacion
             if (cliente.IdUsuario == 0)
+            {
                 datos.SetearConsultaSP("sp_CrearUsuario");
+                datos.setearParametro("@PesoCorporalKG", cliente.PesoCorporal);
+            }
             // Modificacion
             else
             {
                 datos.SetearConsultaSP("sp_ModificarUsuario");
                 datos.setearParametro("@IdUsuario", cliente.IdUsuario);
+                datos.setearParametro("@PesoCorporal", cliente.PesoCorporal);
+                datos.setearParametro("@Activo", cliente.Activo);
             }
 
             datos.setearParametro("@Nombre", cliente.Nombre);
             datos.setearParametro("@Apellido", cliente.Apellido);
             datos.setearParametro("@Email", cliente.Email);
             datos.setearParametro("@FechaNacimiento", cliente.FechaNacimiento);
-            datos.setearParametro("@PesoCorporal", cliente.PesoCorporal);
-            datos.setearParametro("@IdRol", cliente.Rol);
+            datos.setearParametro("@IdRol", cliente.Rol.IdRol);
             datos.setearParametro("@FechaIngreso", cliente.FechaIngreso);
+            datos.setearParametro("@Pass", pass);
 
             datos.ejecutarAccion();
         }
-        public void Agregar(Cliente nuevo)
+        public void Agregar(Cliente nuevo, string pass)
         {
             string Excepcion = "Ocurrio un error al agregar un cliente (ClienteNegocio.Agregar())\n";
 
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                AltaOModificacion(nuevo, datos);
+                AltaOModificacion(nuevo, datos, pass);
             }
             catch (Exception ex)
             {
@@ -154,7 +159,7 @@ namespace Negocio
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                AltaOModificacion(existente, datos);
+                AltaOModificacion(existente, datos, "");
             }
             catch (Exception ex)
             {

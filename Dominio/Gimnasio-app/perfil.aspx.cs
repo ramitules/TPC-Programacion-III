@@ -136,18 +136,18 @@ namespace Gimnasio_app
                 btnCambiarPlan.Text = "Cambiar plan";
             }
         }
-        
         protected void btnRenovarPlan_click(object sender, EventArgs e)
         {   // Asume que ya se puede renovar el plan (ver Page_Load())
-            CrearPlan();
-
-            Toasts.MostrarToast(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
+            if (CrearPlan())
+                Toasts.MostrarToast(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
 
             btnRenovarPlan.Enabled = false;
         }
-        protected void CrearPlan()
+        protected bool CrearPlan()
         {
-            if (Session["cliente"] == null) return;
+            if (Session["cliente"] == null) 
+                return false;
+
             Cliente cliente = (Cliente)Session["cliente"];
             SuscripcionNegocio negocio = new SuscripcionNegocio();
 
@@ -155,8 +155,7 @@ namespace Gimnasio_app
             if (negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE).IdSuscripcion != 0)
             {
                 Toasts.MostrarToast(this, "Ya tiene otro plan pendiente de activacion. Espere a que se venza o cancele su plan actual para suscribirse a uno nuevo", "error", "Exito");
-
-                return;
+                return false;
             }
 
             // Al cambiar de plan, se crea una nueva suscripcion
@@ -174,6 +173,7 @@ namespace Gimnasio_app
             suscripcionNueva.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
 
             negocio.Agregar(suscripcionNueva, cliente);
+            return true;
         }
         protected void btnCancelarSuscripcion_click(object sender, EventArgs e)
         {

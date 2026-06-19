@@ -292,3 +292,20 @@ BEGIN
 	WHERE IdSesionesEntrenamiento = @IdSesion
 END
 GO
+
+-- SERIES COMPLETADAS
+-- Creacion (se inserta una fila por cada serie que el cliente completa durante la sesion)
+CREATE PROCEDURE sp_CrearSerieCompletada (
+	@IdSesion INT,
+	@IdEjercicio INT,
+	@PesoLevantadoKG SMALLINT,
+	@RepeticionesLogradas SMALLINT,
+	@RIR TINYINT,
+	@EsRecordPersonal BIT
+)
+AS
+BEGIN
+	INSERT INTO SeriesCompletadas (IdSesion, IdEjercicio, PesoLevantadoKG, RepeticionesLogradas, RIR, EsRecordPersonal)
+	VALUES (@IdSesion, @IdEjercicio, @PesoLevantadoKG, @RepeticionesLogradas, @RIR, @EsRecordPersonal)
+END
+GO
