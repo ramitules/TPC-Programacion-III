@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AccesoDB;
 
 namespace Integraciones
 {
@@ -41,6 +42,48 @@ namespace Integraciones
                 return false;
             }
             return true;
+        }
+        public static Usuario logueo(string email, string pass) 
+        {
+            Usuario usuario;
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_logueo"); 
+                datos.setearParametro("@email", email);
+                datos.setearParametro("@pass", pass);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    if (Convert.ToInt32(datos.Lector["IdRol"]) == (int)Roles.CLIENTE)
+                    {
+                        usuario = new Cliente();
+                        //aca irian los datos especificos del cliente, como peso corporal, suscripcion, records personales, etc.
+                    }else
+                    {
+                        usuario = new Admin(); //Elegi Admin, pero para el casteo podria ser cualquier tipo de rol distinto a cliente, es solo para poder almacenar los datos en session
+                    }
+                    usuario.IdUsuario = (int)datos.Lector["IdUsuarios"];
+                    usuario.Nombre = (string)datos.Lector["Nombre"];
+                    usuario.Apellido = (string)datos.Lector["Apellido"];
+                    usuario.Email = (string)datos.Lector["Email"];
+                    usuario.Rol.IdRol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    usuario.Rol.RolDescripcion = (string)datos.Lector["Rol Nombre"];
+                    usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
+                    usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
+                    usuario.Activo = (bool)datos.Lector["Activo"];
+                    return usuario;
+                }
+                else
+                {
+                    return null; // No se encontró un usuario con esas credenciales
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
     }
 }

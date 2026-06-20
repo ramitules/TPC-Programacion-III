@@ -12,6 +12,9 @@
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <asp:TextBox ID="tbxPass" CssClass="form-control" TextMode="Password" runat="server"></asp:TextBox>
         </div>
+        <div>
+            <asp:Label ID="lblError" runat="server" ForeColor="Red" Visible="false">Credenciales incorrectas</asp:Label>
+        </div>
         
         
         <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
