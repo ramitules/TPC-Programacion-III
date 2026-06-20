@@ -28,14 +28,14 @@ namespace Gimnasio_app
                     string.IsNullOrWhiteSpace(txtFechaNacimiento.Text) ||
                     string.IsNullOrWhiteSpace(txtPassword.Text))
                 {
-                    Toasts.MostrarToast(this, "Por favor complete todos los campos.", "warning", "Atencion");
+                    Toasts.ToastAdvertencia(this, "Por favor complete todos los campos.", "Atencion");
                     return;
                 }
 
                 // Validacion de coincidencia de contraseñas
                 if (txtPassword.Text != txtConfirmarPassword.Text)
                 {
-                    Toasts.MostrarToast(this, "Las contraseñas no coinciden.", "error", "Error");
+                    Toasts.ToastError(this, "Las contraseñas no coinciden.");
                     return;
                 }
 
@@ -57,7 +57,7 @@ namespace Gimnasio_app
             }
             catch (Exception)
             {
-                Toasts.MostrarToast(this, "Ocurrio un error al crear la cuenta. Intente nuevamente.", "error", "Error");
+                Toasts.ToastError(this, "Ocurrio un error al crear la cuenta. Intente nuevamente.");
             }
         }
     }

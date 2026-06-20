@@ -87,7 +87,7 @@ namespace Gimnasio_app
 
                     negocio.Modificar(cliente);
 
-                    Toasts.MostrarToast(this, "Se han modificado sus datos personales con exito", "success", "Exito");
+                    Toasts.ToastExito(this, "Se han modificado sus datos personales con exito");
 
                     SetReadOnly();
                 }
@@ -112,8 +112,7 @@ namespace Gimnasio_app
             {
                 new ClienteNegocio().DarBaja(cliente);
                 Session.Clear();
-                Toasts.MostrarToast(this, "Tu cuenta ha sido dada de baja.", "success", "Hasta pronto");
-                Response.Redirect("Default", false);
+                Toasts.ToastInformacion(this, "Tu cuenta ha sido dada de baja.", "Hasta pronto", "Default");
             }
             catch (Exception ex)
             {
@@ -148,7 +147,7 @@ namespace Gimnasio_app
             {
                 CrearPlan();
 
-                Toasts.MostrarToast(this, "Se ha agregado una suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
+                Toasts.ToastExito(this, "Se ha agregado una suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
 
                 ddlPlan.Enabled = false;
                 btnCambiarPlan.Text = "Cambiar plan";
@@ -157,7 +156,7 @@ namespace Gimnasio_app
         protected void btnRenovarPlan_click(object sender, EventArgs e)
         {   // Asume que ya se puede renovar el plan (ver Page_Load())
             if (CrearPlan())
-                Toasts.MostrarToast(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
+                Toasts.ToastExito(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
 
             btnRenovarPlan.Enabled = false;
         }
@@ -172,7 +171,7 @@ namespace Gimnasio_app
             // No se puede crear una suscripcion mas si ya existe una pendiente de activacion
             if (negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE).IdSuscripcion != 0)
             {
-                Toasts.MostrarToast(this, "Ya tiene otro plan pendiente de activacion. Espere a que se venza o cancele su plan actual para suscribirse a uno nuevo", "error", "Exito");
+                Toasts.ToastError(this, "Ya tiene otro plan pendiente de activacion. Espere a que se venza o cancele su plan actual para suscribirse a uno nuevo");
                 return false;
             }
 
@@ -204,7 +203,7 @@ namespace Gimnasio_app
             {
                 suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
                 negocio.Modificar(suscripcionActual, cliente);
-                Toasts.MostrarToast(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "success", "Exito");
+                Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
             }
         }
     }
