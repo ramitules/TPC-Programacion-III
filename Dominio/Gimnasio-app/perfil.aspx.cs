@@ -87,7 +87,7 @@ namespace Gimnasio_app
 
                     negocio.Modificar(cliente);
 
-                    Toasts.MostrarToast(this, "Se han modificado sus datos personales con exito", "success", "Exito");
+                    Toasts.ToastExito(this, "Se han modificado sus datos personales con exito");
 
                     SetReadOnly();
                 }
@@ -102,6 +102,23 @@ namespace Gimnasio_app
         protected void btnCancelarDatos_click(object sender, EventArgs e)
         {
             SetReadOnly();
+        }
+
+        protected void btnDarDeBaja_click(object sender, EventArgs e)
+        {
+            if (Session["cliente"] == null) return;
+            Cliente cliente = (Cliente)Session["cliente"];
+            try
+            {
+                new ClienteNegocio().DarBaja(cliente);
+                Session.Clear();
+                Toasts.ToastInformacion(this, "Tu cuenta ha sido dada de baja.", "Hasta pronto", "Default");
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error", false);
+            }
         }
         
         protected void CambioTab(object sender, EventArgs e)
@@ -130,33 +147,32 @@ namespace Gimnasio_app
             {
                 CrearPlan();
 
-                Toasts.MostrarToast(this, "Se ha agregado una suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
+                Toasts.ToastExito(this, "Se ha agregado una suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
 
                 ddlPlan.Enabled = false;
                 btnCambiarPlan.Text = "Cambiar plan";
             }
         }
-        
         protected void btnRenovarPlan_click(object sender, EventArgs e)
         {   // Asume que ya se puede renovar el plan (ver Page_Load())
-            CrearPlan();
-
-            Toasts.MostrarToast(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.", "success", "Exito");
+            if (CrearPlan())
+                Toasts.ToastExito(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
 
             btnRenovarPlan.Enabled = false;
         }
-        protected void CrearPlan()
+        protected bool CrearPlan()
         {
-            if (Session["cliente"] == null) return;
+            if (Session["cliente"] == null) 
+                return false;
+
             Cliente cliente = (Cliente)Session["cliente"];
             SuscripcionNegocio negocio = new SuscripcionNegocio();
 
             // No se puede crear una suscripcion mas si ya existe una pendiente de activacion
             if (negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE).IdSuscripcion != 0)
             {
-                Toasts.MostrarToast(this, "Ya tiene otro plan pendiente de activacion. Espere a que se venza o cancele su plan actual para suscribirse a uno nuevo", "error", "Exito");
-
-                return;
+                Toasts.ToastError(this, "Ya tiene otro plan pendiente de activacion. Espere a que se venza o cancele su plan actual para suscribirse a uno nuevo");
+                return false;
             }
 
             // Al cambiar de plan, se crea una nueva suscripcion
@@ -174,6 +190,7 @@ namespace Gimnasio_app
             suscripcionNueva.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
 
             negocio.Agregar(suscripcionNueva, cliente);
+            return true;
         }
         protected void btnCancelarSuscripcion_click(object sender, EventArgs e)
         {
@@ -186,7 +203,7 @@ namespace Gimnasio_app
             {
                 suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
                 negocio.Modificar(suscripcionActual, cliente);
-                Toasts.MostrarToast(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "success", "Exito");
+                Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
             }
         }
     }
