@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.ComponentModel.DataAnnotations;
 
 namespace Gimnasio_app
 {
@@ -39,14 +40,45 @@ namespace Gimnasio_app
                     return;
                 }
 
-                ClienteNegocio negocio = new ClienteNegocio();
-                Cliente cliente = new Cliente();
+                // Validación de Email
+                string email = txtEmail.Text.Trim().ToLower();
 
-                cliente.Nombre = txtNombre.Text;
-                cliente.Apellido = txtApellido.Text;
-                cliente.Email = txtEmail.Text;
-                cliente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                cliente.FechaIngreso = DateTime.Now;
+                if (string.IsNullOrWhiteSpace(email) || !new EmailAddressAttribute().IsValid(email))
+                {
+                    Toasts.ToastAdvertencia(this, "Por favor, ingresa un correo electronico valido.");
+                    return;
+                }
+
+                // Validacion fecha de nacimiento (minimo 12 años)
+                DateTime ahora = DateTime.Today;
+
+                if (!DateTime.TryParse(txtFechaNacimiento.Text, out DateTime fechaNacimiento))
+                {
+                    Toasts.ToastAdvertencia(this, "Por favor, ingresa una fecha de nacimiento válida.");
+                    return;
+                }
+
+                DateTime FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+                int edad = ahora.Year - fechaNacimiento.Year;
+
+                if (fechaNacimiento.Date > ahora.AddYears(-edad))
+                    edad--;
+
+                if (edad < 12)
+                {
+                    Toasts.ToastAdvertencia(this, "Fecha de nacimiento inválida. Debes tener mínimo 12 años para entrenar en el gimnasio.");
+                    return;
+                }
+
+                ClienteNegocio negocio = new ClienteNegocio();
+                Cliente cliente = new Cliente
+                {
+                    Nombre = txtNombre.Text,
+                    Apellido = txtApellido.Text,
+                    Email = txtEmail.Text,
+                    FechaNacimiento = FechaNacimiento,
+                    FechaIngreso = ahora
+                };
 
                 negocio.Agregar(cliente, txtPassword.Text);
 
