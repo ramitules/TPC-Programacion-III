@@ -19,7 +19,7 @@ namespace Gimnasio_app
             {
                 if (!IsPostBack)
                 {
-                    if (Session["litaAdmins"] == null)
+                    if (Session["listaAdmins"] == null)
                     {
                         admins = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins");
                         Session.Add("listaAdmins", admins);
@@ -43,6 +43,30 @@ namespace Gimnasio_app
             try
             {
                 Response.Redirect("FormularioAdmins", false);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            List<Usuario> filtrado;
+            try
+            {
+                if (Session["listaAdmins"] != null)
+                {
+                    List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                    filtrado = admins.FindAll(a => a.Nombre.ToLower().Contains(txtBuscar.Text.ToLower()) || a.Apellido.ToLower().Contains(txtBuscar.Text.ToLower()));
+                }
+                else
+                {
+                    filtrado = new List<Usuario>();
+                }
+                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Usuario>();
+                dgvAdmins.DataBind();
             }
             catch (Exception ex)
             {
