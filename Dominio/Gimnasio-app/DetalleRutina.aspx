@@ -9,8 +9,10 @@
                     <asp:Literal ID="litNombre" runat="server" />
                 </h1>
                 <p class="text-muted mt-1 mb-0">
-                    <span class="me-3"><i class="bi bi-calendar-week me-1"></i><asp:Literal ID="litDia" runat="server" /></span>
-                    <span><i class="bi bi-clock-history me-1"></i>Creada el <asp:Literal ID="litFecha" runat="server" /></span>
+                    <span class="me-3"><i class="bi bi-calendar-week me-1"></i>
+                        <asp:Literal ID="litDia" runat="server" /></span>
+                    <span><i class="bi bi-clock-history me-1"></i>Creada el
+                        <asp:Literal ID="litFecha" runat="server" /></span>
                 </p>
             </div>
             <a href="Rutinas.aspx" class="btn btn-outline-secondary btn-sm">

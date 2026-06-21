@@ -76,19 +76,43 @@ namespace Gimnasio_app
                 }
                 else if (btnEditarDatos.Text.ToLower() == "guardar")
                 {
-                    Editando = false;
-                    ClienteNegocio negocio = new ClienteNegocio();
+                    string nombre = txtNombre.Text.Trim();
+                    string apellido = txtApellido.Text.Trim().ToLower();
+                    string email = txtEmail.Text.Trim().ToLower();
+                    string fechaNacimiento = txtNacimiento.Text;
 
-                    cliente.Nombre = txtNombre.Text;
-                    cliente.Apellido = txtApellido.Text;
-                    cliente.Email = txtEmail.Text;
-                    cliente.FechaNacimiento = DateTime.Parse(txtNacimiento.Text);
+                    // Validacion de campos obligatorios
+                    if (!(Validaciones.validarNombre(nombre) || Validaciones.validarNombre(apellido)))
+                    {
+                        Toasts.ToastAdvertencia(this, "Por favor complete todos los campos.", "Atencion");
+                        return;
+                    }
+
+                    // Validación de Email
+                    if (!Validaciones.validarEmail(email))
+                    {
+                        Toasts.ToastAdvertencia(this, "Por favor, ingresa un correo electronico valido.");
+                        return;
+                    }
+
+                    // Validacion fecha de nacimiento (minimo 12 años)
+                    if (!(Validaciones.validarFechaNacimiento(fechaNacimiento, 12)))
+                    {
+                        Toasts.ToastAdvertencia(this, "Fecha de nacimiento inválida. Debes tener mínimo 12 años para entrenar en el gimnasio.");
+                        return;
+                    }
+
+                    cliente.Nombre = nombre;
+                    cliente.Apellido = apellido;
+                    cliente.Email = email;
+                    cliente.FechaNacimiento = DateTime.Parse(fechaNacimiento);
                     cliente.PesoCorporal = float.Parse(txtPeso.Text);
 
-                    negocio.Modificar(cliente);
+                    new ClienteNegocio().Modificar(cliente);
 
                     Toasts.ToastExito(this, "Se han modificado sus datos personales con exito");
 
+                    Editando = false;
                     SetReadOnly();
                 }
             }
@@ -196,15 +220,17 @@ namespace Gimnasio_app
         {
             if (Session["cliente"] == null) return;
             Cliente cliente = (Cliente)Session["cliente"];
-            SuscripcionNegocio negocio = new SuscripcionNegocio();
-            Suscripcion suscripcionActual = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
-            
-            if (suscripcionActual.IdSuscripcion != 0)
+
+            if(new SuscripcionNegocio().BajaSuscripcionCliente(cliente))
             {
-                suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
-                negocio.Modificar(suscripcionActual, cliente);
                 Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
             }
+            else
+            {
+                Toasts.ToastError(this, "Ha ocurrido un error. Por favor intente nuevamente.");
+            }
+            
+
         }
     }
 }

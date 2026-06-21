@@ -162,7 +162,7 @@ namespace Gimnasio_app
 
             if (seriesActuales >= objetivoSeries + 1)
             {
-                Toasts.MostrarToast(this, $"Ya alcanzaste el límite de {objetivoSeries + 1} series para este ejercicio.", "warning", "Límite alcanzado");
+                Toasts.ToastAdvertencia(this, $"Ya alcanzaste el límite de {objetivoSeries + 1} series para este ejercicio.", "Límite alcanzado");
                 CargarModoActivo(id);
                 return;
             }
@@ -181,7 +181,7 @@ namespace Gimnasio_app
 
             new SerieCompletadaNegocio().Agregar(serie);
 
-            Toasts.MostrarToast(this, "Serie registrada con exito. Segui asi!", "info", "Nueva serie");
+            Toasts.ToastInformacion(this, "Serie registrada con exito. Segui asi!", "Nueva serie");
 
             CargarModoActivo(id);
         }
@@ -195,7 +195,7 @@ namespace Gimnasio_app
 
             Session.Remove("sesionActiva");
 
-            Toasts.MostrarToast(this, "Sesion de entrenamiento finalizada", "success", "Finalizada");
+            Toasts.ToastExito(this, "Sesion de entrenamiento finalizada", "Finalizada");
             
             if (!string.IsNullOrEmpty(id))
                 CargarResumen(id);
