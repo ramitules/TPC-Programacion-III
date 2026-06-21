@@ -59,22 +59,22 @@
                                 <asp:BoundField DataField="IdUsuario" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
 
                                 <%-- Columna Nombre --%>
-                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Apellido --%>
-                                <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                                <asp:BoundField DataField="Apellido" HeaderText="Apellido" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Email --%>
-                                <asp:BoundField DataField="Email" HeaderText="Email" />
+                                <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Fecha de nacimiento --%>
-                                <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de Nacimiento" />
+                                <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de Nacimiento" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Rol --%>
-                                <asp:BoundField DataField="Rol.RolDescripcion" HeaderText="Nombre Rol" />
+                                <asp:BoundField DataField="Rol.RolDescripcion" HeaderText="Nombre Rol" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Fecha de ingresp --%>
-                                <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" />
+                                <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
                                 <%-- Columna Estado (Podés meter lógica en el code-behind para el look) --%>
                                 <asp:TemplateField HeaderText="Activo" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">

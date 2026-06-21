@@ -48,8 +48,16 @@ namespace Negocio
                             case "Entrenador":
                                 user = new Entrenador();
                                 break;
-                            case "Recepcionista":
+                            case "Administrativo":
                                 user = new Recepcionista();
+                                break;
+                            case "Cliente":
+                                Cliente cliente = new Cliente();
+                                cliente.SuscripcionCliente = new Suscripcion();
+                                cliente.SuscripcionCliente.IdSuscripcion = Convert.ToInt32(datos.Lector["IdEstado"]);
+                                cliente.SuscripcionCliente.Estado = (EstadoSuscripcion)(Convert.ToInt32(datos.Lector["IdEstado"]));
+                                cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
+                                user = cliente;
                                 break;
                             default:
                                 throw new Exception("Un problema al captar tipo de rol - AdminNegocio/ObtenerAdmins " + (string)datos.Lector["Rol"]);
@@ -69,7 +77,8 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocurrio un problema al traer los admins de base de datos - AdminNegocio/ObtenerAdmins");
+                throw;
+                //throw new Exception("Ocurrio un problema al traer los admins de base de datos - AdminNegocio/ObtenerAdmins");
             }
             return listaUsuario;
         }  // Funcion que ya esta ok. Trae todo sim problemas

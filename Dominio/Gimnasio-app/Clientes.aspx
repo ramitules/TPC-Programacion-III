@@ -38,68 +38,7 @@
                 </div>
             </div>
         </div>
-        <%-- Modo Ejemplo ejemplo --%>
-        <div class="card shadow-sm">
-            <div class="card-body p-0">
-                <div class="table-responsive">
 
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-primary text-white">
-                            <tr>
-                                <th scope="col" class="ps-3">ID</th>
-                                <th scope="col">Nombre y Apellido</th>
-                                <th scope="col">DNI</th>
-                                <th scope="col">Suscripción</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col" class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="ps-3 fw-bold">1024</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-light rounded-circle p-2 me-3 text-primary">
-                                            <i class="bi bi-person-circle fs-5"></i>
-                                        </div>
-                                        <span>Juan Pérez</span>
-                                    </div>
-                                </td>
-                                <td>38.123.456</td>
-                                <td><span class="badge bg-info text-dark">Pase Libre Mensual</span></td>
-                                <td><span class="badge bg-success">Activo</span></td>
-                                <td class="text-center">
-                                    <a href="FormularioCliente.aspx?id=1024" class="btn btn-outline-primary btn-sm px-3 shadow-sm">
-                                        <i class="bi bi-pencil-square me-1"></i>Ver Detalle
-                                    </a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="ps-3 fw-bold">1025</td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div class="bg-light rounded-circle p-2 me-3 text-secondary">
-                                            <i class="bi bi-person-circle fs-5"></i>
-                                        </div>
-                                        <span class="text-muted">María Rodríguez</span>
-                                    </div>
-                                </td>
-                                <td>40.987.654</td>
-                                <td><span class="badge bg-light text-muted">Ninguno</span></td>
-                                <td><span class="badge bg-danger">Inactivo</span></td>
-                                <td class="text-center">
-                                    <a href="FormularioCliente.aspx?id=1025" class="btn btn-outline-primary btn-sm px-3 shadow-sm">
-                                        <i class="bi bi-pencil-square me-1"></i>Ver Detalle
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <%-- Hasta aca llega el ejemplo --%>
     </div>
     <%-- El GridView deberia verse igual que el codigo de arriba (falta probar trayendo los datos de la base de datos) --%>
     <div class="card shadow-sm">
@@ -114,21 +53,51 @@
                     <Columns>
 
                         <%-- Columna ID --%>
-                        <asp:BoundField DataField="Id" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
+                        <asp:BoundField DataField="IdUsuario" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
 
-                        <%-- Columna Nombre y Apellido --%>
-                        <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre y Apellido" />
+                        <%-- Columna Nombre --%>
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
-                        <%-- Columna DNI --%>
-                        <asp:BoundField DataField="Dni" HeaderText="DNI" />
+                        <%-- Columna Apellido --%>
+                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
 
-                        <%-- Columna Estado (Podés meter lógica en el code-behind para el look) --%>
-                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                        <%-- Columna Email --%>
+                        <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+
+                        <%-- Columna Fecha de nacimientp --%>
+                        <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de nacimiento" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+
+                        <%-- Columna Fecha de ingreso --%>
+                        <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+
+                        <%-- Columna Peso corporal --%>
+                        <asp:BoundField DataField="PesoCorporal" HeaderText="Peso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
+
+                        <%-- Columna Estado Suscripcion --%>
+                        <asp:TemplateField HeaderText="Suscripción" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                            <ItemTemplate>
+                                <%# ObtenerBadgeEstado(Eval("SuscripcionCliente.Estado")) %>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <%-- Columna Estado --%>
+                        <asp:TemplateField HeaderText="Activo" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
+                            <ItemTemplate>
+                                <span class="badge <%# Convert.ToBoolean(Eval("Activo")) ? "bg-success" : "bg-danger" %>">
+                                    <%# Convert.ToBoolean(Eval("Activo")) ? "Activo" : "Inactivo" %>
+                                </span>
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
 
                         <%-- Columna Acciones (Última columna con el botón de Bootstrap) --%>
                         <asp:TemplateField HeaderText="Acciones" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
                             <ItemTemplate>
-                                <a href='FormularioCliente.aspx?id=<%# Eval("Id") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                                <a href='RegistrarUsuario.aspx?id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                                    <%if (true)
+                                        {
+
+                                        } %>
                                     <i class="bi bi-pencil-square me-1"></i>Ver Detalle
                                 </a>
                             </ItemTemplate>
