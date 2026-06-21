@@ -29,13 +29,13 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    cliente.IdUsuario = (int)datos.Lector["IdUsuarios"];
+                    cliente.IdUsuario = int.Parse(datos.Lector["IdUsuarios"].ToString());
                     cliente.Nombre = datos.Lector["Nombre"].ToString();
                     cliente.Apellido = datos.Lector["Apellido"].ToString();
                     cliente.Email = datos.Lector["Email"].ToString();
-                    cliente.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
-                    cliente.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
-                    cliente.Activo = (bool)datos.Lector["Activo"];
+                    cliente.FechaNacimiento = DateTime.Parse(datos.Lector["FechaNacimiento"].ToString());
+                    cliente.FechaIngreso = DateTime.Parse(datos.Lector["FechaIngreso"].ToString());
+                    cliente.Activo = bool.Parse(datos.Lector["Activo"].ToString());
                     cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
 
                     if (full)
@@ -79,14 +79,14 @@ namespace Negocio
                 {
                     Cliente cliente = new Cliente
                     {
-                        IdUsuario = (int)datos.Lector["IdUsuarios"],
+                        IdUsuario = int.Parse(datos.Lector["IdUsuarios"].ToString()),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Apellido = datos.Lector["Apellido"].ToString(),
                         Email = datos.Lector["Email"].ToString(),
-                        FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"],
-                        FechaIngreso = (DateTime)datos.Lector["FechaIngreso"],
-                        Activo = (bool)datos.Lector["Activo"],
-                        PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
+                        FechaNacimiento = DateTime.Parse(datos.Lector["FechaNacimiento"].ToString()),
+                        FechaIngreso = DateTime.Parse(datos.Lector["FechaIngreso"].ToString()),
+                        Activo = bool.Parse(datos.Lector["Activo"].ToString()),
+                        PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString())
                     };
 
                     lista.Add(cliente);
