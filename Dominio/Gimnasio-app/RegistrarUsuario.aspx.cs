@@ -22,49 +22,35 @@ namespace Gimnasio_app
         {
             try
             {
+                string nombre = txtNombre.Text.Trim();
+                string apellido = txtApellido.Text.Trim().ToLower();
+                string email = txtEmail.Text.Trim().ToLower();
+                string fechaNacimiento = txtFechaNacimiento.Text;
+                string contrasenia = txtPassword.Text;
+
                 // Validacion de campos obligatorios
-                if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                    string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                    string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                    string.IsNullOrWhiteSpace(txtFechaNacimiento.Text) ||
-                    string.IsNullOrWhiteSpace(txtPassword.Text))
+                if (!(Validaciones.validarNombre(nombre) || Validaciones.validarNombre(apellido)))
                 {
                     Toasts.ToastAdvertencia(this, "Por favor complete todos los campos.", "Atencion");
                     return;
                 }
 
                 // Validacion de coincidencia de contraseñas
-                if (txtPassword.Text != txtConfirmarPassword.Text)
+                if (!(Validaciones.validarContrasenias(contrasenia, txtConfirmarPassword.Text)))
                 {
                     Toasts.ToastError(this, "Las contraseñas no coinciden.");
                     return;
                 }
 
                 // Validación de Email
-                string email = txtEmail.Text.Trim().ToLower();
-
-                if (string.IsNullOrWhiteSpace(email) || !new EmailAddressAttribute().IsValid(email))
+                if (!Validaciones.validarEmail(email))
                 {
                     Toasts.ToastAdvertencia(this, "Por favor, ingresa un correo electronico valido.");
                     return;
                 }
 
                 // Validacion fecha de nacimiento (minimo 12 años)
-                DateTime ahora = DateTime.Today;
-
-                if (!DateTime.TryParse(txtFechaNacimiento.Text, out DateTime fechaNacimiento))
-                {
-                    Toasts.ToastAdvertencia(this, "Por favor, ingresa una fecha de nacimiento válida.");
-                    return;
-                }
-
-                DateTime FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-                int edad = ahora.Year - fechaNacimiento.Year;
-
-                if (fechaNacimiento.Date > ahora.AddYears(-edad))
-                    edad--;
-
-                if (edad < 12)
+                if (!(Validaciones.validarFechaNacimiento(fechaNacimiento, 12)))
                 {
                     Toasts.ToastAdvertencia(this, "Fecha de nacimiento inválida. Debes tener mínimo 12 años para entrenar en el gimnasio.");
                     return;
@@ -76,8 +62,8 @@ namespace Gimnasio_app
                     Nombre = txtNombre.Text,
                     Apellido = txtApellido.Text,
                     Email = txtEmail.Text,
-                    FechaNacimiento = FechaNacimiento,
-                    FechaIngreso = ahora
+                    FechaNacimiento = DateTime.Parse(fechaNacimiento),
+                    FechaIngreso = DateTime.Now
                 };
 
                 negocio.Agregar(cliente, txtPassword.Text);

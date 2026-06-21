@@ -204,7 +204,6 @@ namespace Negocio
         /// Chequea si se esta estableciendo un nuevo record en el ejercicio que el
         /// cliente esta realizando
         /// </summary>
-        /// <returns></returns>
         public bool EsRecordPersonal(Cliente cliente)
         { // PENDIENTE
             if (cliente.RecordsPersonales is null)
