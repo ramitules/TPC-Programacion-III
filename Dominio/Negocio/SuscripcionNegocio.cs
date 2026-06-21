@@ -110,5 +110,26 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public bool BajaSuscripcionCliente(Cliente cliente)
+        {
+            SuscripcionNegocio negocio = new SuscripcionNegocio();
+            Suscripcion suscripcionActual = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
+
+            try
+            {
+                if (suscripcionActual.IdSuscripcion != 0)
+                {
+                    suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
+                    negocio.Modificar(suscripcionActual, cliente);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return false;
+        }
     }
 }

@@ -220,15 +220,17 @@ namespace Gimnasio_app
         {
             if (Session["cliente"] == null) return;
             Cliente cliente = (Cliente)Session["cliente"];
-            SuscripcionNegocio negocio = new SuscripcionNegocio();
-            Suscripcion suscripcionActual = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
-            
-            if (suscripcionActual.IdSuscripcion != 0)
+
+            if(new SuscripcionNegocio().BajaSuscripcionCliente(cliente))
             {
-                suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
-                negocio.Modificar(suscripcionActual, cliente);
                 Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
             }
+            else
+            {
+                Toasts.ToastError(this, "Ha ocurrido un error. Por favor intente nuevamente.");
+            }
+            
+
         }
     }
 }
