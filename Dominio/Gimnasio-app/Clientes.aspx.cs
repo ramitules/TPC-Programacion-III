@@ -30,6 +30,11 @@ namespace Gimnasio_app
                     }
                     dgvClientes.DataSource = clientes != null ? clientes : new List<Cliente>();
                     dgvClientes.DataBind();
+                    ddlEstadoSuscripcion.DataSource = adminNegocio.listaSuscripciones();
+                    ddlEstadoSuscripcion.DataTextField = "Estado";
+                    ddlEstadoSuscripcion.DataValueField = "IdSuscripcion";
+                    ddlEstadoSuscripcion.DataBind();
+                    ddlEstadoSuscripcion.Items.Insert(0, new ListItem("Todos", "0"));
                 }
             }
             catch (Exception ex)
@@ -79,6 +84,123 @@ namespace Gimnasio_app
 
             // Retornamos la etiqueta HTML armada dinámicamente
             return $"<span class='badge {claseCss}'>{texto}</span>";
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            aplicarFiltros();
+            //List<Cliente> filtrado;
+            //try
+            //{
+            //    if (Session["listaClientes"] != null)
+            //    {
+            //        List<Cliente> clientes = (List<Cliente>)Session["listaClientes"];
+            //        filtrado = clientes.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
+            //    }
+            //    else
+            //    {
+            //        filtrado = new List<Cliente>();
+            //    }
+            //    dgvClientes.DataSource = filtrado != null ? filtrado : new List<Cliente>();
+            //    dgvClientes.DataBind();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+        }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            aplicarFiltros();
+            //List<Cliente> filtrado;
+            //bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
+            //try
+            //{
+            //    if (Session["listaClientes"] != null)
+            //    {
+            //        List<Cliente> clientes = (List<Cliente>)Session["listaClientes"];
+            //        if (ddlEstado.SelectedValue == "todos")
+            //        {
+            //            filtrado = clientes;
+            //        }
+            //        else
+            //        {
+            //            filtrado = clientes.FindAll(a => a.Activo == estadoSeleccionado);
+            //        }
+            //        dgvClientes.DataSource = filtrado != null ? filtrado : new List<Cliente>();
+            //        dgvClientes.DataBind();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+        }
+
+        protected void ddlEstadoSuscripcion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            aplicarFiltros();
+            //List<Cliente> filtrado;
+            //int estadoSeleccionado = int.Parse(ddlEstadoSuscripcion.SelectedValue);
+            //try
+            //{
+            //    if (Session["listaClientes"] != null)
+            //    {
+            //        List<Cliente> clientes = (List<Cliente>)Session["listaClientes"];
+            //        if (ddlEstadoSuscripcion.SelectedValue == "0")
+            //        {
+            //            filtrado = clientes;
+            //        }
+            //        else
+            //        {
+            //            filtrado = clientes.FindAll(a => a.SuscripcionCliente.IdSuscripcion == estadoSeleccionado);
+            //        }
+            //        dgvClientes.DataSource = filtrado != null ? filtrado : new List<Cliente>();
+            //        dgvClientes.DataBind();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+        }
+
+        //Metodo para unificar filtros
+        public void aplicarFiltros()
+        {
+            List<Cliente> filtrado;
+            bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
+            int estadoSuscripcionSeleccionado = int.Parse(ddlEstadoSuscripcion.SelectedValue);
+            try
+            {
+                if (Session["listaClientes"] != null)
+                {
+                    List<Cliente> clientes = (List<Cliente>)Session["listaClientes"];
+                    filtrado = clientes;
+                    if (ddlEstado.SelectedValue != "todos")
+                    {
+                        filtrado = filtrado.FindAll(a => a.Activo == estadoSeleccionado);
+                    }
+                    if (ddlEstadoSuscripcion.SelectedValue != "0")
+                    {
+                        filtrado = filtrado.FindAll(a => a.SuscripcionCliente.IdSuscripcion == estadoSuscripcionSeleccionado);
+                    }
+                    if (txtBuscar.Text != "")
+                    {
+                        filtrado = filtrado.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
+                    }
+                    dgvClientes.DataSource = filtrado != null ? filtrado : new List<Cliente>();
+                    dgvClientes.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

@@ -37,5 +37,84 @@ namespace Gimnasio_app
                 throw;
             }
         }
+
+        protected void btnRegistrar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            aplicarFiltros();
+            //List<Recepcionista> filtrado;
+            //try
+            //{
+            //    if (Session["listaRecepcionistas"] != null)
+            //    {
+            //        List<Recepcionista> recepcionistas = (List<Recepcionista>)Session["listaRecepcionistas"];
+            //        filtrado = recepcionistas.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
+            //    }
+            //    else
+            //    {
+            //        filtrado = new List<Recepcionista>();
+            //    }
+            //    dgvRecepcionistas.DataSource = filtrado != null ? filtrado : new List<Recepcionista>();
+            //    dgvRecepcionistas.DataBind();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    throw;
+            //}
+        }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            aplicarFiltros();
+            //List<Recepcionista> filtrado;
+            //bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
+            //if (Session["listaRecepcionistas"] != null)
+            //{
+            //    List<Recepcionista> recepcionistas = (List<Recepcionista>)Session["listaRecepcionistas"];
+            //    if (ddlEstado.SelectedValue == "todos")
+            //    {
+            //        filtrado = recepcionistas;
+            //    }
+            //    else
+            //    {
+            //        filtrado = recepcionistas.FindAll(a => a.Activo == estadoSeleccionado);
+            //    }
+            //    dgvRecepcionistas.DataSource = filtrado != null ? filtrado : new List<Recepcionista>();
+            //    dgvRecepcionistas.DataBind();
+            //}
+        }
+
+        public void aplicarFiltros()
+        {
+            List<Recepcionista> filtrado;
+            bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
+            try
+            {
+                if (Session["listaRecepcionistas"] != null)
+                {
+                    List<Recepcionista> recepcionistas = (List<Recepcionista>)Session["listaRecepcionistas"];
+                    filtrado = recepcionistas;
+                    if (ddlEstado.SelectedValue != "todos")
+                    {
+                        filtrado = filtrado.FindAll(a => a.Activo == estadoSeleccionado);
+                    }
+                    if (txtBuscar.Text != "")
+                    {
+                        filtrado = filtrado.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
+                    }
+                    dgvRecepcionistas.DataSource = filtrado != null ? filtrado : new List<Recepcionista>();
+                    dgvRecepcionistas.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

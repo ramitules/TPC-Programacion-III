@@ -59,7 +59,7 @@ namespace Gimnasio_app
                 if (Session["listaAdmins"] != null)
                 {
                     List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
-                    filtrado = admins.FindAll(a => a.Nombre.ToLower().Contains(txtBuscar.Text.ToLower()) || a.Apellido.ToLower().Contains(txtBuscar.Text.ToLower()));
+                    filtrado = admins.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
                 }
                 else
                 {
@@ -72,6 +72,26 @@ namespace Gimnasio_app
             {
 
                 throw;
+            }
+        }
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Usuario> filtrado;
+            bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
+            if (Session["listaAdmins"] != null)
+            {
+                List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                if (ddlEstado.SelectedValue == "todos")
+                {
+                    filtrado = admins;
+                }
+                else
+                {
+                    filtrado = admins.FindAll(a => a.Activo == estadoSeleccionado);
+                }
+                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Usuario>();
+                dgvAdmins.DataBind();
             }
         }
     }

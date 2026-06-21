@@ -9,9 +9,9 @@
             </h3>
                 <p class="text-muted mb-0">Listado general, búsqueda y gestión de estados de clientes.</p>
             </div>
-            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <%--<div class="col-md-6 text-md-end mt-3 mt-md-0">
                 <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary shadow-sm" Text="Registrar Nuevo Cliente" />
-            </div>
+            </div>--%>
         </div>
 
         <div class="card shadow-sm mb-4">
@@ -22,13 +22,20 @@
                             <span class="input-group-text bg-white text-muted">
                                 <i class="bi bi-search"></i>
                             </span>
-                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre, Apellido o DNI..." />
+                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre y/o Apellido" OnTextChanged="txtBuscar_TextChanged" />
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true">
-                            <asp:ListItem Value="todos">Todos los estados</asp:ListItem>
-                            <asp:ListItem Value="activos" Selected="True">Activos</asp:ListItem>
+                        <asp:DropDownList ID="ddlEstadoSuscripcion" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstadoSuscripcion_SelectedIndexChanged">
+                            <%--<asp:ListItem Value="todos" Selected="True">Todos los estados</asp:ListItem>
+                            <asp:ListItem Value="activos">Activos</asp:ListItem>
+                            <asp:ListItem Value="inactivos">Inactivos</asp:ListItem>--%>
+                        </asp:DropDownList>
+                    </div>
+                    <div class="col-md-3">
+                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
+                            <asp:ListItem Value="todos" Selected="True">Todos los estados</asp:ListItem>
+                            <asp:ListItem Value="activos">Activos</asp:ListItem>
                             <asp:ListItem Value="inactivos">Inactivos</asp:ListItem>
                         </asp:DropDownList>
                     </div>
@@ -56,19 +63,19 @@
                         <asp:BoundField DataField="IdUsuario" HeaderText="ID" ItemStyle-CssClass="ps-3 fw-bold" HeaderStyle-CssClass="ps-3" />
 
                         <%-- Columna Nombre --%>
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
 
                         <%-- Columna Apellido --%>
-                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
 
                         <%-- Columna Email --%>
-                        <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+                        <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
 
                         <%-- Columna Fecha de nacimientp --%>
-                        <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de nacimiento" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+                        <asp:BoundField DataField="FechaNacimiento" HeaderText="Fecha de nacimiento" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
 
                         <%-- Columna Fecha de ingreso --%>
-                        <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center"/>
+                        <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de ingreso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />
 
                         <%-- Columna Peso corporal --%>
                         <asp:BoundField DataField="PesoCorporal" HeaderText="Peso" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center" />

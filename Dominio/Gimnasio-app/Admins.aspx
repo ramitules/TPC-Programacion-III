@@ -26,9 +26,9 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true">
-                            <asp:ListItem Value="todos">Todos los estados</asp:ListItem>
-                            <asp:ListItem Value="activos" Selected="True">Activos</asp:ListItem>
+                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
+                            <asp:ListItem Value="todos" Selected="True">Todos los estados</asp:ListItem>
+                            <asp:ListItem Value="activos">Activos</asp:ListItem>
                             <asp:ListItem Value="inactivos">Inactivos</asp:ListItem>
                         </asp:DropDownList>
                     </div>

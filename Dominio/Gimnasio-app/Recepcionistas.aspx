@@ -10,7 +10,7 @@
                 <p class="text-muted mb-0">Listado general, búsqueda y gestión de recepcionistas.</p>
             </div>
             <div class="col-md-6 text-md-end mt-3 mt-md-0">
-                <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary shadow-sm" Text="Registrar Nuevo Recepcionista" />
+                <asp:Button ID="btnRegistrar" runat="server" CssClass="btn btn-primary shadow-sm" Text="Registrar Nuevo Recepcionista" OnClick="btnRegistrar_Click"/>
             </div>
         </div>
 
@@ -22,13 +22,13 @@
                             <span class="input-group-text bg-white text-muted">
                                 <i class="bi bi-search"></i>
                             </span>
-                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre, Apellido o DNI..." />
+                            <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" Placeholder="Buscar por Nombre y/o Apellido" OnTextChanged="txtBuscar_TextChanged"/>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true">
-                            <asp:ListItem Value="todos">Todos los estados</asp:ListItem>
-                            <asp:ListItem Value="activos" Selected="True">Activos</asp:ListItem>
+                        <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlEstado_SelectedIndexChanged">
+                            <asp:ListItem Value="todos" Selected="True">Todos los estados</asp:ListItem>
+                            <asp:ListItem Value="activos">Activos</asp:ListItem>
                             <asp:ListItem Value="inactivos">Inactivos</asp:ListItem>
                         </asp:DropDownList>
                     </div>

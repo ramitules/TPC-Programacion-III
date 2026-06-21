@@ -80,6 +80,10 @@ namespace Negocio
                 throw;
                 //throw new Exception("Ocurrio un problema al traer los admins de base de datos - AdminNegocio/ObtenerAdmins");
             }
+            finally
+            {
+                datos.cerrarConexion();
+            }
             return listaUsuario;
         }  // Funcion que ya esta ok. Trae todo sim problemas
         public void crearAdmin(Admin admin, string pass) 
@@ -139,6 +143,37 @@ namespace Negocio
         //Métodos para administrar clientes
         public void activarCancelarSuscripcionCliente(Cliente cliente) { }//funcion compartida con recepcionista (30 dias de suscripcion en forzado)
         public void cancelarSuscripcionCliente(Cliente cliente) { }
+
+
+
+
+        //Obtener suscripciones
+        public List<Suscripcion> listaSuscripciones() 
+        {
+            List<Suscripcion> listaSuscripciones = new List<Suscripcion>();
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Traer_Estados_De_Suscripciones");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Suscripcion suscripcion = new Suscripcion();
+                    suscripcion.IdSuscripcion = Convert.ToInt32(datos.Lector["IdSuscripcionesEstados"]);
+                    suscripcion.Estado = (EstadoSuscripcion)(Convert.ToInt32(datos.Lector["IdSuscripcionesEstados"]));
+                    listaSuscripciones.Add(suscripcion);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return listaSuscripciones; 
+        }
     }
 
 
