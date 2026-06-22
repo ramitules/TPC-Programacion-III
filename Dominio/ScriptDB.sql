@@ -70,9 +70,12 @@ GO
 CREATE TABLE Ejercicios (  -- Un catalogo estandarizado de movimientos
 	IdEjercicios	INTEGER NOT NULL IDENTITY(1,1),
 	Nombre 			NVARCHAR(200) NOT NULL,
-	IdGrupoMuscular	TINYINT
+	IdGrupoMuscular	TINYINT,
+	LinkExplicacion	NVARCHAR(255)  -- Link a la pagina que explica como realizar el ejercicio
 	PRIMARY KEY (IdEjercicios),
-	FOREIGN KEY(IdGrupoMuscular) REFERENCES GruposMusculares(IdGruposMusculares)
+	FOREIGN KEY(IdGrupoMuscular) REFERENCES GruposMusculares(IdGruposMusculares),
+	CONSTRAINT CK_Ejercicios_LinkExplicacion
+		CHECK (LinkExplicacion LIKE 'https://www.simplyfitness.com/es/pages/%')
 );
 GO
 
@@ -88,7 +91,7 @@ CREATE TABLE Rutinas (  -- Plantillas de entrenamiento que un entrenador puede a
 );
 GO
 
-CREATE TABLE RutinaEjercicios (  -- Asigna los ejercicios específicos a una plantilla de rutina
+CREATE TABLE RutinaEjercicios (  -- Asigna los ejercicios especificos a una plantilla de rutina
 	IdRutinasEjercicios		INTEGER NOT NULL IDENTITY(1,1),
 	IdEjercicio 			INTEGER NOT NULL,
 	IdRutina				INTEGER NOT NULL,

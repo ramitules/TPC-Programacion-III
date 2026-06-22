@@ -223,6 +223,7 @@ namespace Negocio
                     re.Ejercicio = new Ejercicio();
                     re.Ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
                     re.Ejercicio.NombreEjercicio = datos.Lector["NombreEjercicio"].ToString();
+                    re.Ejercicio.LinkExplicacion = datos.Lector["LinkExplicacion"].ToString();
 
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
@@ -254,8 +255,7 @@ namespace Negocio
                 resultado.Add(new DiaRutina
                 {
                     DiaDeRutina = dia,
-                    Rutinas = rutinas.Where(r => string.Equals(r.Dia, dia,
-                                  StringComparison.OrdinalIgnoreCase)).ToList()
+                    Rutinas = rutinas.Where(r => string.Equals(r.Dia, dia, StringComparison.OrdinalIgnoreCase)).ToList()
                 });
 
             resultado.Add(new DiaRutina

@@ -48,7 +48,10 @@
                                         <ItemTemplate>
                                             <tr>
                                                 <td class="text-muted"><%# Eval("OrdenEjercicio") %></td>
-                                                <td class="fw-semibold"><%# Eval("Ejercicio.NombreEjercicio") %></td>
+                                                <td class="fw-semibold">
+                                                    <a href='<%# Eval("Ejercicio.LinkExplicacion") %>' target="_blank" rel="noopener">
+                                                        <%# Eval("Ejercicio.NombreEjercicio") %></a>
+                                                </td>
                                                 <td><%# Eval("Ejercicio.GrupoMuscular.NombreGrupoMuscular") %></td>
                                                 <td class="text-center"><%# Eval("ObjetivoSeries") %></td>
                                                 <td class="text-center"><%# Eval("ObjetivoRepeticiones") %></td>
@@ -80,7 +83,7 @@
                             <div class="card mb-3">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <span class="fw-semibold">
-                                        <%# Eval("OrdenEjercicio") %>. <%# Eval("Ejercicio.NombreEjercicio") %>
+                                        <%# Eval("OrdenEjercicio") %>. <a href='<%# Eval("Ejercicio.LinkExplicacion") %>' target="_blank" rel="noopener"><%# Eval("Ejercicio.NombreEjercicio") %></a>
                                         <small class="text-muted ms-2"><%# Eval("Ejercicio.GrupoMuscular.NombreGrupoMuscular") %></small>
                                     </span>
                                     <span class="badge bg-secondary">

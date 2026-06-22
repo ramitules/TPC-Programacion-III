@@ -68,31 +68,31 @@ VALUES
 ('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1);
 GO
 
-INSERT INTO Ejercicios (Nombre, IdGrupoMuscular)
-VALUES 
-('Press de Banca con Barra', 1),
-('Press Inclinado con Mancuernas', 1),
-('Aperturas en Polea Alta (Cruces)', 1),
+INSERT INTO Ejercicios (Nombre, IdGrupoMuscular, LinkExplicacion)
+VALUES
+('Press de Banca con Barra', 1, 'https://www.simplyfitness.com/es/pages/barbell-bench-press'),
+('Press Inclinado con Mancuernas', 1, 'https://www.simplyfitness.com/es/pages/incline-dumbbell-bench-press'),
+('Aperturas en Peck Deck', 1, 'https://www.simplyfitness.com/es/pages/peck-deck'),
 
-('Dominadas Pronas', 2),
-('Remo con Barra', 2),
-('Jalón al Pecho en Polea', 2),
+('Dominadas Pronas', 2, 'https://www.simplyfitness.com/es/pages/pull-up'),
+('Remo con Barra', 2, 'https://www.simplyfitness.com/es/pages/barbell-row'),
+('Jalón al Pecho en Polea', 2, 'https://www.simplyfitness.com/es/pages/wide-grip-pulldown'),
 
-('Sentadilla Libre con Barra', 3),
-('Prensa de Piernas 45 Grados', 3),
-('Sillón de Extensiones de Cuádriceps', 3),
-('Peso Muerto Rumano con Mancuernas', 3),
+('Sentadilla Libre con Barra', 3, 'https://www.simplyfitness.com/es/pages/squat'),
+('Prensa de Piernas 45 Grados', 3, 'https://www.simplyfitness.com/es/pages/leg-press'),
+('Sillón de Extensiones de Cuádriceps', 3, 'https://www.simplyfitness.com/es/pages/leg-extension'),
+('Peso Muerto Rumano con Mancuernas', 3, 'https://www.simplyfitness.com/es/pages/dumbbell-stiff-leg-deadlift'),
 
-('Press Militar con Barra', 4),
-('Vuelos Laterales con Mancuernas', 4),
-('Pájaros en Polea (Deltoides Posterior)', 4),
+('Press Militar con Barra', 4, 'https://www.simplyfitness.com/es/pages/barbell-push-press'),
+('Vuelos Laterales con Mancuernas', 4, 'https://www.simplyfitness.com/es/pages/dumbbell-lateral-raise'),
+('Pájaros en Polea (Deltoides Posterior)', 4, 'https://www.simplyfitness.com/es/pages/bent-over-lateral-raise'),
 
-('Curl de Bíceps con Barra W', 5),
-('Curl de Bíceps en Banco Scott', 5),
-('Extensiones de Tríceps en Polea Alta', 5),
-('Fondos en Paralelas para Tríceps', 5),
+('Curl de Bíceps con Barra W', 5, 'https://www.simplyfitness.com/es/pages/ez-barbell-curl'),
+('Curl de Bíceps en Banco Scott', 5, 'https://www.simplyfitness.com/es/pages/ez-barbell-preacher-curl'),
+('Extensiones de Tríceps en Polea Alta', 5, 'https://www.simplyfitness.com/es/pages/triceps-pressdown'),
+('Fondos en Paralelas para Tríceps', 5, 'https://www.simplyfitness.com/es/pages/parallel-dip-bar'),
 
-('Plancha Abdominal Isométrica', 6);
+('Plancha Abdominal Isométrica', 6, 'https://www.simplyfitness.com/es/pages/plank');
 GO
 
 INSERT INTO Rutinas (Nombre, IdUsuario, FechaCreacion, Dia, Activo)

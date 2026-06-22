@@ -19,6 +19,7 @@ namespace Dominio
         }
         public int IdEjercicio { get; set; }
         public string NombreEjercicio { get; set; }
-        public GrupoMuscular GrupoMuscular { get; set; }    
+        public GrupoMuscular GrupoMuscular { get; set; }
+        public string LinkExplicacion { get; set; }
     }
 }

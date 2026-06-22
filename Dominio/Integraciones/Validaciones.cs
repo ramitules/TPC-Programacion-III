@@ -38,5 +38,12 @@ namespace Integraciones
         {
             return !string.IsNullOrWhiteSpace(nombre);
         }
+
+        public const string PrefijoLinkEjercicio = "https://www.simplyfitness.com/es/pages/";
+
+        public static bool validarLinkEjercicio(string link)
+        {
+            return !string.IsNullOrWhiteSpace(link) && link.StartsWith(PrefijoLinkEjercicio);
+        }
     }
 }

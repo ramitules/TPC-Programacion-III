@@ -34,14 +34,14 @@
             align-items: flex-start;
         }
 
-            .cards-scroll::-webkit-scrollbar {
-                height: 4px;
-            }
+        .cards-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
 
-            .cards-scroll::-webkit-scrollbar-thumb {
-                background: #dee2e6;
-                border-radius: 2px;
-            }
+        .cards-scroll::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 2px;
+        }
 
         .rutina-card {
             min-width: 175px;

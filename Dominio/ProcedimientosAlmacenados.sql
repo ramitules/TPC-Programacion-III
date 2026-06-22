@@ -93,6 +93,7 @@ BEGIN
 		RE.OrdenEjercicio       AS OrdenEjercicio,
 		E.IdEjercicios          AS IdEjercicio,
 		E.Nombre                AS NombreEjercicio,
+		E.LinkExplicacion       AS LinkExplicacion,
 		GM.IdGruposMusculares   AS IdGrupoMuscular,
 		GM.Nombre               AS NombreGrupoMuscular
 	FROM RutinaEjercicios RE
