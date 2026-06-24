@@ -369,3 +369,46 @@ BEGIN
 	VALUES (@IdSesion, @IdEjercicio, @PesoLevantadoKG, @RepeticionesLogradas, @RIR, @EsRecordPersonal)
 END
 GO
+
+-- Obtener todas las sesiones de un cliente, con el nombre de la rutina y la cantidad de series registradas.
+-- Liviano: una fila por sesion (la metadata). Las series se cargan aparte y bajo demanda.
+CREATE PROCEDURE sp_SesionesDeCliente (@IdUsuario INT)
+AS
+BEGIN
+	SELECT
+		SE.IdSesionesEntrenamiento	AS IdSesion,
+		SE.FechaHoraInicio			AS FechaHoraInicio,
+		SE.FechaHoraFin				AS FechaHoraFin,
+		SE.IdRutina					AS IdRutina,
+		R.Nombre					AS NombreRutina,
+		(SELECT COUNT(*) FROM SeriesCompletadas SC WHERE SC.IdSesion = SE.IdSesionesEntrenamiento) AS CantidadSeries
+	FROM SesionesEntrenamiento SE
+	LEFT JOIN Rutinas R
+		ON SE.IdRutina = R.IdRutinas
+	WHERE SE.IdUsuario = @IdUsuario
+	ORDER BY SE.FechaHoraInicio DESC
+END
+GO
+
+-- Obtener las series completadas de una sesion, con el ejercicio y su grupo muscular.
+-- Ordenadas por nombre de ejercicio para que el agrupado quede contiguo.
+CREATE PROCEDURE sp_SeriesDeSesionAgrupadas (@IdSesion INT)
+AS
+BEGIN
+	SELECT
+		E.IdEjercicios			AS IdEjercicio,
+		E.Nombre				AS NombreEjercicio,
+		GM.Nombre				AS NombreGrupoMuscular,
+		SC.PesoLevantadoKG		AS PesoLevantadoKG,
+		SC.RepeticionesLogradas	AS RepeticionesLogradas,
+		SC.RIR					AS RIR,
+		SC.EsRecordPersonal		AS EsRecordPersonal
+	FROM SeriesCompletadas SC
+	INNER JOIN Ejercicios E
+		ON SC.IdEjercicio = E.IdEjercicios
+	LEFT JOIN GruposMusculares GM
+		ON E.IdGrupoMuscular = GM.IdGruposMusculares
+	WHERE SC.IdSesion = @IdSesion
+	ORDER BY E.Nombre, SC.IdSeriesCompletadas
+END
+GO

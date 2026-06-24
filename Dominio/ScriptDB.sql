@@ -81,7 +81,7 @@ GO
 
 CREATE TABLE Rutinas (  -- Plantillas de entrenamiento que un entrenador puede asignar o que el usuario arma (Ej: Empuje/Tiron/Piernas)
 	IdRutinas		INTEGER NOT NULL IDENTITY(1,1),
-	Nombre 			NVARCHAR(150),
+	Nombre 			NVARCHAR(150) NOT NULL,
 	IdUsuario 		INTEGER, --<-- Si este atributo es NULL, es una rutina general que puede elegir cualquier cliente/entrenador.
 	FechaCreacion 	DATETIME NOT NULL,
 	Dia				VARCHAR(15), --<-- Si este atributo es NULL, es rutina libre (lo puede realizar cualquier dia de la semana).
@@ -91,11 +91,11 @@ CREATE TABLE Rutinas (  -- Plantillas de entrenamiento que un entrenador puede a
 );
 GO
 
-CREATE TABLE RutinaEjercicios (  -- Asigna los ejercicios especificos a una plantilla de rutina
+CREATE TABLE RutinaEjercicios (  -- Asigna los ejercicios específicos a una plantilla de rutina
 	IdRutinasEjercicios		INTEGER NOT NULL IDENTITY(1,1),
 	IdEjercicio 			INTEGER NOT NULL,
 	IdRutina				INTEGER NOT NULL,
-	ObjetivoKG				INTEGER,
+	ObjetivoKG				INTEGER DEFAULT 1,
 	ObjetivoSeries 			SMALLINT DEFAULT 1,
 	ObjetivoRepeticiones 	SMALLINT DEFAULT 1,
 	OrdenEjercicio 			TINYINT DEFAULT 1 --<-- Si debe ser el primer ejercicio de la rutina del dia, el ultimo, etc.
@@ -129,5 +129,12 @@ CREATE TABLE SeriesCompletadas (  -- Guarda cada serie efectiva que hace el usua
 	PRIMARY KEY (IdSeriesCompletadas),
 	FOREIGN KEY(IdSesion) REFERENCES SesionesEntrenamiento(IdSesionesEntrenamiento),
 	FOREIGN KEY(IdEjercicio) REFERENCES Ejercicios(IdEjercicios)
+);
+GO
+
+CREATE TABLE AccesoUsuarios (  -- Guarda el codigo de usuario y su contraseña para el acceso y/o demas validaciones
+	IdUsuarios				INT NOT NULL,
+	Pass		 			VARCHAR (40) NOT NULL,
+	FOREIGN KEY(IdUsuarios) REFERENCES Usuarios (IdUsuarios)
 );
 GO
