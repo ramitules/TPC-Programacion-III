@@ -173,12 +173,12 @@ namespace Gimnasio_app
         /// </summary>
         protected void txtDesde_TextChanged(object sender, EventArgs e)
         {
-            if (EsRangoValido())
+            if (Validaciones.rangoFechasValido(txtDesde.Text, txtHasta.Text))
                 ViewState[KeyDesdeValido] = txtDesde.Text;
             else
             {
                 txtDesde.Text = (string)ViewState[KeyDesdeValido] ?? "";
-                Toasts.ToastAdvertencia(this, "La fecha 'Desde' no puede ser mayor que 'Hasta'.", "Rango invalido");
+                Toasts.ToastAdvertencia(this, "La fecha 'Desde' no puede ser mayor al dia de hoy ni mayor que 'Hasta'.", "Rango invalido");
             }
         }
 
@@ -188,25 +188,13 @@ namespace Gimnasio_app
         /// </summary>
         protected void txtHasta_TextChanged(object sender, EventArgs e)
         {
-            if (EsRangoValido())
+            if (Validaciones.rangoFechasValido(txtDesde.Text, txtHasta.Text))
                 ViewState[KeyHastaValido] = txtHasta.Text;
             else
             {
                 txtHasta.Text = (string)ViewState[KeyHastaValido] ?? "";
-                Toasts.ToastAdvertencia(this, "La fecha 'Hasta' no puede ser menor que 'Desde'.", "Rango invalido");
+                Toasts.ToastAdvertencia(this, "La fecha 'Hasta' no puede ser mayor al dia de hoy ni menor que 'Desde'.", "Rango invalido");
             }
-        }
-
-        /// <summary>
-        /// El rango es valido si alguno de los campos esta vacio, o si "Desde" &lt;= "Hasta".
-        /// </summary>
-        private bool EsRangoValido()
-        {
-            if (!DateTime.TryParse(txtDesde.Text, out DateTime desde))
-                return true;
-            if (!DateTime.TryParse(txtHasta.Text, out DateTime hasta))
-                return true;
-            return desde.Date <= hasta.Date;
         }
 
         protected void lnkSortRutina_Click(object sender, EventArgs e)
