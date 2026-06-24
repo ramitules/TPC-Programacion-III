@@ -13,5 +13,6 @@ namespace Dominio
         public Rutina Rutina { get; set; }
         public DateTime FechaHoraInicio { get; set; }
         public DateTime FechaHoraFin { get; set; }
+        public int CantidadSeries { get; set; }
     }
 }

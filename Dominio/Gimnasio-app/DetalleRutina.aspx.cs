@@ -201,6 +201,13 @@ namespace Gimnasio_app
                 CargarResumen(id);
         }
 
+        protected void btnSesiones_Click(object sender, EventArgs e)
+        {
+            string id = Request.QueryString["id"];
+            string url = string.IsNullOrEmpty(id) ? "SesionesEntrenamiento.aspx" : $"SesionesEntrenamiento.aspx?id={id}";
+            Response.Redirect(url, false);
+        }
+
         private float ParsearEntero(string valor)
         {
             return float.TryParse(valor, out float resultado) ? resultado : 0;

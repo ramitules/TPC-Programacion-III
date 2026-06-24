@@ -54,6 +54,52 @@ namespace Negocio
             }
             return sesion;
         }
+        /// <summary>
+        /// Obtiene todas las sesiones de entrenamiento de un cliente (solo metadata: rutina y cantidad de
+        /// series). No trae las series completadas; estas se cargan aparte y bajo demanda al expandir cada
+        /// sesion. Evita el N+1 de Get() (que resuelve Cliente y Rutina por separado en cada fila).
+        /// </summary>
+        public List<SesionEntrenamiento> GetSesionesDeCliente(int idUsuario)
+        {
+            string Excepcion = "Ocurrio un error al obtener las sesiones del cliente (SesionEntrenamientoNegocio.GetSesionesDeCliente())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            List<SesionEntrenamiento> sesiones = new List<SesionEntrenamiento>();
+            try
+            {
+                datos.SetearConsultaSP("sp_SesionesDeCliente");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    SesionEntrenamiento sesion = new SesionEntrenamiento();
+                    sesion.IdSesion = int.Parse(datos.Lector["IdSesion"].ToString());
+                    sesion.FechaHoraInicio = DateTime.Parse(datos.Lector["FechaHoraInicio"].ToString());
+                    sesion.FechaHoraFin = DateTime.Parse(datos.Lector["FechaHoraFin"].ToString());
+                    sesion.CantidadSeries = int.Parse(datos.Lector["CantidadSeries"].ToString());
+
+                    if (!(datos.Lector["IdRutina"] is DBNull))
+                    {
+                        sesion.Rutina = new Rutina();
+                        sesion.Rutina.IdRutina = int.Parse(datos.Lector["IdRutina"].ToString());
+                        sesion.Rutina.Nombre = datos.Lector["NombreRutina"].ToString();
+                    }
+
+                    sesiones.Add(sesion);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return sesiones;
+        }
+
         private void AltaOModificacion(SesionEntrenamiento sesion, AccesoADatos datos)
         {
             // Creacion

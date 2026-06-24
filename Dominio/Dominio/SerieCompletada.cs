@@ -16,4 +16,12 @@ namespace Dominio
         public int RIR { get; set; }
         public bool EsRecordPersonal { get; set; }
     }
+
+    // Agrupa las series completadas de una sesion por ejercicio, para mostrarlas en el detalle desplegable.
+    public class SeriesPorEjercicio
+    {
+        public string NombreEjercicio { get; set; }
+        public string NombreGrupoMuscular { get; set; }
+        public List<SerieCompletada> Series { get; set; }
+    }
 }

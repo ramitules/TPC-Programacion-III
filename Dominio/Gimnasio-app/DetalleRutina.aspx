@@ -24,7 +24,7 @@
                 <%-- Acciones --%>
                 <div class="d-flex gap-2 my-3">
                     <asp:Button ID="btnIniciar" runat="server" Text="Iniciar" CssClass="btn btn-success" OnClick="btnIniciar_Click" />
-                    <button type="button" class="btn btn-outline-secondary" disabled>Sesiones realizadas</button>
+                    <asp:Button ID="btnSesiones" runat="server" Text="Sesiones realizadas" CssClass="btn btn-outline-secondary" OnClick="btnSesiones_Click" />
                 </div>
 
                 <%-- MODO RESUMEN: rutina aun no iniciada (tabla de solo lectura) --%>
