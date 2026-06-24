@@ -174,8 +174,93 @@ namespace Negocio
             }
             return listaSuscripciones; 
         }
+
+        public List<GrupoMuscular> listarGruposMusculares() 
+        {
+            List<GrupoMuscular> listaGrupos = new List<GrupoMuscular>();
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Traer_Grupos_Musculares");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    GrupoMuscular grupo = new GrupoMuscular();
+                    grupo.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGruposMusculares"]);
+                    grupo.NombreGrupoMuscular = (string)datos.Lector["Nombre"];
+                    listaGrupos.Add(grupo);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return listaGrupos;
+        }
+
+        public List<Ejercicio> listarEjercicios() 
+        {
+            List<Ejercicio> listaEjercicios = new List<Ejercicio>();
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Traer_Ejercicios");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Ejercicio ejercicio = new Ejercicio();
+                    ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
+                    ejercicio.NombreEjercicio = (string)datos.Lector["Nombre"];
+                    ejercicio.GrupoMuscular = new GrupoMuscular();
+                    ejercicio.GrupoMuscular.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
+                    ejercicio.GrupoMuscular.NombreGrupoMuscular = (string)datos.Lector["NombreGrupoMuscular"];
+                    //ejercicio.LinkExplicacion = (string)datos.Lector["LinkExplicacion"]; Rami tiene que actualizar el nuevo atributo en la definicion de la tabla
+                    listaEjercicios.Add(ejercicio);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return listaEjercicios;
+        }
+
+        public List<Plan> listarPlanes() 
+        {
+            List<Plan> listaPlanes = new List<Plan>();
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Traer_Planes");
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Plan plan = new Plan();
+                    plan.IdPlan = Convert.ToInt32(datos.Lector["IdPlanes"]);
+                    plan.NombrePlan = (string)datos.Lector["Nombre"];
+                    plan.PrecioPlan = Convert.ToSingle(datos.Lector["PrecioMensual"]);
+                    plan.DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionDias"]);
+                    listaPlanes.Add(plan);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return listaPlanes;
+        }
     }
-
-
 
 }

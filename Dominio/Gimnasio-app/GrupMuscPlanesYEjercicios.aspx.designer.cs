@@ -11,7 +11,7 @@ namespace Gimnasio_app
 {
 
 
-    public partial class AdminControl
+    public partial class GrupMuscPlanesYEjercicios
     {
 
         /// <summary>
@@ -42,13 +42,13 @@ namespace Gimnasio_app
         protected global::System.Web.UI.WebControls.Button btnNuevoMusculo;
 
         /// <summary>
-        /// Control dgvGruposMusculares.
+        /// Control dgvMusculos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView dgvGruposMusculares;
+        protected global::System.Web.UI.WebControls.GridView dgvMusculos;
 
         /// <summary>
         /// Control btnNuevoPlan.
