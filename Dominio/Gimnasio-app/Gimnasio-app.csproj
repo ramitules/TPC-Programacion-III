@@ -103,6 +103,8 @@
     <Content Include="Admins.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="Ejercicios.aspx" />
+    <Content Include="GrupMuscPlanesYEjercicios.aspx" />
+    <Content Include="GruposMusculares.aspx" />
     <Content Include="PanelEntrenadorCrearRutina.aspx" />
     <Content Include="PanelEntrenadorRutinas.aspx" />
     <Content Include="PanelEntrenador.aspx" />
@@ -233,6 +235,20 @@
     </Compile>
     <Compile Include="Ejercicios.aspx.designer.cs">
       <DependentUpon>Ejercicios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GrupMuscPlanesYEjercicios.aspx.cs">
+      <DependentUpon>GrupMuscPlanesYEjercicios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrupMuscPlanesYEjercicios.aspx.designer.cs">
+      <DependentUpon>GrupMuscPlanesYEjercicios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GruposMusculares.aspx.cs">
+      <DependentUpon>GruposMusculares.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GruposMusculares.aspx.designer.cs">
+      <DependentUpon>GruposMusculares.aspx</DependentUpon>
     </Compile>
     <Compile Include="PanelEntrenadorCrearRutina.aspx.cs">
       <DependentUpon>PanelEntrenadorCrearRutina.aspx</DependentUpon>
