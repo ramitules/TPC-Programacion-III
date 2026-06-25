@@ -174,7 +174,7 @@ namespace Negocio
             }
             return listaSuscripciones; 
         }
-
+        //grupo listar
         public List<GrupoMuscular> listarGruposMusculares() 
         {
             List<GrupoMuscular> listaGrupos = new List<GrupoMuscular>();
@@ -201,7 +201,6 @@ namespace Negocio
             }
             return listaGrupos;
         }
-
         public List<Ejercicio> listarEjercicios() 
         {
             List<Ejercicio> listaEjercicios = new List<Ejercicio>();
@@ -213,12 +212,12 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     Ejercicio ejercicio = new Ejercicio();
-                    ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
+                    ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicios"]);
                     ejercicio.NombreEjercicio = (string)datos.Lector["Nombre"];
                     ejercicio.GrupoMuscular = new GrupoMuscular();
                     ejercicio.GrupoMuscular.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
-                    ejercicio.GrupoMuscular.NombreGrupoMuscular = (string)datos.Lector["NombreGrupoMuscular"];
-                    //ejercicio.LinkExplicacion = (string)datos.Lector["LinkExplicacion"]; Rami tiene que actualizar el nuevo atributo en la definicion de la tabla
+                    ejercicio.GrupoMuscular.NombreGrupoMuscular = (string)datos.Lector["GrupoMuscular"];
+                    ejercicio.LinkExplicacion = datos.Lector["LinkExplicacion"] != DBNull.Value? (string)datos.Lector["LinkExplicacion"] : "";
                     listaEjercicios.Add(ejercicio);
                 }
             }
@@ -232,7 +231,6 @@ namespace Negocio
             }
             return listaEjercicios;
         }
-
         public List<Plan> listarPlanes() 
         {
             List<Plan> listaPlanes = new List<Plan>();
@@ -261,6 +259,166 @@ namespace Negocio
             }
             return listaPlanes;
         }
+        //
+        //grupo eliminar
+        public void eliminarGrupoMuscular(GrupoMuscular grupo) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Eliminar_Grupo_Muscular");
+                datos.setearParametro("@IdGrupoMuscular", grupo.IdGrupoMuscular);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void eliminarEjercicio(Ejercicio ejercicio) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Eliminar_Ejercicio");
+                datos.setearParametro("@IdEjercicio", ejercicio.IdEjercicio);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        //
+        //grupo modificar
+        public void modificarGrupoMuscular(GrupoMuscular grupo) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Modificar_Grupo_Muscular");
+                datos.setearParametro("@IdGrupoMuscular", grupo.IdGrupoMuscular);
+                datos.setearParametro("@Nombre", grupo.NombreGrupoMuscular);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void modificarEjercicio(Ejercicio ejercicio) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Modificar_Ejercicio");
+                datos.setearParametro("@IdEjercicio", ejercicio.IdEjercicio);
+                datos.setearParametro("@Nombre", ejercicio.NombreEjercicio);
+                datos.setearParametro("@IdGrupoMuscular", ejercicio.GrupoMuscular.IdGrupoMuscular);
+                datos.setearParametro("@LinkExplicacion", ejercicio.LinkExplicacion);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void modificarPlan(Plan plan) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Modificar_Plan");
+                datos.setearParametro("@IdPlan", plan.IdPlan);
+                datos.setearParametro("@Nombre", plan.NombrePlan);
+                datos.setearParametro("@PrecioMensual", plan.PrecioPlan);
+                datos.setearParametro("@DuracionDias", plan.DuracionDiasPlan);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        //
+        //grupo crear
+        public void crearGrupoMuscular(GrupoMuscular grupo) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Crear_Grupo_Muscular");
+                datos.setearParametro("@Nombre", grupo.NombreGrupoMuscular);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void crearEjercicio(Ejercicio ejercicio) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Crear_Ejercicio");
+                datos.setearParametro("@Nombre", ejercicio.NombreEjercicio);
+                datos.setearParametro("@IdGrupoMuscular", ejercicio.GrupoMuscular.IdGrupoMuscular);
+                datos.setearParametro("@LinkExplicacion", ejercicio.LinkExplicacion);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void crearPlan(Plan plan) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Crear_Plan");
+                datos.setearParametro("@Nombre", plan.NombrePlan);
+                datos.setearParametro("@PrecioMensual", plan.PrecioPlan);
+                datos.setearParametro("@DuracionDias", plan.DuracionDiasPlan);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
-
 }
