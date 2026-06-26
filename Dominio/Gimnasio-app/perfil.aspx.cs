@@ -169,20 +169,50 @@ namespace Gimnasio_app
             }
             else if (btnCambiarPlan.Text.ToLower() == "guardar")
             {
-                CrearPlan();
-
-                Toasts.ToastExito(this, "Se ha agregado una suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
-
-                ddlPlan.Enabled = false;
-                btnCambiarPlan.Text = "Cambiar plan";
+                // No se confirma el cambio hasta que se apruebe el pago en el modal
+                AbrirModalPago("cambio");
             }
         }
         protected void btnRenovarPlan_click(object sender, EventArgs e)
         {   // Asume que ya se puede renovar el plan (ver Page_Load())
-            if (CrearPlan())
-                Toasts.ToastExito(this, "Se ha renovado su suscripcion con exito. Entrara en vigencia al momento de vencerse la suscripcion actual.");
+            // No se confirma la renovacion hasta que se apruebe el pago en el modal
+            AbrirModalPago("renovar");
+        }
+        /// <summary>
+        /// Prepara el resumen del pago y abre el modal de tarjeta. El alta real de la
+        /// suscripcion ocurre recien al confirmar el pago (ver btnConfirmarPago_click).
+        /// </summary>
+        protected void AbrirModalPago(string accion)
+        {
+            Plan plan = new PlanNegocio().GetPlan(ddlPlan.SelectedValue);
+            lblPlanPago.Text = plan.NombrePlan;
+            lblMontoPago.Text = plan.PrecioPlan.ToString("C");
+            hfAccionPago.Value = accion;
 
-            btnRenovarPlan.Enabled = false;
+            ScriptManager.RegisterStartupScript(this, GetType(), "abrirPago",
+                "new bootstrap.Modal(document.getElementById('modalPago')).show();", true);
+        }
+        protected void btnConfirmarPago_click(object sender, EventArgs e)
+        {
+            // Pago aprobado automaticamente: la validacion de formato ya la garantizo
+            // validarTarjeta() en el cliente.
+            if (CrearPlan())
+            {
+                Toasts.ToastExito(this, "Pago aprobado. Su suscripcion entrara en vigencia al momento de vencerse la suscripcion actual.");
+
+                if (hfAccionPago.Value == "cambio")
+                {
+                    ddlPlan.Enabled = false;
+                    btnCambiarPlan.Text = "Cambiar plan";
+                }
+                else if (hfAccionPago.Value == "renovar")
+                {
+                    btnRenovarPlan.Enabled = false;
+                }
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "cerrarPago",
+                    "var m = bootstrap.Modal.getInstance(document.getElementById('modalPago')); if (m) m.hide();", true);
+            }
         }
         protected bool CrearPlan()
         {

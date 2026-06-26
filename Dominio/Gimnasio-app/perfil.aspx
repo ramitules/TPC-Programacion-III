@@ -116,4 +116,144 @@
         </div>
 
     </div>
+
+    <%-- ====================== MODAL DE PAGO ====================== --%>
+    <asp:UpdatePanel ID="upPago" runat="server">
+        <ContentTemplate>
+            <asp:HiddenField ID="hfAccionPago" runat="server" />
+            <div class="modal fade" id="modalPago" tabindex="-1" aria-labelledby="modalPagoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalPagoLabel">Pago de suscripcion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-secondary d-flex justify-content-between align-items-center py-2">
+                                <span>Plan: <strong><asp:Label ID="lblPlanPago" runat="server" /></strong></span>
+                                <span>Total: <strong><asp:Label ID="lblMontoPago" runat="server" /></strong></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Nombre en la tarjeta</label>
+                                <asp:TextBox runat="server" ID="txtNombreTarjeta" CssClass="form-control" placeholder="Como figura en la tarjeta" />
+                                <div class="invalid-feedback">Ingrese el nombre tal como figura en la tarjeta.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Numero de tarjeta</label>
+                                <asp:TextBox runat="server" ID="txtNumeroTarjeta" CssClass="form-control" placeholder="0000 0000 0000 0000"
+                                    MaxLength="19" autocomplete="off" />
+                                <div class="invalid-feedback">El numero debe tener 16 digitos.</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Vencimiento</label>
+                                    <asp:TextBox runat="server" ID="txtVencimientoTarjeta" CssClass="form-control" placeholder="MM/AA"
+                                        MaxLength="5" autocomplete="off" />
+                                    <div class="invalid-feedback">Formato MM/AA. La tarjeta no debe estar vencida.</div>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">CVV</label>
+                                    <asp:TextBox runat="server" ID="txtCvvTarjeta" CssClass="form-control" TextMode="Password" placeholder="123"
+                                        MaxLength="4" autocomplete="off" />
+                                    <div class="invalid-feedback">El CVV debe tener 3 o 4 digitos.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <asp:Button ID="btnConfirmarPago" runat="server" Text="Pagar" CssClass="btn btn-success"
+                                OnClick="btnConfirmarPago_click" OnClientClick="return validarTarjeta();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
+    <script type="text/javascript">
+        (function () {
+            // Ids de cliente resueltos por ASP.NET (el modal vive dentro de un UpdatePanel)
+            var ID = {
+                numero: '<%= txtNumeroTarjeta.ClientID %>',
+                vencimiento: '<%= txtVencimientoTarjeta.ClientID %>',
+                cvv: '<%= txtCvvTarjeta.ClientID %>',
+                nombre: '<%= txtNombreTarjeta.ClientID %>'
+            };
+
+            function soloDigitos(valor) { return (valor || '').replace(/\D/g, ''); }
+
+            function marcar(el, valido) {
+                if (!el) return;
+                el.classList.remove(valido ? 'is-invalid' : 'is-valid');
+                el.classList.add(valido ? 'is-valid' : 'is-invalid');
+            }
+
+            // Formateo en tiempo real
+            function formatearNumero(e) {
+                var d = soloDigitos(e.target.value).substring(0, 16);
+                e.target.value = d.replace(/(.{4})/g, '$1 ').trim();
+            }
+            function formatearVencimiento(e) {
+                var d = soloDigitos(e.target.value).substring(0, 4);
+                e.target.value = d.length >= 3 ? d.substring(0, 2) + '/' + d.substring(2) : d;
+            }
+            function formatearCvv(e) {
+                e.target.value = soloDigitos(e.target.value).substring(0, 4);
+            }
+
+            function engancharListeners() {
+                var numero = document.getElementById(ID.numero);
+                var vencimiento = document.getElementById(ID.vencimiento);
+                var cvv = document.getElementById(ID.cvv);
+                if (numero && !numero.dataset.bound) { numero.addEventListener('input', formatearNumero); numero.dataset.bound = '1'; }
+                if (vencimiento && !vencimiento.dataset.bound) { vencimiento.addEventListener('input', formatearVencimiento); vencimiento.dataset.bound = '1'; }
+                if (cvv && !cvv.dataset.bound) { cvv.addEventListener('input', formatearCvv); cvv.dataset.bound = '1'; }
+            }
+
+            // Validacion de formato (aprobacion automatica si todo es valido)
+            window.validarTarjeta = function () {
+                var nombre = document.getElementById(ID.nombre);
+                var numero = document.getElementById(ID.numero);
+                var vencimiento = document.getElementById(ID.vencimiento);
+                var cvv = document.getElementById(ID.cvv);
+
+                var okNombre = nombre && nombre.value.trim().length > 0;
+                marcar(nombre, okNombre);
+
+                var digitos = soloDigitos(numero ? numero.value : '');
+                var okNumero = digitos.length === 16;
+                marcar(numero, okNumero);
+
+                var okVencimiento = false;
+                if (vencimiento) {
+                    var m = /^(\d{2})\/(\d{2})$/.exec(vencimiento.value.trim());
+                    if (m) {
+                        var mes = parseInt(m[1], 10);
+                        var anio = 2000 + parseInt(m[2], 10);
+                        if (mes >= 1 && mes <= 12) {
+                            var hoy = new Date();
+                            var finMes = new Date(anio, mes, 1); // primer dia del mes siguiente
+                            okVencimiento = finMes > hoy;
+                        }
+                    }
+                }
+                marcar(vencimiento, okVencimiento);
+
+                var cvvDigitos = soloDigitos(cvv ? cvv.value : '');
+                var okCvv = cvvDigitos.length === 3 || cvvDigitos.length === 4;
+                marcar(cvv, okCvv);
+
+                return okNombre && okNumero && okVencimiento && okCvv;
+            };
+
+            engancharListeners();
+            // Re-enganchar tras cada postback asincrono del UpdatePanel
+            if (typeof Sys !== 'undefined' && Sys.WebForms && Sys.WebForms.PageRequestManager) {
+                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(engancharListeners);
+            }
+        })();
+    </script>
 </asp:Content>
