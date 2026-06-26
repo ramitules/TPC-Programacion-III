@@ -82,7 +82,7 @@ namespace Gimnasio_app
                     string fechaNacimiento = txtNacimiento.Text;
 
                     // Validacion de campos obligatorios
-                    if (!(Validaciones.validarNombre(nombre) || Validaciones.validarNombre(apellido)))
+                    if (!(Validaciones.validarNombre(nombre) && Validaciones.validarNombre(apellido)))
                     {
                         Toasts.ToastAdvertencia(this, "Por favor complete todos los campos.", "Atencion");
                         return;
