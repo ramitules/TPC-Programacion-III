@@ -14,6 +14,7 @@ namespace Gimnasio_app
     {
         public bool Editando { get; set; }
         public bool TienePlanProximo { get; set; }
+        public bool TienePlanVigente { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             //  TESTING
@@ -31,7 +32,11 @@ namespace Gimnasio_app
             {
                 SuscripcionNegocio suscripciones = new SuscripcionNegocio();
                 Suscripcion suscripcionVPendiente = suscripciones.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE);
+                Suscripcion suscripcionActual = cliente.SuscripcionCliente;
+
                 TienePlanProximo = suscripcionVPendiente.IdSuscripcion != 0;
+                TienePlanVigente = cliente.SuscripcionCliente != null && cliente.SuscripcionCliente.IdSuscripcion != 0 && cliente.SuscripcionCliente.Plan != null;
+
                 ddlPlan.DataSource = new PlanNegocio().GetPlanes();
                 ddlPlan.DataValueField = "IdPlan";
                 ddlPlan.DataTextField = "NombrePlan";
@@ -44,14 +49,24 @@ namespace Gimnasio_app
                 txtNacimiento.Text = cliente.FechaNacimiento.ToString("yyyy-MM-dd");
                 txtPeso.Text = cliente.PesoCorporal.ToString();
                 txtIngreso.Text = cliente.FechaIngreso.ToString("yyyy-MM-dd");
-                ddlPlan.SelectedValue = cliente.SuscripcionCliente.Plan.IdPlan.ToString();
-                txtVencimiento.Text = cliente.SuscripcionCliente.FechaFin.ToString("yyyy-MM-dd");
+                if (TienePlanVigente)
+                {
+                    ddlPlan.SelectedValue = cliente.SuscripcionCliente.Plan.IdPlan.ToString();
+                    txtVencimiento.Text = cliente.SuscripcionCliente.FechaFin.ToString("yyyy-MM-dd");
+                    int vencimiento = (cliente.SuscripcionCliente.FechaFin - DateTime.Now).Days;
+                    lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
 
-                int vencimiento = (cliente.SuscripcionCliente.FechaFin - DateTime.Now).Days;
-                lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
-                // Habilitar boton para renovar suscripcion si vence en los proximos 5 dias
-                if (vencimiento < 5)
-                    btnRenovarPlan.Enabled = true;
+                    // Habilitar boton para renovar suscripcion si vence en los proximos 5 dias
+                    if (vencimiento < 5)
+                        btnRenovarPlan.Enabled = true;
+                }
+                else
+                {
+                    lblVencimiento.Text = "No tenes una suscripción activa.";
+                    btnCambiarPlan.Enabled = false;
+                    btnRenovarPlan.Enabled = false;
+                }
+                
 
                 if (TienePlanProximo)
                 {
