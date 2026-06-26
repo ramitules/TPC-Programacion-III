@@ -39,6 +39,46 @@ namespace Integraciones
             return !string.IsNullOrWhiteSpace(nombre);
         }
 
+        // Tarjeta de credito/debito (validacion de formato)
+
+        private static string SoloDigitos(string valor)
+        {
+            return string.IsNullOrEmpty(valor)
+                ? string.Empty
+                : System.Text.RegularExpressions.Regex.Replace(valor, @"\D", "");
+        }
+
+        public static bool validarNumeroTarjeta(string numero)
+        {
+            return SoloDigitos(numero).Length == 16;
+        }
+
+        public static bool validarVencimientoTarjeta(string vencimiento)
+        {
+            if (string.IsNullOrWhiteSpace(vencimiento))
+                return false;
+
+            var match = System.Text.RegularExpressions.Regex.Match(vencimiento.Trim(), @"^(\d{2})/(\d{2})$");
+            if (!match.Success)
+                return false;
+
+            int mes = int.Parse(match.Groups[1].Value);
+            int anio = 2000 + int.Parse(match.Groups[2].Value);
+
+            if (mes < 1 || mes > 12)
+                return false;
+
+            // No vencida: el primer dia del mes siguiente debe ser posterior a hoy.
+            DateTime finDeVigencia = new DateTime(anio, mes, 1).AddMonths(1);
+            return finDeVigencia > DateTime.Now;
+        }
+
+        public static bool validarCvv(string cvv)
+        {
+            int largo = SoloDigitos(cvv).Length;
+            return largo == 3 || largo == 4;
+        }
+
         public const string PrefijoLinkEjercicio = "https://www.simplyfitness.com/es/pages/";
 
         public static bool validarLinkEjercicio(string link)

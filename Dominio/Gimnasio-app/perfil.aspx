@@ -165,7 +165,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <asp:Button ID="btnConfirmarPago" runat="server" Text="Pagar" CssClass="btn btn-success"
-                                OnClick="btnConfirmarPago_click" OnClientClick="return validarTarjeta();" />
+                                OnClick="btnConfirmarPago_click" />
                         </div>
                     </div>
                 </div>
@@ -184,12 +184,6 @@
             };
 
             function soloDigitos(valor) { return (valor || '').replace(/\D/g, ''); }
-
-            function marcar(el, valido) {
-                if (!el) return;
-                el.classList.remove(valido ? 'is-invalid' : 'is-valid');
-                el.classList.add(valido ? 'is-valid' : 'is-invalid');
-            }
 
             // Formateo en tiempo real
             function formatearNumero(e) {
@@ -213,46 +207,33 @@
                 if (cvv && !cvv.dataset.bound) { cvv.addEventListener('input', formatearCvv); cvv.dataset.bound = '1'; }
             }
 
-            // Validacion de formato (aprobacion automatica si todo es valido)
-            window.validarTarjeta = function () {
-                var nombre = document.getElementById(ID.nombre);
-                var numero = document.getElementById(ID.numero);
-                var vencimiento = document.getElementById(ID.vencimiento);
-                var cvv = document.getElementById(ID.cvv);
+            // Evita backdrops grises colgados al re-renderizar el modal dentro del UpdatePanel.
+            function sincronizarBackdrops() {
+                var modal = document.getElementById('modalPago');
+                var visible = modal && modal.classList.contains('show');
+                var backdrops = document.querySelectorAll('.modal-backdrop');
 
-                var okNombre = nombre && nombre.value.trim().length > 0;
-                marcar(nombre, okNombre);
-
-                var digitos = soloDigitos(numero ? numero.value : '');
-                var okNumero = digitos.length === 16;
-                marcar(numero, okNumero);
-
-                var okVencimiento = false;
-                if (vencimiento) {
-                    var m = /^(\d{2})\/(\d{2})$/.exec(vencimiento.value.trim());
-                    if (m) {
-                        var mes = parseInt(m[1], 10);
-                        var anio = 2000 + parseInt(m[2], 10);
-                        if (mes >= 1 && mes <= 12) {
-                            var hoy = new Date();
-                            var finMes = new Date(anio, mes, 1); // primer dia del mes siguiente
-                            okVencimiento = finMes > hoy;
-                        }
-                    }
+                if (!visible) {
+                    // El modal no esta abierto: limpiar cualquier backdrop residual.
+                    backdrops.forEach(function (b) { b.remove(); });
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('overflow');
+                    document.body.style.removeProperty('padding-right');
+                } else {
+                    // Modal abierto: dejar solo un backdrop.
+                    for (var i = 0; i < backdrops.length - 1; i++) backdrops[i].remove();
                 }
-                marcar(vencimiento, okVencimiento);
+            }
 
-                var cvvDigitos = soloDigitos(cvv ? cvv.value : '');
-                var okCvv = cvvDigitos.length === 3 || cvvDigitos.length === 4;
-                marcar(cvv, okCvv);
-
-                return okNombre && okNumero && okVencimiento && okCvv;
-            };
+            function alFinalizarPostback() {
+                engancharListeners();
+                sincronizarBackdrops();
+            }
 
             engancharListeners();
-            // Re-enganchar tras cada postback asincrono del UpdatePanel
+            // Re-enganchar listeners y limpiar backdrops tras cada postback asincrono del UpdatePanel
             if (typeof Sys !== 'undefined' && Sys.WebForms && Sys.WebForms.PageRequestManager) {
-                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(engancharListeners);
+                Sys.WebForms.PageRequestManager.getInstance().add_endRequest(alFinalizarPostback);
             }
         })();
     </script>

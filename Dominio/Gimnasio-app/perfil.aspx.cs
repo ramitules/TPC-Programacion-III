@@ -194,8 +194,16 @@ namespace Gimnasio_app
         }
         protected void btnConfirmarPago_click(object sender, EventArgs e)
         {
-            // Pago aprobado automaticamente: la validacion de formato ya la garantizo
-            // validarTarjeta() en el cliente.
+            // Validacion de formato en el servidor. Los datos de tarjeta no se persisten.
+            if (!ValidarTarjeta())
+            {
+                Toasts.ToastAdvertencia(this, "Revise los datos de la tarjeta. Hay campos invalidos.");
+                ScriptManager.RegisterStartupScript(this, GetType(), "abrirPago",
+                    "new bootstrap.Modal(document.getElementById('modalPago')).show();", true);
+                return;
+            }
+
+            // Pago aprobado automaticamente al ser validos los datos.
             if (CrearPlan())
             {
                 Toasts.ToastExito(this, "Pago aprobado. Su suscripcion entrara en vigencia al momento de vencerse la suscripcion actual.");
@@ -210,9 +218,58 @@ namespace Gimnasio_app
                     btnRenovarPlan.Enabled = false;
                 }
 
+                LimpiarCamposTarjeta();
+
                 ScriptManager.RegisterStartupScript(this, GetType(), "cerrarPago",
                     "var m = bootstrap.Modal.getInstance(document.getElementById('modalPago')); if (m) m.hide();", true);
             }
+        }
+        /// <summary>
+        /// Valida el formato de los campos de la tarjeta y marca en rojo los invalidos.
+        /// </summary>
+        protected bool ValidarTarjeta()
+        {
+            // Resetear estado visual
+            txtNombreTarjeta.CssClass = "form-control";
+            txtNumeroTarjeta.CssClass = "form-control";
+            txtVencimientoTarjeta.CssClass = "form-control";
+            txtCvvTarjeta.CssClass = "form-control";
+
+            bool valido = true;
+
+            if (!Validaciones.validarNombre(txtNombreTarjeta.Text))
+            {
+                txtNombreTarjeta.CssClass += " is-invalid";
+                valido = false;
+            }
+            if (!Validaciones.validarNumeroTarjeta(txtNumeroTarjeta.Text))
+            {
+                txtNumeroTarjeta.CssClass += " is-invalid";
+                valido = false;
+            }
+            if (!Validaciones.validarVencimientoTarjeta(txtVencimientoTarjeta.Text))
+            {
+                txtVencimientoTarjeta.CssClass += " is-invalid";
+                valido = false;
+            }
+            if (!Validaciones.validarCvv(txtCvvTarjeta.Text))
+            {
+                txtCvvTarjeta.CssClass += " is-invalid";
+                valido = false;
+            }
+
+            return valido;
+        }
+        protected void LimpiarCamposTarjeta()
+        {
+            txtNombreTarjeta.Text = "";
+            txtNumeroTarjeta.Text = "";
+            txtVencimientoTarjeta.Text = "";
+            txtCvvTarjeta.Text = "";
+            txtNombreTarjeta.CssClass = "form-control";
+            txtNumeroTarjeta.CssClass = "form-control";
+            txtVencimientoTarjeta.CssClass = "form-control";
+            txtCvvTarjeta.CssClass = "form-control";
         }
         protected bool CrearPlan()
         {
