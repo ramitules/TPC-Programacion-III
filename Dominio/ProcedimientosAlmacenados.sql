@@ -332,8 +332,11 @@ CREATE PROCEDURE sp_CrearSesionEntrenamiento (
 )
 AS
 BEGIN
-	INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
-	VALUES (@IdUsuario, @IdRutina, @FechaHoraInicio, @FechaHoraFin)
+	SET NOCOUNT ON;
+    INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
+    VALUES (@IdUsuario, @IdRutina, @FechaHoraInicio, @FechaHoraFin);
+
+    SELECT CAST(SCOPE_IDENTITY() AS INT) AS IdSesion;
 END
 GO
 

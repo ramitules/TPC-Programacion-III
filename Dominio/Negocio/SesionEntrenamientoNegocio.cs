@@ -171,8 +171,8 @@ namespace Negocio
             sesion.FechaHoraInicio = DateTime.Now;
             sesion.FechaHoraFin = DateTime.Now;
 
-            Agregar(sesion);
-            return Get();
+            sesion.IdSesion = AgregarYDevolverId(sesion);
+            return sesion;
         }
         /// <summary>
         /// Cierra la sesion actual estableciendo la fecha y hora de fin
@@ -181,6 +181,20 @@ namespace Negocio
         {
             sesion.FechaHoraFin = DateTime.Now;
             Modificar(sesion);
+        }
+        public int AgregarYDevolverId(SesionEntrenamiento nuevo)
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_CrearSesionEntrenamiento");
+                datos.setearParametro("@IdUsuario", nuevo.Cliente.IdUsuario);
+                datos.setearParametro("@IdRutina", (object)nuevo.Rutina?.IdRutina ?? DBNull.Value);
+                datos.setearParametro("@FechaHoraInicio", nuevo.FechaHoraInicio);
+                datos.setearParametro("@FechaHoraFin", DBNull.Value);
+                return datos.EjecutarScalar();
+            }
+            finally { datos.cerrarConexion(); }
         }
     }
 }
