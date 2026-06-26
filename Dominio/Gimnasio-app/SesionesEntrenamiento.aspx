@@ -45,7 +45,6 @@
                         <table class="table table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th style="width: 40px;"></th>
                                     <th>
                                         <asp:LinkButton ID="lnkSortRutina" runat="server" CssClass="text-decoration-none text-reset fw-semibold" OnClick="lnkSortRutina_Click">
                                             Rutina <asp:Literal ID="litCaretRutina" runat="server" />
@@ -63,14 +62,11 @@
                             <tbody>
                                 <asp:Repeater ID="rptSesiones" runat="server" OnItemCommand="rptSesiones_ItemCommand" OnItemDataBound="rptSesiones_ItemDataBound">
                                     <ItemTemplate>
-                                        <tr>
-                                            <td>
-                                                <asp:LinkButton runat="server" CssClass="btn btn-sm btn-outline-secondary" CommandName="Toggle"
-                                                    CommandArgument='<%# Eval("IdSesion") %>'>
-                                                    <i class='<%# (int)Eval("IdSesion") == IdSesionExpandida ? "bi bi-chevron-down" : "bi bi-chevron-right" %>'></i>
-                                                </asp:LinkButton>
-                                            </td>
+                                        <tr style="cursor:pointer;" onclick="this.querySelector('a[data-row-action]').click()">
                                             <td class="fw-semibold">
+                                                <asp:LinkButton runat="server" CssClass="d-none" data-row-action="toggle" CommandName="Toggle"
+                                                    CommandArgument='<%# Eval("IdSesion") %>'>&nbsp;</asp:LinkButton>
+                                                <i class='<%# (int)Eval("IdSesion") == IdSesionExpandida ? "bi bi-chevron-down me-2" : "bi bi-chevron-right me-2" %>'></i>
                                                 <%# Eval("Rutina") == null ? "<span class='text-muted'>Sesion libre</span>" : Server.HtmlEncode(Eval("Rutina.Nombre").ToString()) %>
                                             </td>
                                             <td><%# Eval("FechaHoraInicio", "{0:dd/MM/yyyy HH:mm}") %></td>
@@ -79,7 +75,7 @@
                                         </tr>
                                         <%-- Fila de detalle (se llena solo si la sesion esta expandida) --%>
                                         <tr>
-                                            <td colspan="5" class="p-0 border-0">
+                                            <td colspan="4" class="p-0 border-0">
                                                 <asp:PlaceHolder ID="phDetalle" runat="server" Visible="false">
                                                     <div class="p-3 bg-light">
                                                         <asp:Repeater ID="rptEjercicios" runat="server">
