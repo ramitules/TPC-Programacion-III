@@ -1,9 +1,9 @@
-﻿using System;
+using Dominio;
+using Integraciones;
+using Negocio;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace Gimnasio_app
 {
@@ -11,7 +11,26 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // TESTING
+            Session.Add("cliente", new ClienteNegocio().Get("9", true));
 
+            if (!(Seguridad.SessionActiva(Session["cliente"])))
+            {
+                Response.Redirect("Default", false);
+                return;
+            }
+
+            if (!IsPostBack)
+            {
+                Cliente cliente = (Cliente)Session["cliente"];
+
+                List<Dominio.Records> records = new RecordsNegocio().GetRecordsUsuario(cliente.IdUsuario.ToString());
+
+                rptRecords.DataSource = records;
+                rptRecords.DataBind();
+
+                phSinRecords.Visible = records.Count == 0;
+            }
         }
     }
 }

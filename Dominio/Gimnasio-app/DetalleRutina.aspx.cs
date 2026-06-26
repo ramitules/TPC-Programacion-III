@@ -177,7 +177,11 @@ namespace Gimnasio_app
             serie.PesoLevantadoKG = ParsearEntero(txtPeso.Text);
             serie.RepeticionesLogradas = (int)ParsearEntero(txtReps.Text);
             serie.RIR = (int)ParsearEntero(txtRir.Text);
-            serie.EsRecordPersonal = false;
+
+            // Es record si supera el peso maximo historico del cliente en este ejercicio
+            // (igualar la marca previa no cuenta como record).
+            float maxAnterior = new RecordsNegocio().GetMaxPesoEjercicio(sesion.Cliente.IdUsuario, idEjercicio);
+            serie.EsRecordPersonal = serie.PesoLevantadoKG > maxAnterior;
 
             new SerieCompletadaNegocio().Agregar(serie);
 

@@ -13,5 +13,23 @@ namespace Gimnasio_app
 
     public partial class Records
     {
+
+        /// <summary>
+        /// Control rptRecords.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo de diseño al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptRecords;
+
+        /// <summary>
+        /// Control phSinRecords.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo de diseño al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder phSinRecords;
     }
 }

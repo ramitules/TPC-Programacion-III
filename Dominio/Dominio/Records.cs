@@ -10,5 +10,7 @@ namespace Dominio
     {
         public Ejercicio Ejercicio { get; set; }
         public float PesoKG { get; set; }
+        public int Repeticiones { get; set; }
+        public DateTime FechaRecord { get; set; }
     }
 }
