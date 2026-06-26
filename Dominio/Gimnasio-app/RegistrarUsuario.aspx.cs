@@ -28,6 +28,8 @@ namespace Gimnasio_app
                 string fechaNacimiento = txtFechaNacimiento.Text;
                 string contrasenia = txtPassword.Text;
 
+                ClienteNegocio negocio = new ClienteNegocio();
+
                 // Validacion de campos obligatorios
                 if (!(Validaciones.validarNombre(nombre) && Validaciones.validarNombre(apellido)))
                 {
@@ -49,6 +51,13 @@ namespace Gimnasio_app
                     return;
                 }
 
+                if (negocio.ExisteEmail(email))  // Duplicados
+                {
+                    Toasts.ToastError(this, "Ya existe una cuenta con esta direccion de correo electronico.");
+                    return;
+                }
+                
+
                 // Validacion fecha de nacimiento (minimo 12 años)
                 if (!(Validaciones.validarFechaNacimiento(fechaNacimiento, 12)))
                 {
@@ -56,7 +65,6 @@ namespace Gimnasio_app
                     return;
                 }
 
-                ClienteNegocio negocio = new ClienteNegocio();
                 Cliente cliente = new Cliente
                 {
                     Nombre = txtNombre.Text,

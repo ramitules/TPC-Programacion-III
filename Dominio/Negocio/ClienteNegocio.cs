@@ -190,5 +190,25 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        public bool ExisteEmail(string email)
+        {
+            string Excepcion = "Ocurrio un error al chequear email de cliente (ClienteNegocio.ExisteEmail())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Email = @email");
+                int cantidad = datos.EjecutarScalar();
+
+                if (cantidad > 0) return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion + ex.ToString());
+            }
+            finally { datos.cerrarConexion(); }
+            
+            return true;
+        }
     }
 }

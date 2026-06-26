@@ -188,21 +188,21 @@ CREATE PROCEDURE sp_CrearUsuario (
 )
 AS
 BEGIN
-	BEGIN TRY
-		BEGIN TRANSACTION
-			DECLARE @IdUsuario INT; 
-			INSERT INTO Usuarios (Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso)
-			VALUES (@Nombre, @Apellido, @Email, @FechaNacimiento, @PesoCorporalKG, @IdRol, @FechaIngreso)
-			SET @IdUsuario = (SELECT SCOPE_IDENTITY());
-			INSERT INTO AccesoUsuarios (IdUsuarios, Pass)
-			VALUES (@IdUsuario, @Pass)
-		COMMIT TRANSACTION
-		SELECT @IdUsuario
-	END TRY
-	BEGIN CATCH
-		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;   
-        PRINT 'Error al registrar usuario: ' + ERROR_MESSAGE();
-	END CATCH
+	SET NOCOUNT ON;
+    BEGIN TRY
+        BEGIN TRANSACTION;
+            DECLARE @IdUsuario INT;
+            INSERT INTO Usuarios (Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso)
+            VALUES (@Nombre, @Apellido, @Email, @FechaNacimiento, @PesoCorporalKG, @IdRol, @FechaIngreso);
+            SET @IdUsuario = SCOPE_IDENTITY();
+            INSERT INTO AccesoUsuarios (IdUsuarios, Pass) VALUES (@IdUsuario, @Pass);
+        COMMIT TRANSACTION;
+        SELECT @IdUsuario AS IdUsuario;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
 END
 GO
 
