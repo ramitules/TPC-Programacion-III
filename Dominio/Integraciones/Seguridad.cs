@@ -55,19 +55,27 @@ namespace Integraciones
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
                 {
-                    if (Convert.ToInt32(datos.Lector["IdRol"]) == (int)Roles.CLIENTE)
+                    int rol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    if (rol == (int)Roles.CLIENTE)
                     {
-                        usuario = new Cliente();
-                        //aca irian los datos especificos del cliente, como peso corporal, suscripcion, records personales, etc.
-                    }else
+                        usuario = new Cliente()
+                        {
+                            PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
+                        };
+                    } 
+                    else if (rol == (int)Roles.ADMIN)
                     {
                         usuario = new Admin(); //Elegi Admin, pero para el casteo podria ser cualquier tipo de rol distinto a cliente, es solo para poder almacenar los datos en session
+                    }
+                    else
+                    {
+                        usuario = new Entrenador();
                     }
                     usuario.IdUsuario = (int)datos.Lector["IdUsuarios"];
                     usuario.Nombre = (string)datos.Lector["Nombre"];
                     usuario.Apellido = (string)datos.Lector["Apellido"];
                     usuario.Email = (string)datos.Lector["Email"];
-                    usuario.Rol.IdRol = Convert.ToInt32(datos.Lector["IdRol"]);
+                    usuario.Rol.IdRol = rol;
                     usuario.Rol.RolDescripcion = (string)datos.Lector["Rol Nombre"];
                     usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
