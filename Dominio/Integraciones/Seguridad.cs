@@ -80,6 +80,7 @@ namespace Integraciones
                     usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     usuario.Activo = (bool)datos.Lector["Activo"];
+
                     return usuario;
                 }
                 else

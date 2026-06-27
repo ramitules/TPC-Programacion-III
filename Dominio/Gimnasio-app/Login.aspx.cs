@@ -34,7 +34,10 @@ namespace Gimnasio_app
                     switch (usuario.Rol.IdRol)
                     {
                         case (int)Roles.ADMIN:
-                            Response.Redirect("~/AdminControl.aspx", false); ;
+                            Response.Redirect("~/AdminControl.aspx", false);
+                            break;
+                        case (int)Roles.CLIENTE:
+                            Response.Redirect("~/perfil.aspx", false);
                             break;
                         default:
                             break;

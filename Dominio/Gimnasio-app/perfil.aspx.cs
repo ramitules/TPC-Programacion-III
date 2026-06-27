@@ -76,8 +76,8 @@ namespace Gimnasio_app
         // ---------- DATOS ----------
         protected void btnEditarDatos_click(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null) return;
-            Cliente cliente = (Cliente)Session["cliente"];
+            if (Session["usuario"] == null) return;
+            Cliente cliente = (Cliente)Session["usuario"];
 
             try
             {
@@ -145,8 +145,8 @@ namespace Gimnasio_app
 
         protected void btnDarDeBaja_click(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null) return;
-            Cliente cliente = (Cliente)Session["cliente"];
+            if (Session["usuario"] == null) return;
+            Cliente cliente = (Cliente)Session["usuario"];
             try
             {
                 new ClienteNegocio().DarBaja(cliente);
@@ -288,10 +288,10 @@ namespace Gimnasio_app
         }
         protected bool CrearPlan()
         {
-            if (Session["cliente"] == null) 
+            if (Session["usuario"] == null) 
                 return false;
 
-            Cliente cliente = (Cliente)Session["cliente"];
+            Cliente cliente = (Cliente)Session["usuario"];
             SuscripcionNegocio negocio = new SuscripcionNegocio();
 
             // No se puede crear una suscripcion mas si ya existe una pendiente de activacion
@@ -315,13 +315,20 @@ namespace Gimnasio_app
             suscripcionNueva.FechaFin = suscripcionNueva.FechaInicio.AddDays(suscripcionNueva.Plan.DuracionDiasPlan);
             suscripcionNueva.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
 
+            txtVencimiento.Text = suscripcionNueva.FechaFin.ToString("yyyy-MM-dd");
+            int vencimiento = (suscripcionNueva.FechaFin - DateTime.Now).Days;
+            lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
+            txtProximoPlan.Text = suscripcionNueva.Plan.NombrePlan;
+
             negocio.Agregar(suscripcionNueva, cliente);
+
+
             return true;
         }
         protected void btnCancelarSuscripcion_click(object sender, EventArgs e)
         {
-            if (Session["cliente"] == null) return;
-            Cliente cliente = (Cliente)Session["cliente"];
+            if (Session["usuario"] == null) return;
+            Cliente cliente = (Cliente)Session["usuario"];
 
             if(new SuscripcionNegocio().BajaSuscripcionCliente(cliente))
             {

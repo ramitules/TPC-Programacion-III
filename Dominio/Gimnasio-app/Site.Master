@@ -78,16 +78,11 @@
                 </li>
                 <%} %>
                 <%------------------------CLIENTE------------------------%>
-                <%else if (!(Session["cliente"] is null))
+                <%else if (Integraciones.Seguridad.accesoYPermisos((Dominio.Usuario)Session["usuario"], Dominio.Roles.CLIENTE))
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">
                         <i class="bi bi-journal-text"></i>Mis rutinas
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" runat="server" href="~/Ejercicios">
-                        <i class="bi bi-journal-text"></i>Mis ejercicios
                     </a>
                 </li>
                 <li class="nav-item mb-2">

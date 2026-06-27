@@ -24,14 +24,12 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT * FROM Rutinas WHERE IdUsuario = @Id");
+                datos.SetearConsulta("SELECT * FROM Rutinas WHERE IdUsuario = @Id AND Activo = 1");
                 datos.setearParametro("@Id", cliente.IdUsuario);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    if (!bool.Parse(datos.Lector["Activo"].ToString())) continue;
-
                     rutinas.Add(new Rutina() {
                         IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
                         Nombre = datos.Lector["Nombre"].ToString(),
@@ -66,13 +64,11 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT IdRutinas, Nombre, FechaCreacion, Dia, Activo FROM Rutinas WHERE IdUsuario IS NULL");
+                datos.SetearConsulta("SELECT IdRutinas, Nombre, FechaCreacion, Dia, Activo FROM Rutinas WHERE IdUsuario IS NULL AND Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    if (!bool.Parse(datos.Lector["Activo"].ToString())) continue;
-
                     rutinas.Add(new Rutina()
                     {
                         IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
@@ -248,7 +244,7 @@ namespace Negocio
 
         public List<DiaRutina> AgruparPorDia(List<Rutina> rutinas)
         {
-            string[] dias = new[] { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
+            string[] dias = new[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
             List<DiaRutina> resultado = new List<DiaRutina>();
 
             foreach (string dia in dias)
@@ -260,7 +256,7 @@ namespace Negocio
 
             resultado.Add(new DiaRutina
             {
-                DiaDeRutina = "Sin día",
+                DiaDeRutina = "Sin dia",
                 Rutinas = rutinas.Where(r => string.IsNullOrEmpty(r.Dia)).ToList()
             });
 

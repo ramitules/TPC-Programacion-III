@@ -22,7 +22,7 @@ namespace Gimnasio_app
             }
             if (!IsPostBack)
             {
-                Cliente cliente = (Cliente)Session["cliente"];
+                Cliente cliente = (Cliente)Session["usuario"];
                 RutinasNegocio negocio = new RutinasNegocio();
                 rptPropias.DataSource = negocio.AgruparPorDia(negocio.GetRutinasUsuario(cliente));
                 rptPropias.DataBind();

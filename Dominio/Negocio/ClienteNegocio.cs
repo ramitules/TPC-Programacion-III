@@ -198,9 +198,10 @@ namespace Negocio
             try
             {
                 datos.SetearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Email = @email");
+                datos.setearParametro("@email", email);
                 int cantidad = datos.EjecutarScalar();
 
-                if (cantidad > 0) return false;
+                if (cantidad > 0) return true;
             }
             catch (Exception ex)
             {
@@ -208,7 +209,7 @@ namespace Negocio
             }
             finally { datos.cerrarConexion(); }
             
-            return true;
+            return false;
         }
     }
 }

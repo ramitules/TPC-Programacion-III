@@ -112,6 +112,8 @@ namespace Negocio
         }
         public bool BajaSuscripcionCliente(Cliente cliente)
         {
+            string Excepcion = "Ocurrio un error al dar de baja una suscripcion (SuscripcionNegocio.BajaSuscripcionCliente())\n";
+
             SuscripcionNegocio negocio = new SuscripcionNegocio();
             Suscripcion suscripcionActual = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
 
@@ -126,7 +128,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception(Excepcion + ex.ToString());
             }
 
             return false;

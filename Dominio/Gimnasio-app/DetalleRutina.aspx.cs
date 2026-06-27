@@ -15,7 +15,8 @@ namespace Gimnasio_app
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!(Seguridad.SessionActiva(Session["cliente"])))
+            if (!Seguridad.SessionActiva(Session["usuario"]) ||
+                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.CLIENTE))
             {
                 Response.Redirect("Default", false);
                 return;
@@ -126,7 +127,7 @@ namespace Gimnasio_app
                 return;
             }
 
-            Cliente cliente = (Cliente)Session["cliente"];
+            Cliente cliente = (Cliente)Session["usuario"];
             Rutina rutina = new RutinasNegocio().Get(id);
             if (rutina is null)
             {
