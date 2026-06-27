@@ -14,11 +14,8 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //  TESTING
-            Session.Add("cliente", new ClienteNegocio().Get("9", true));
-            //  TESTING
-
-            if (!(Seguridad.SessionActiva(Session["cliente"])))
+            if (!Seguridad.SessionActiva(Session["usuario"]) ||
+                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.CLIENTE))
             {
                 Response.Redirect("Default", false);
                 return;

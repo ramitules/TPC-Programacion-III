@@ -17,12 +17,8 @@ namespace Gimnasio_app
         public bool TienePlanVigente { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //  TESTING
-            Cliente cliente = new ClienteNegocio().Get("9", true);
-            Session.Add("cliente", cliente);
-            //  TESTING
-
-            if (!(Seguridad.SessionActiva(Session["cliente"])))
+            if (!Seguridad.SessionActiva(Session["usuario"]) ||
+                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.CLIENTE))
             {
                 Response.Redirect("Default", false);
                 return;
@@ -30,9 +26,10 @@ namespace Gimnasio_app
 
             if (!IsPostBack)
             {
+                Cliente cliente = (Cliente)Session["usuario"];
                 SuscripcionNegocio suscripciones = new SuscripcionNegocio();
                 Suscripcion suscripcionVPendiente = suscripciones.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE);
-                Suscripcion suscripcionActual = cliente.SuscripcionCliente;
+                Suscripcion suscripcionActual = suscripciones.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
 
                 TienePlanProximo = suscripcionVPendiente.IdSuscripcion != 0;
                 TienePlanVigente = cliente.SuscripcionCliente != null && cliente.SuscripcionCliente.IdSuscripcion != 0 && cliente.SuscripcionCliente.Plan != null;

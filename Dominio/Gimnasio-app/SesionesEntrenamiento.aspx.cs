@@ -45,11 +45,8 @@ namespace Gimnasio_app
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //  TESTING
-            Session.Add("cliente", new ClienteNegocio().Get("9", true));
-            //  TESTING
-
-            if (!(Seguridad.SessionActiva(Session["cliente"])))
+            if (!Seguridad.SessionActiva(Session["usuario"]) ||
+                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.CLIENTE))
             {
                 Response.Redirect("Default", false);
                 return;
@@ -57,7 +54,7 @@ namespace Gimnasio_app
 
             if (!IsPostBack)
             {
-                Cliente cliente = (Cliente)Session["cliente"];
+                Cliente cliente = (Cliente)Session["usuario"];
                 // Cargar lista de sesiones de entrenamiento en Session
                 List<SesionEntrenamiento> sesiones = new SesionEntrenamientoNegocio().GetSesionesDeCliente(cliente.IdUsuario);
                 Session["sesionesCliente"] = sesiones;
