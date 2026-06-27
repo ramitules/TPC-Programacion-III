@@ -38,28 +38,14 @@ namespace AccesoDB
         public int EjecutarScalar()
         {
             comando.Connection = conexion;
-            try
-            {
-                conexion.Open();
-                return int.Parse(comando.ExecuteScalar().ToString());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            conexion.Open();
+            return int.Parse(comando.ExecuteScalar().ToString());
         }
         public void ejecutarLectura()
         {
             comando.Connection = conexion;
-            try
-            {
-                conexion.Open();
-                lector = comando.ExecuteReader();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error al ejecutar la consulta: " + e.Message);
-            }
+            conexion.Open();
+            lector = comando.ExecuteReader();
         }
         public void setearParametro(string nombre, object valor)
         {
@@ -68,15 +54,8 @@ namespace AccesoDB
         public void ejecutarAccion()
         {
             comando.Connection = conexion;
-            try
-            {
-                conexion.Open();
-                comando.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw ex;  // PENDIENTE
-            }
+            conexion.Open();
+            comando.ExecuteNonQuery();
         }
         public SqlDataReader Lector
         {
