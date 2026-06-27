@@ -98,15 +98,15 @@
                                     <div class="row g-2 align-items-end">
                                         <div class="col-auto">
                                             <label class="form-label small mb-1">Peso (kg)</label>
-                                            <asp:TextBox ID="txtPeso" runat="server" TextMode="Number" CssClass="form-control" Text='<%# Eval("ObjetivoKG") %>' />
+                                            <asp:TextBox ID="txtPeso" runat="server" TextMode="Number" min="0" step="0,5" CssClass="form-control" Text='<%# Eval("ObjetivoKG") %>' />
                                         </div>
                                         <div class="col-auto">
                                             <label class="form-label small mb-1">Reps</label>
-                                            <asp:TextBox ID="txtReps" runat="server" TextMode="Number" CssClass="form-control" Text='<%# Eval("ObjetivoRepeticiones") %>' />
+                                            <asp:TextBox ID="txtReps" runat="server" TextMode="Number" min="0" CssClass="form-control" Text='<%# Eval("ObjetivoRepeticiones") %>' />
                                         </div>
                                         <div class="col-auto">
                                             <label class="form-label small mb-1">RIR</label>
-                                            <asp:TextBox ID="txtRir" runat="server" TextMode="Number" CssClass="form-control" Text="0" />
+                                            <asp:TextBox ID="txtRir" runat="server" TextMode="Number" min="0" CssClass="form-control" Text="0" />
                                         </div>
                                         <div class="col-auto">
                                             <asp:HiddenField ID="hfObjetivoSeries" runat="server" Value='<%# Eval("ObjetivoSeries") %>' />

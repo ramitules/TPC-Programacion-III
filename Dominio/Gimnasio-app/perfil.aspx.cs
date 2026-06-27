@@ -89,7 +89,7 @@ namespace Gimnasio_app
                 else if (btnEditarDatos.Text.ToLower() == "guardar")
                 {
                     string nombre = txtNombre.Text.Trim();
-                    string apellido = txtApellido.Text.Trim().ToLower();
+                    string apellido = txtApellido.Text.Trim();
                     string email = txtEmail.Text.Trim().ToLower();
                     string fechaNacimiento = txtNacimiento.Text;
 
@@ -114,11 +114,14 @@ namespace Gimnasio_app
                         return;
                     }
 
+                    // Validacion peso KG
+                    float peso = Validaciones.validarPeso(txtPeso.Text);
+
                     cliente.Nombre = nombre;
                     cliente.Apellido = apellido;
                     cliente.Email = email;
                     cliente.FechaNacimiento = DateTime.Parse(fechaNacimiento);
-                    cliente.PesoCorporal = float.Parse(txtPeso.Text);
+                    cliente.PesoCorporal = peso;
 
                     new ClienteNegocio().Modificar(cliente);
 

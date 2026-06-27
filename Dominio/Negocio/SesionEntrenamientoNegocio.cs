@@ -40,7 +40,7 @@ namespace Negocio
                     sesion.FechaHoraFin = DateTime.Parse(datos.Lector["FechaHoraFin"].ToString());
                     sesion.Cliente = new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString());
 
-                    if (!(datos.Lector["IdRutina"] is null))
+                    if (!(datos.Lector["IdRutina"] is DBNull))
                         sesion.Rutina = new RutinasNegocio().Get(datos.Lector["IdRutina"].ToString());
                 }
             }

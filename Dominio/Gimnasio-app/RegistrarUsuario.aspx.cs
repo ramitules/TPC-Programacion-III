@@ -23,7 +23,7 @@ namespace Gimnasio_app
             try
             {
                 string nombre = txtNombre.Text.Trim();
-                string apellido = txtApellido.Text.Trim().ToLower();
+                string apellido = txtApellido.Text.Trim();
                 string email = txtEmail.Text.Trim().ToLower();
                 string fechaNacimiento = txtFechaNacimiento.Text;
                 string contrasenia = txtPassword.Text;
@@ -67,9 +67,9 @@ namespace Gimnasio_app
 
                 Cliente cliente = new Cliente
                 {
-                    Nombre = txtNombre.Text,
-                    Apellido = txtApellido.Text,
-                    Email = txtEmail.Text,
+                    Nombre = nombre,
+                    Apellido = apellido,
+                    Email = email,
                     FechaNacimiento = DateTime.Parse(fechaNacimiento),
                     FechaIngreso = DateTime.Now
                 };

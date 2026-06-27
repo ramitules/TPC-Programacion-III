@@ -214,7 +214,15 @@ namespace Gimnasio_app
 
         private float ParsearEntero(string valor)
         {
-            return float.TryParse(valor, out float resultado) ? resultado : 0;
+            if (float.TryParse(valor, out float resultado))
+            {
+                if (resultado < 0)
+                {
+                    return 0;
+                }
+                return resultado;
+            }
+            return 0;
         }
     }
 }

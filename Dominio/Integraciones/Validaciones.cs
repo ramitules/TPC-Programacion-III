@@ -38,8 +38,20 @@ namespace Integraciones
         {
             return !string.IsNullOrWhiteSpace(nombre);
         }
+        /// <summary>
+        /// Minimo 20kg - maximo 500kg
+        /// </summary>
+        public static float validarPeso(string peso)
+        {
+            if (!float.TryParse(peso, out float pesoFloat)) return 20;
+            
+            if (pesoFloat > 500) pesoFloat = 500;
+            if (pesoFloat < 20) pesoFloat = 20;
 
-        // Tarjeta de credito/debito (validacion de formato)
+            return pesoFloat;
+        }
+
+        // -- Tarjeta de credito/debito (validacion de formato) --
 
         private static string SoloDigitos(string valor)
         {
