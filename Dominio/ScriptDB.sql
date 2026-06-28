@@ -95,7 +95,7 @@ CREATE TABLE RutinaEjercicios (  -- Asigna los ejercicios específicos a una pla
 	IdRutinasEjercicios		INTEGER NOT NULL IDENTITY(1,1),
 	IdEjercicio 			INTEGER NOT NULL,
 	IdRutina				INTEGER NOT NULL,
-	ObjetivoKG				INTEGER DEFAULT 1,
+	ObjetivoKG				DECIMAL(6, 2) DEFAULT 1,
 	ObjetivoSeries 			SMALLINT DEFAULT 1,
 	ObjetivoRepeticiones 	SMALLINT DEFAULT 1,
 	OrdenEjercicio 			TINYINT DEFAULT 1 --<-- Si debe ser el primer ejercicio de la rutina del dia, el ultimo, etc.
@@ -122,7 +122,7 @@ CREATE TABLE SeriesCompletadas (  -- Guarda cada serie efectiva que hace el usua
 	IdSeriesCompletadas		INTEGER NOT NULL IDENTITY(1,1),
 	IdSesion 				INTEGER NOT NULL,
 	IdEjercicio 			INTEGER NOT NULL,
-	PesoLevantadoKG 		SMALLINT NOT NULL DEFAULT 0,
+	PesoLevantadoKG 		DECIMAL(6, 2) NOT NULL DEFAULT 0,
 	RepeticionesLogradas 	SMALLINT NOT NULL DEFAULT 0,
 	RIR 					TINYINT,  --<-- Reps In Reserve, o repeticiones de reserva que le quedaban antes de llegar al fallo.
 	EsRecordPersonal 		BIT NOT NULL DEFAULT 0
@@ -134,7 +134,53 @@ GO
 
 CREATE TABLE AccesoUsuarios (  -- Guarda el codigo de usuario y su contraseña para el acceso y/o demas validaciones
 	IdUsuarios				INT NOT NULL,
-	Pass		 			VARCHAR (200) NOT NULL,  -- Hash PBKDF2
+	Pass		 			VARCHAR (200) NOT NULL,
 	FOREIGN KEY(IdUsuarios) REFERENCES Usuarios (IdUsuarios)
 );
+GO
+
+--Tablas de auditoria (Probando)
+--Modificacion y/o eliminacion de usuarios
+CREATE TABLE Auditoria_Usuarios(
+  IdAuditoria INT IDENTITY(1,1),
+  IdUsuarioAfectado INT,
+  Accion VARCHAR(10),
+  DatosAnteriores VARCHAR(MAX),
+  DatosNuevos VARCHAR(MAX),
+  IdUsuarioApp INT NULL,
+  UsuarioBD VARCHAR(100) DEFAULT SUSER_SNAME(),
+  FechaHora DATETIME DEFAULT GETDATE(),
+  DireccionIP VARCHAR(45),
+
+  PRIMARY KEY(IdAuditoria)
+  );
+GO
+
+--Cambios de pass
+CREATE TABLE Auditoria_Pass(
+  IdHistorial INT IDENTITY(1,1),
+  IdUsuarioModificado INT,
+  Pass VARCHAR(255),
+  IdUsuarioModificador INT NULL,
+  UsuarioBD VARCHAR(100) DEFAULT SUSER_SNAME(),
+  FechaHora DATETIME DEFAULT GETDATE(),
+  DireccionIP VARCHAR(45),
+
+  PRIMARY KEY(IdHistorial)
+  );
+GO
+
+--Errores que vienen de la app
+CREATE TABLE Auditoria_Errores(
+  IdLog INT IDENTITY(1,1),
+  FechaHora DATETIME DEFAULT GETDATE(),
+  Modulo VARCHAR(100),
+  MensajeError VARCHAR(MAX),
+  StackTrace VARCHAR(MAX),
+  IdUsuarioLogueado INT NULL,
+  UsuarioBD VARCHAR(100) DEFAULT SUSER_SNAME(),
+  DatosEntrada VARCHAR(MAX),
+
+  PRIMARY KEY(IdLog)
+  );
 GO

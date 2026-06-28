@@ -65,35 +65,19 @@ VALUES
 ('Ezequiel', 'López', 'eze.lopez@email.com', '1990-02-17', 102.60, 3, '2026-04-02 21:00:00', 1),
 ('Micaela', 'Suárez', 'mica.s@email.com', '2001-01-28', 57.00, 3, '2026-04-10 14:15:00', 1),
 ('Tomás', 'Verón', 'tomas.v@email.com', '1989-06-11', 76.20, 3, '2026-04-15 17:00:00', 1),
-('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1);
-GO
+('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1),
 
--- Credenciales de acceso. La contrasenia de todos los usuarios seed es "Gimnasio123".
--- Los valores son hashes PBKDF2 (SHA-256, 100000 iteraciones) con el formato
--- "iteraciones.saltBase64.hashBase64" generados con Integraciones.HashContrasenia.
--- El salt es distinto en cada fila, por eso los hashes difieren aun con la misma contrasenia.
-INSERT INTO AccesoUsuarios (IdUsuarios, Pass)
-VALUES
-(1, '100000.fg1+/+sY43idAnXHeCxJNg==.9TdCRq9q6VUg/PRyfWm8XVCZzvLSAeOjbtPkYVBcizA='),
-(2, '100000.jJ8HTVUecBRsCTaTpwMJOg==.Fm/SUdM2Xz8wdzCCCvn2G5xRJfN3Nq4CYKKgDFhcaPg='),
-(3, '100000.WZtu+woFyEinB3Lk9jCLkg==.T1+E8z8HFwNmh4PKQ5pwbbdLfZjOf+uZJersN4+RGJs='),
-(4, '100000.tTWWDagtVI7QLY+LblGP5Q==.CC+RrQhk3hmfMsokgmJT55LQu5aupTfP4mvHtX9alIM='),
-(5, '100000.o0kKxNDqJMaBlkWRb5eNCw==.ACct9N3ymNDxT789+RxbCcnUgvwzF9HwKWMB6a4mr3g='),
-(6, '100000.v/U5PBhTp3csMLJum3JHsw==.CyrebXgzMBhm/SpsFbO70jOUoYiUNjDZVYNZBzsDuLI='),
-(7, '100000.lmjG31aucAjoNgpLZr7I4g==.D1qN8ak1V7pn/mQ8EFhMaKEfmmMSAj3+EiBC3ki7cDo='),
-(8, '100000.7TJvI4YtaBwk2rBn/WpPnA==.Jgh2lVfzDxuiu4P2+AQMo7+iP+15JxZWXJ7W8m4JwE0='),
-(9, '100000.qfOYJFo3CzMlfm8oTYHYfA==.mRl7fDlyw+t5HclQPaBevYFU73kYUzMdizxSMvUnzWU='),
-(10, '100000.5xJzfeTsC5vp/TeBDck30g==.rvM46O/X/V6G8+o2nkfqESXKZByOYExvhwULSp8WZeI='),
-(11, '100000./4tm7WbkSvH2vYMPX8voRw==./vke1yXLBiZ0VuueYK6DxgcC27X2NhJExAPZAikvBT8='),
-(12, '100000.4AeFoO81W7IsMrmd9IDhTA==.iABcr01EeLegwDndOLgcM2B74bb4m5g8s8WVJYt+pTg='),
-(13, '100000.LSnUOZZs0t9U4HPngNDBpQ==.6ETa6RdCP2hN45roUgK9qomCHCIcoX+oSIKtRnfCrfU='),
-(14, '100000.JjK/pcZXAWjw9r29cV2t9g==.9hqkUokOdKGfewMzpITVvxacgJZQjibR17ltXz307vI='),
-(15, '100000.Cd8UMj1Wa9sS5NfMrBbFvQ==.o1Ex0zyT9ITp6t5ExSEXpuH2eVxTgAP+dVBuzoZn4i8='),
-(16, '100000.LaGObr1bRJlMwHWQ6wIBrg==.4S0C+KEcd7okiAq3s4ibjWkkOf4nyCZCgFCetNh6HrU='),
-(17, '100000.jAKrSXrEEl3GdLBLHBvtbQ==.yu6Q9ExbMoBfNBZa/tvwaM0djixZpJBEHCHQnmlX6P8='),
-(18, '100000.jUwBuQOmbafcCvLUzcoOZg==.RK/oc/Z9999DLAjEnXqVKn0ZLDD4lhLLSFkAvhua6f4='),
-(19, '100000.inyERxP8QSJCVqU2bps1ug==.Cm2Uxqh5wi18GiftKvDVK2qbZE03qZXAXxkQdsm4vKg='),
-(20, '100000.x8h6k7xebwJe5OFus0zzrA==.EixwD29L25t95rQvNfKE8z+6lcwq00++cBo7vIFsoUE=');
+----
+('Bruno', 'Navarro', 'bruno.n@email.com', '1996-04-18', 81.50, 3, '2026-05-01 09:00:00', 1),
+('Melina', 'Quiroga', 'melina.q@email.com', '1998-12-03', 59.80, 3, '2026-05-03 18:30:00', 1),
+('Kevin', 'Morales', 'kevin.m@email.com', '1992-07-25', 88.10, 3, '2026-05-05 11:00:00', 1),
+('Rocío', 'Peralta', 'rocio.p@email.com', '2000-02-11', 54.60, 3, '2026-05-10 17:45:00', 1),
+('Nicolás', 'Vega', 'nico.v@email.com', '1995-09-08', 77.30, 3, '2026-05-12 20:00:00', 1),
+('Carla', 'Figueroa', 'carla.f@email.com', '1997-06-21', 62.40, 3, '2026-05-15 08:15:00', 1),
+('Matías', 'Ruiz', 'matias.r@email.com', '1993-11-17', 84.70, 3, '2026-05-18 19:20:00', 1),
+('Luciana', 'Paz', 'luciana.p@email.com', '1999-08-09', 56.90, 3, '2026-05-20 10:00:00', 1),
+('Federico', 'Sosa', 'fede.s@email.com', '1991-03-30', 91.20, 3, '2026-05-22 18:40:00', 1),
+('Antonella', 'Molina', 'anto.m@email.com', '2001-01-14', 52.80, 3, '2026-05-25 14:30:00', 1);
 GO
 
 INSERT INTO Ejercicios (Nombre, IdGrupoMuscular, LinkExplicacion)
@@ -139,37 +123,61 @@ VALUES
 ('Torso / Pierna Avanzado', NULL, '2025-02-20 11:30:00', 'Martes', 1),
 ('Rutina de Fuerza (5x5)', NULL, '2025-03-05 09:15:00', NULL, 1),
 
+----
+('Push Pull Legs', NULL, '2026-04-01 10:00:00', NULL, 1),
+('Hipertrofia General', NULL, '2026-04-05 09:00:00', NULL, 1),
+('Entrenamiento Funcional', NULL, '2026-04-10 18:00:00', NULL, 1),
+('Pérdida de Peso', NULL, '2026-04-15 16:00:00', NULL, 1),
+('Ganancia de Masa Muscular', NULL, '2026-04-20 11:00:00', NULL, 1),
+('Fullbody Intermedio', NULL, '2026-04-25 10:30:00', NULL, 1),
+('Entrenamiento Express 45 Minutos', NULL, '2026-05-01 17:00:00', NULL, 1),
+
 -- Rutinas personalizadas (IDs del script de Usuarios)
-('Hipertrofia Piernas - Sofía', 4, '2026-01-06 18:00:00', 'Lunes', 1),
+('Hipertrofia Piernas - Sofía', 8, '2026-01-06 18:00:00', 'Lunes', 1),
 ('Acondicionamiento General - Lucas', 5, '2026-01-13 19:45:00', NULL, 1),
 ('Definición / Quema Calórica - Florencia', 6, '2026-01-22 15:30:00', NULL, 1),
 ('Fuerza Máxima - Diego', 7, '2026-02-03 20:00:00', NULL, 1),
-('Rutina Adaptada - Martín', 9, '2026-02-19 10:20:00', NULL, 1);
+('Rutina Adaptada - Martín', 9, '2026-02-19 10:20:00', NULL, 1),
+
+----
+('Hipertrofia Tren Superior - Bruno', 21, '2026-05-03 18:00:00', 'Lunes', 1),
+('Fuerza y Potencia - Kevin', 23, '2026-05-08 20:00:00', 'Miércoles', 1),
+('Definición Muscular - Rocío', 24, '2026-05-12 17:00:00', 'Viernes', 1),
+('Plan Integral - Nicolás', 25, '2026-05-15 19:00:00', 'Martes', 1),
+('Ganancia Muscular - Carla', 26, '2026-05-18 18:00:00', 'Lunes', 1),
+('Preparación Física - Matías', 27, '2026-05-20 20:00:00', 'Jueves', 1),
+('Tonificación General - Luciana', 28, '2026-05-22 17:30:00', 'Miércoles', 1),
+('Entrenamiento de Fuerza - Federico', 29, '2026-05-24 19:00:00', 'Martes', 1),
+('Acondicionamiento Inicial - Antonella', 30, '2026-05-26 16:00:00', 'Viernes', 1);
 GO
 
 INSERT INTO Suscripciones (IdUsuario, IdPlan, IdEstado, FechaInicio, FechaVencimiento)
 VALUES 
-(4, 2, 2, '2026-01-05', '2026-02-04'),
-(5, 3, 2, '2026-01-12', '2026-02-11'),
-(6, 2, 2, '2026-01-20', '2026-02-19'),
-(7, 2, 2, '2026-02-02', '2026-03-04'),
-(8, 4, 2, '2026-02-10', '2026-05-11'), 
-(4, 3, 1, '2026-05-01', '2026-05-31'), 
-(5, 3, 1, '2026-05-12', '2026-06-11'), 
-(6, 2, 1, '2026-05-05', '2026-06-04'), 
 (9, 5, 1, '2026-02-18', '2026-08-17'), 
 (10, 2, 1, '2026-04-25', '2026-05-25'),
 (11, 3, 1, '2026-05-05', '2026-06-04'), 
 (12, 2, 1, '2026-05-12', '2026-06-11'), 
 (13, 2, 1, '2026-05-15', '2026-06-14'), 
 (14, 1, 2, '2026-04-02', '2026-04-03'),
-(15, 1, 2, '2026-04-10', '2026-04-11');
+(15, 1, 2, '2026-04-10', '2026-04-11'),
+
+--
+(21, 3, 1, '2026-05-01', '2026-06-30'),
+(22, 2, 1, '2026-05-03', '2026-07-02'),
+(23, 5, 1, '2026-05-05', '2026-11-01'),
+(24, 2, 4, '2026-06-20', '2026-07-20'),
+(25, 3, 3, '2026-05-10', '2026-06-09'),
+(26, 2, 1, '2026-05-15', '2026-06-14'),
+(27, 3, 1, '2026-05-18', '2026-06-17'),
+(28, 4, 1, '2026-05-20', '2026-08-18'),
+(29, 5, 1, '2026-05-22', '2026-11-18'),
+(30, 2, 2, '2026-04-01', '2026-05-01');
 GO
 
 
-
-INSERT INTO RutinaEjercicios (IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio)
-VALUES 
+INSERT INTO RutinaEjercicios
+(IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio)
+VALUES
 (7,  3, 10,	4, 10, 1),
 (1,  3, 10,	4, 12, 2),
 (6,  3, 10,	4, 10, 3),
@@ -186,54 +194,150 @@ VALUES
 (9,  3, 10,	4, 15, 4),
 (7,  5, 10,	4, 5,  1),
 (1,  5, 10,	4, 5,  2),
-(5,  5, 10,	4, 5,  3);
+(5,  5, 10,	4, 5,  3),
+
+(1, 9, 60, 4, 8, 1),
+(5, 9, 50, 4, 10, 2),
+(11, 9, 35, 4, 10, 3),
+(14, 9, 25, 3, 12, 4),
+(18, 9, 0, 3, 60, 5),
+
+(2, 10, 22, 4, 12, 1),
+(6, 10, 50, 4, 12, 2),
+(8, 10, 140, 4, 10, 3),
+(12, 10, 10, 4, 15, 4),
+(15, 10, 20, 4, 12, 5),
+
+(7, 11, 40, 3, 15, 1),
+(4, 11, 0, 3, 10, 2),
+(20, 11, 15, 3, 15, 3),
+
+(1, 16, 70, 4, 8, 1),
+(2, 16, 24, 4, 10, 2),
+(11, 16, 40, 4, 8, 3),
+(23, 16, 16, 3, 12, 4),
+
+(7, 17, 100, 5, 5, 1),
+(10, 17, 40, 5, 8, 2),
+(5, 17, 80, 5, 5, 3),
+(1, 17, 90, 5, 5, 4),
+
+(8, 19, 180, 4, 10, 1),
+(9, 19, 45, 4, 12, 2),
+(24, 19, 35, 4, 10, 3);
 GO
+
 
 INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
 VALUES 
-(4, 4, '2026-01-08 18:30:00', '2026-01-08 19:45:00'),
-(5, 5, '2026-01-15 19:00:00', '2026-01-15 20:15:00'),
-(6, 6, '2026-01-25 16:00:00', '2026-01-25 17:00:00'),
-(7, 7, '2026-02-05 20:15:00', '2026-02-05 21:45:00'),
-(4, 4, '2026-02-12 18:15:00', '2026-02-12 19:30:00'),
 (9, 8, '2026-02-22 09:30:00', '2026-02-22 10:45:00'),
-(7, 7, '2026-03-02 20:00:00', '2026-03-02 21:30:00'),
-(5, NULL, '2026-03-10 19:30:00', '2026-03-10 20:30:00'),
 (10, NULL, '2026-04-26 08:00:00', '2026-04-26 09:00:00'),
-(4, 1, '2026-05-02 10:00:00', '2026-05-02 11:15:00'),
 (11, 2, '2026-05-08 17:00:00', '2026-05-08 18:20:00'),
-(12, 2, '2026-05-14 19:15:00', '2026-05-14 20:30:00');
+(12, 2, '2026-05-14 19:15:00', '2026-05-14 20:30:00'),
+(13, 9, '2026-06-01 18:00:00', '2026-06-01 19:20:00'),
+(14, 10, '2026-06-03 19:00:00', '2026-06-03 20:15:00'),
+(15, 11, '2026-06-05 17:00:00', '2026-06-05 18:10:00'),
+
+(21, 16, '2026-05-04 18:00:00', '2026-05-04 19:20:00'),
+(21, 16, '2026-05-08 18:10:00', '2026-05-08 19:35:00'),
+(21, 16, '2026-05-12 18:00:00', '2026-05-12 19:15:00'),
+(21, 16, '2026-05-16 18:00:00', '2026-05-16 19:20:00'),
+
+(22, 10, '2026-05-05 17:00:00', '2026-05-05 18:10:00'),
+(22, 10, '2026-05-09 17:10:00', '2026-05-09 18:30:00'),
+
+(23, 17, '2026-05-07 20:00:00', '2026-05-07 21:30:00'),
+(23, 17, '2026-05-11 20:15:00', '2026-05-11 21:40:00'),
+(23, 17, '2026-05-15 20:00:00', '2026-05-15 21:20:00'),
+(23, 17, '2026-05-18 20:00:00', '2026-05-18 21:25:00'),
+
+(24, 18, '2026-05-12 17:00:00', '2026-05-12 18:10:00'),
+(24, 18, '2026-05-16 17:00:00', '2026-05-16 18:15:00'),
+
+(25, 19, '2026-05-15 19:00:00', '2026-05-15 20:20:00'),
+(25, 19, '2026-05-20 19:00:00', '2026-05-20 20:15:00'),
+
+(26, 20, '2026-05-18 18:00:00', '2026-05-18 19:15:00'),
+(27, 21, '2026-05-20 20:00:00', '2026-05-20 21:20:00'),
+(28, 22, '2026-05-22 17:30:00', '2026-05-22 18:45:00'),
+(29, 23, '2026-05-24 19:00:00', '2026-05-24 20:25:00'),
+(30, 24, '2026-05-26 16:00:00', '2026-05-26 17:00:00');
 GO
 
-INSERT INTO SeriesCompletadas (IdSesion, IdEjercicio, PesoLevantadoKG, RepeticionesLogradas, RIR, EsRecordPersonal)
-VALUES 
-(1, 7, 40, 10, 3, 0), 
-(1, 7, 50, 8,  2, 0),
-(1, 7, 50, 8,  1, 0),
-(1, 7, 55, 6,  0, 1),
-(1, 8, 100, 12, 2, 0),
-(1, 8, 120, 12, 1, 0),
-(1, 8, 130, 10, 0, 1),
-(4, 7, 100, 5, 2, 0),
-(4, 7, 100, 5, 2, 0),
-(4, 7, 105, 5, 1, 0),
-(4, 7, 105, 5, 1, 0),
-(4, 7, 110, 5, 0, 1),
-(4, 1, 80, 5, 2, 0),
-(4, 1, 85, 5, 1, 0),
-(4, 1, 85, 5, 1, 0),
-(4, 1, 90, 4, 0, 0),
-(8, 14, 25, 12, 2, 0),
-(8, 14, 25, 10, 1, 0),
-(8, 14, 30, 8,  0, 0),
-(8, 16, 20, 15, 3, 0),
-(8, 16, 25, 12, 2, 0),
-(8, 16, 25, 12, 1, 0),
-(11, 1, 60, 8, 2, 0),
-(11, 1, 65, 8, 2, 0),
-(11, 1, 70, 8, 1, 0),
-(11, 1, 70, 7, 0, 0),
-(11, 5, 50, 10, 2, 0),
-(11, 5, 55, 10, 1, 0),
-(11, 5, 60, 8,  0, 0);
+INSERT INTO SeriesCompletadas
+(IdSesion, IdEjercicio, PesoLevantadoKG, RepeticionesLogradas, RIR, EsRecordPersonal)
+VALUES
+(3, 1, 60, 8, 2, 0),
+(3, 1, 65, 8, 2, 0),
+(3, 1, 70, 8, 1, 0),
+(3, 1, 70, 7, 0, 0),
+(3, 5, 50, 10, 2, 0),
+(3, 5, 55, 10, 1, 0),
+(3, 5, 60, 8, 0, 0),
+
+(5, 1, 60, 10, 2, 0),
+(5, 1, 65, 8, 1, 1),
+(5, 11, 35, 10, 2, 0),
+(5, 11, 40, 8, 1, 1),
+
+(6, 2, 22, 12, 2, 0),
+(6, 2, 24, 10, 1, 1),
+(6, 6, 50, 12, 2, 0),
+(6, 6, 55, 10, 1, 1),
+
+(7, 1, 70, 8, 1, 0),
+(7, 5, 65, 8, 1, 1),
+
+(8, 14, 20, 15, 2, 0),
+(8, 14, 25, 12, 1, 0),
+(8, 27, 18, 12, 1, 1),
+
+(9, 14, 25, 12, 2, 0),
+(9, 15, 30, 10, 1, 1),
+
+(10, 7, 90, 5, 2, 0),
+(10, 7, 100, 5, 1, 1),
+(10, 1, 80, 5, 1, 1),
+
+(11, 7, 100, 5, 1, 0),
+(11, 10, 40, 8, 1, 1),
+
+(12, 23, 100, 10, 2, 0),
+(12, 23, 120, 8, 1, 1),
+
+(13, 23, 120, 10, 1, 0),
+(13, 24, 45, 12, 1, 1),
+
+(14, 8, 180, 10, 1, 1),
+(14, 9, 50, 12, 1, 1),
+
+(15, 2, 26, 12, 2, 0),
+(15, 2, 28, 10, 1, 1),
+
+(16, 7, 120, 5, 1, 1),
+(16, 5, 85, 5, 1, 1),
+
+(17, 12, 12, 15, 2, 0),
+(17, 12, 15, 12, 1, 1),
+
+(18, 14, 35, 10, 1, 1),
+(18, 16, 35, 10, 1, 1),
+
+(19, 1, 75, 6, 1, 1),
+(19, 5, 80, 6, 1, 1),
+
+(20, 11, 45, 8, 1, 1),
+(20, 26, 30, 10, 1, 1),
+
+(21, 8, 200, 8, 1, 1),
+(21, 23, 140, 8, 1, 1),
+
+(22, 18, 0, 60, 2, 0),
+(22, 25, 0, 20, 1, 1),
+
+(23, 1, 65, 10, 1, 0),
+(23, 5, 60, 10, 1, 0),
+
+(24, 7, 80, 8, 1, 0),
+(24, 23, 110, 10, 1, 1);
 GO
