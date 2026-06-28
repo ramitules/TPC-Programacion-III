@@ -34,7 +34,8 @@
                     </a>
                 </li>
                 <%------------------------ADMIN SUPERUSUARIO------------------------%>
-                <%if (!(Session["admin"] is null))
+                <% Dominio.Usuario usuarioActual = (Dominio.Usuario)Session["usuario"]; %>
+                <% if (usuarioActual != null && usuarioActual.Rol.IdRol == (int)Dominio.Roles.ADMIN)
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Socios">
@@ -78,7 +79,7 @@
                 </li>
                 <%} %>
                 <%------------------------CLIENTE------------------------%>
-                <%else if (Integraciones.Seguridad.accesoYPermisos((Dominio.Usuario)Session["usuario"], Dominio.Roles.CLIENTE))
+                <%else if (usuarioActual != null && usuarioActual.Rol.IdRol == (int)Dominio.Roles.CLIENTE)
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">

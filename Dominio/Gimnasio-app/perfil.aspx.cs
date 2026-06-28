@@ -29,7 +29,6 @@ namespace Gimnasio_app
                 Cliente cliente = (Cliente)Session["usuario"];
                 SuscripcionNegocio suscripciones = new SuscripcionNegocio();
                 Suscripcion suscripcionVPendiente = suscripciones.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE);
-                Suscripcion suscripcionActual = suscripciones.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.ACTIVA);
 
                 TienePlanProximo = suscripcionVPendiente.IdSuscripcion != 0;
                 TienePlanVigente = cliente.SuscripcionCliente != null && cliente.SuscripcionCliente.IdSuscripcion != 0 && cliente.SuscripcionCliente.Plan != null;
@@ -332,14 +331,19 @@ namespace Gimnasio_app
 
             if(new SuscripcionNegocio().BajaSuscripcionCliente(cliente))
             {
+                // Reflejar la baja en el panel sin esperar a una recarga: ya no hay plan vigente.
+                cliente.SuscripcionCliente = null;
+                txtVencimiento.Text = "";
+                lblVencimiento.Text = "No tenes una suscripcion activa.";
+                btnCambiarPlan.Enabled = false;
+                btnRenovarPlan.Enabled = false;
+
                 Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
             }
             else
             {
                 Toasts.ToastError(this, "Ha ocurrido un error. Por favor intente nuevamente.");
             }
-            
-
         }
     }
 }

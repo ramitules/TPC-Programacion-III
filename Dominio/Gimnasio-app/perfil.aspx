@@ -117,7 +117,12 @@
 
     </div>
 
-    <%-- ====================== MODAL DE PAGO ====================== --%>
+    <%-- ====================== MODAL DE PAGO ======================
+        Esta parte es simplemente un mock para simular una pasarela de pagos.
+        No esta conectado a ningun proveedor de servicios de pago ni API.
+        Solo corrobora que el formato sea el esperado y aprueba automatico,
+        procesando la suscripcion como corresponde.--%>
+
     <asp:UpdatePanel ID="upPago" runat="server">
         <ContentTemplate>
             <asp:HiddenField ID="hfAccionPago" runat="server" />

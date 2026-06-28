@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
+using Negocio;
 
 namespace Gimnasio_app
 {
@@ -30,13 +31,15 @@ namespace Gimnasio_app
                 Usuario usuario = Seguridad.logueo(email, pass);
                 if (usuario != null)
                 {
-                    Session.Add("usuario", usuario);
                     switch (usuario.Rol.IdRol)
                     {
                         case (int)Roles.ADMIN:
+                            Session.Add("usuario", usuario);
                             Response.Redirect("~/AdminControl.aspx", false);
                             break;
                         case (int)Roles.CLIENTE:
+                            Cliente cliente = new ClienteNegocio().Get(usuario.IdUsuario.ToString(), full: true);
+                            Session.Add("usuario", cliente);
                             Response.Redirect("~/perfil.aspx", false);
                             break;
                         default:
@@ -50,10 +53,9 @@ namespace Gimnasio_app
                     lblError.Visible = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                throw;
             }
         }
     }

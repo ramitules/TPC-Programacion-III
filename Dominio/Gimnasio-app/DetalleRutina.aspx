@@ -98,7 +98,7 @@
                                     <div class="row g-2 align-items-end">
                                         <div class="col-auto">
                                             <label class="form-label small mb-1">Peso (kg)</label>
-                                            <asp:TextBox ID="txtPeso" runat="server" TextMode="Number" min="0" step="0,5" CssClass="form-control" Text='<%# Eval("ObjetivoKG") %>' />
+                                            <asp:TextBox ID="txtPeso" runat="server" TextMode="Number" min="0" step="0.5" CssClass="form-control" Text='<%# Eval("ObjetivoKG") %>' />
                                         </div>
                                         <div class="col-auto">
                                             <label class="form-label small mb-1">Reps</label>

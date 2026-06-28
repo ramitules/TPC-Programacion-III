@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
 
 namespace Gimnasio_app
 {
@@ -215,12 +216,10 @@ namespace Gimnasio_app
 
         private float ParsearEntero(string valor)
         {
-            if (float.TryParse(valor, out float resultado))
+            if (float.TryParse(valor, NumberStyles.Float, CultureInfo.InvariantCulture, out float resultado))
             {
                 if (resultado < 0)
-                {
                     return 0;
-                }
                 return resultado;
             }
             return 0;
