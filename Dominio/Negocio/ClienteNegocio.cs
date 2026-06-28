@@ -1,5 +1,6 @@
 using AccesoDB;
 using Dominio;
+using Integraciones;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,7 +127,9 @@ namespace Negocio
             datos.setearParametro("@FechaNacimiento", cliente.FechaNacimiento);
             datos.setearParametro("@IdRol", cliente.Rol.IdRol);
             datos.setearParametro("@FechaIngreso", cliente.FechaIngreso);
-            datos.setearParametro("@Pass", pass);
+            // Solo se hashea cuando viene una contrasenia nueva. En la modificacion
+            // de perfil se pasa "" y el SP deja la contrasenia existente intacta.
+            datos.setearParametro("@Pass", string.IsNullOrEmpty(pass) ? pass : HashContrasenia.Hashear(pass));
 
             datos.ejecutarAccion();
         }

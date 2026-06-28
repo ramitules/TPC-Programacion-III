@@ -49,12 +49,15 @@ namespace Integraciones
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsultaSP("sp_logueo"); 
+                datos.SetearConsultaSP("sp_logueo");
                 datos.setearParametro("@email", email);
-                datos.setearParametro("@pass", pass);
                 datos.ejecutarLectura();
                 if (datos.Lector.Read())
                 {
+                    // La validacion de la contrasenia se hace aca (PBKDF2), no en SQL.
+                    if (!HashContrasenia.Verificar(pass, datos.Lector["Pass"] as string))
+                        return null; // Contrasenia incorrecta
+
                     int rol = Convert.ToInt32(datos.Lector["IdRol"]);
                     if (rol == (int)Roles.CLIENTE)
                     {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AccesoDB;
 using Dominio;
+using Integraciones;
 
 namespace Negocio
 {
@@ -99,7 +100,8 @@ namespace Negocio
                 datos.setearParametro("@PesoCorporalKG", 0);
                 datos.setearParametro("@IdRol", admin.Rol.IdRol);
                 datos.setearParametro("@FechaIngreso", DateTime.Now);
-                datos.setearParametro("@Pass", pass);
+                // datos.setearParametro("@Pass", pass);
+                datos.setearParametro("@Pass", string.IsNullOrEmpty(pass) ? pass : HashContrasenia.Hashear(pass));
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -125,7 +127,8 @@ namespace Negocio
                 datos.setearParametro("@IdRol", admin.Rol.IdRol);
                 datos.setearParametro("@FechaIngreso", admin.FechaIngreso);
                 datos.setearParametro("@Activo", admin.Activo);
-                datos.setearParametro("@Pass", pass);
+                // datos.setearParametro("@Pass", pass);
+                datos.setearParametro("@Pass", string.IsNullOrEmpty(pass) ? pass : HashContrasenia.Hashear(pass));
                 datos.setearParametro("@IdUsuario", admin.IdUsuario);
                 datos.ejecutarAccion();
             }

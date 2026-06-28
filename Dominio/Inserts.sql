@@ -68,7 +68,35 @@ VALUES
 ('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1);
 GO
 
-INSERT INTO Ejercicios (Nombre, IdGrupoMuscular)
+-- Credenciales de acceso. La contrasenia de todos los usuarios seed es "Gimnasio123".
+-- Los valores son hashes PBKDF2 (SHA-256, 100000 iteraciones) con el formato
+-- "iteraciones.saltBase64.hashBase64" generados con Integraciones.HashContrasenia.
+-- El salt es distinto en cada fila, por eso los hashes difieren aun con la misma contrasenia.
+INSERT INTO AccesoUsuarios (IdUsuarios, Pass)
+VALUES
+(1, '100000.fg1+/+sY43idAnXHeCxJNg==.9TdCRq9q6VUg/PRyfWm8XVCZzvLSAeOjbtPkYVBcizA='),
+(2, '100000.jJ8HTVUecBRsCTaTpwMJOg==.Fm/SUdM2Xz8wdzCCCvn2G5xRJfN3Nq4CYKKgDFhcaPg='),
+(3, '100000.WZtu+woFyEinB3Lk9jCLkg==.T1+E8z8HFwNmh4PKQ5pwbbdLfZjOf+uZJersN4+RGJs='),
+(4, '100000.tTWWDagtVI7QLY+LblGP5Q==.CC+RrQhk3hmfMsokgmJT55LQu5aupTfP4mvHtX9alIM='),
+(5, '100000.o0kKxNDqJMaBlkWRb5eNCw==.ACct9N3ymNDxT789+RxbCcnUgvwzF9HwKWMB6a4mr3g='),
+(6, '100000.v/U5PBhTp3csMLJum3JHsw==.CyrebXgzMBhm/SpsFbO70jOUoYiUNjDZVYNZBzsDuLI='),
+(7, '100000.lmjG31aucAjoNgpLZr7I4g==.D1qN8ak1V7pn/mQ8EFhMaKEfmmMSAj3+EiBC3ki7cDo='),
+(8, '100000.7TJvI4YtaBwk2rBn/WpPnA==.Jgh2lVfzDxuiu4P2+AQMo7+iP+15JxZWXJ7W8m4JwE0='),
+(9, '100000.qfOYJFo3CzMlfm8oTYHYfA==.mRl7fDlyw+t5HclQPaBevYFU73kYUzMdizxSMvUnzWU='),
+(10, '100000.5xJzfeTsC5vp/TeBDck30g==.rvM46O/X/V6G8+o2nkfqESXKZByOYExvhwULSp8WZeI='),
+(11, '100000./4tm7WbkSvH2vYMPX8voRw==./vke1yXLBiZ0VuueYK6DxgcC27X2NhJExAPZAikvBT8='),
+(12, '100000.4AeFoO81W7IsMrmd9IDhTA==.iABcr01EeLegwDndOLgcM2B74bb4m5g8s8WVJYt+pTg='),
+(13, '100000.LSnUOZZs0t9U4HPngNDBpQ==.6ETa6RdCP2hN45roUgK9qomCHCIcoX+oSIKtRnfCrfU='),
+(14, '100000.JjK/pcZXAWjw9r29cV2t9g==.9hqkUokOdKGfewMzpITVvxacgJZQjibR17ltXz307vI='),
+(15, '100000.Cd8UMj1Wa9sS5NfMrBbFvQ==.o1Ex0zyT9ITp6t5ExSEXpuH2eVxTgAP+dVBuzoZn4i8='),
+(16, '100000.LaGObr1bRJlMwHWQ6wIBrg==.4S0C+KEcd7okiAq3s4ibjWkkOf4nyCZCgFCetNh6HrU='),
+(17, '100000.jAKrSXrEEl3GdLBLHBvtbQ==.yu6Q9ExbMoBfNBZa/tvwaM0djixZpJBEHCHQnmlX6P8='),
+(18, '100000.jUwBuQOmbafcCvLUzcoOZg==.RK/oc/Z9999DLAjEnXqVKn0ZLDD4lhLLSFkAvhua6f4='),
+(19, '100000.inyERxP8QSJCVqU2bps1ug==.Cm2Uxqh5wi18GiftKvDVK2qbZE03qZXAXxkQdsm4vKg='),
+(20, '100000.x8h6k7xebwJe5OFus0zzrA==.EixwD29L25t95rQvNfKE8z+6lcwq00++cBo7vIFsoUE=');
+GO
+
+INSERT INTO Ejercicios (Nombre, IdGrupoMuscular, LinkExplicacion)
 VALUES 
 ('Press de Banca con Barra', 1, 'https://www.simplyfitness.com/es/pages/barbell-bench-press'),
 ('Press Inclinado con Mancuernas', 1, 'https://www.simplyfitness.com/es/pages/incline-dumbbell-bench-press'),

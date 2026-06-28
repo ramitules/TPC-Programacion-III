@@ -184,7 +184,7 @@ CREATE PROCEDURE sp_CrearUsuario (
 	@PesoCorporalKG DECIMAL(5, 2),
 	@IdRol TINYINT,
 	@FechaIngreso DATETIME,
-	@Pass VARCHAR(40)
+	@Pass VARCHAR(200)
 )
 AS
 BEGIN
@@ -217,7 +217,7 @@ CREATE PROCEDURE sp_ModificarUsuario (
 	@FechaIngreso DATETIME,
 	@Activo BIT,
 	@IdUsuario INT,
-	@Pass VARCHAR(150)
+	@Pass VARCHAR(200)
 )
 AS
 BEGIN
@@ -419,29 +419,30 @@ BEGIN
 END
 GO
 
---Busca coincidencia de alguna instancia en una vista VW_Usuarios y trae todos los atributos 
+--Busca al usuario por Email y trae sus atributos junto con el hash de la contrasenia.
+--La validacion de la contrasenia se hace en la capa de aplicacion (PBKDF2), no en SQL.
 CREATE PROCEDURE sp_logueo
-	@Email VARCHAR(100),
-	@Pass VARCHAR(100)
+	@Email VARCHAR(100)
 AS
 BEGIN
-SELECT IdUsuarios, 
-Nombre, 
-Apellido, 
-Email, 
-FechaNacimiento, 
-PesoCorporalKG, 
-IdRol, 
-[Rol Nombre], 
-FechaIngreso, 
-IdPlan, [Plan], 
-Activo, 
-PrecioMensual, 
+SELECT IdUsuarios,
+Nombre,
+Apellido,
+Email,
+FechaNacimiento,
+PesoCorporalKG,
+IdRol,
+[Rol Nombre],
+FechaIngreso,
+IdPlan, [Plan],
+Activo,
+PrecioMensual,
 DuracionDias,
-IdEstado, Estado, 
-FechaInicio, 
-FechaVencimiento 
-FROM VW_Usuarios 
-WHERE Email = @Email AND Pass = @Pass
+IdEstado, Estado,
+FechaInicio,
+FechaVencimiento,
+Pass
+FROM VW_Usuarios
+WHERE Email = @Email
 END
 GO
