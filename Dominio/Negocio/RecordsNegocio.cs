@@ -58,40 +58,5 @@ namespace Negocio
 
             return records;
         }
-
-        /// <summary>
-        /// Devuelve el peso maximo (en KG) que el cliente levanto historicamente en un ejercicio.
-        /// Devuelve 0 si todavia no registro ninguna serie de ese ejercicio.
-        /// Se usa al registrar una serie para determinar si constituye un nuevo record personal.
-        /// </summary>
-        public float GetMaxPesoEjercicio(int idUsuario, int idEjercicio)
-        {
-            string Excepcion = "Ocurrio un error al obtener el peso maximo del ejercicio (RecordsNegocio.GetMaxPesoEjercicio())\n";
-
-            AccesoADatos datos = new AccesoADatos();
-            try
-            {
-                datos.SetearConsulta(@"SELECT MAX(SC.PesoLevantadoKG)
-                    FROM SeriesCompletadas SC
-                    INNER JOIN SesionesEntrenamiento SE ON SC.IdSesion = SE.IdSesionesEntrenamiento
-                    WHERE SE.IdUsuario = @IdUsuario AND SC.IdEjercicio = @IdEjercicio");
-                datos.setearParametro("@IdUsuario", idUsuario);
-                datos.setearParametro("@IdEjercicio", idEjercicio);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read() && !(datos.Lector[0] is DBNull))
-                    return float.Parse(datos.Lector[0].ToString());
-
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Excepcion + ex.ToString());
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
     }
 }
