@@ -244,14 +244,14 @@ namespace Negocio
 
         public List<DiaRutina> AgruparPorDia(List<Rutina> rutinas)
         {
-            string[] dias = new[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+            string[] dias = new[] { "lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo" };
             List<DiaRutina> resultado = new List<DiaRutina>();
 
             foreach (string dia in dias)
                 resultado.Add(new DiaRutina
                 {
                     DiaDeRutina = dia,
-                    Rutinas = rutinas.Where(r => string.Equals(r.Dia, dia, StringComparison.OrdinalIgnoreCase)).ToList()
+                    Rutinas = rutinas.Where(r => r.Dia == dia).ToList()
                 });
 
             resultado.Add(new DiaRutina
@@ -278,11 +278,10 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw new Exception(excepcion + ex.ToString());
-                    
             }
             finally
             {
-
+                Datos.cerrarConexion();
             }
         }
 

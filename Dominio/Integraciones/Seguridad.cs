@@ -91,10 +91,9 @@ namespace Integraciones
                     return null; // No se encontró un usuario con esas credenciales
                 }
             }
-            catch (Exception ex)
+            finally
             {
-
-                throw;
+                datos.cerrarConexion();
             }
         }
     }

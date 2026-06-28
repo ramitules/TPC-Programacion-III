@@ -191,7 +191,7 @@ namespace Negocio
                 datos.setearParametro("@IdUsuario", nuevo.Cliente.IdUsuario);
                 datos.setearParametro("@IdRutina", (object)nuevo.Rutina?.IdRutina ?? DBNull.Value);
                 datos.setearParametro("@FechaHoraInicio", nuevo.FechaHoraInicio);
-                datos.setearParametro("@FechaHoraFin", DBNull.Value);
+                datos.setearParametro("@FechaHoraFin", nuevo.FechaHoraFin);
                 return datos.EjecutarScalar();
             }
             finally { datos.cerrarConexion(); }
