@@ -13,14 +13,21 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                ClienteNegocio clienteNegocio = new ClienteNegocio();
-                List<Cliente> clientes = clienteNegocio.ListarClientes(true);
-                Session["listaClientesEntrenador"] = clientes; //Guardo todo en Session 
+                if (!IsPostBack)
+                {
+                    ClienteNegocio clienteNegocio = new ClienteNegocio();
+                    List<Cliente> clientes = clienteNegocio.ListarClientes(true);
+                    Session["listaClientesEntrenador"] = clientes;
 
-                dgvClientes.DataSource = clientes;
-                dgvClientes.DataBind();
+                    dgvClientes.DataSource = clientes;
+                    dgvClientes.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al cargar la lista de clientes (PanelEntrenador.Page_Load()): ", ex);
             }
         }
 
@@ -34,17 +41,24 @@ namespace Gimnasio_app
 
         private void aplicarFiltros()
         {
-            List<Cliente> clientes = (List<Cliente>)Session["listaClientesEntrenador"];
-            List<Cliente> filtrado = clientes;
-
-            if (txtBuscar.Text != "")
+            try
             {
-                filtrado = filtrado.FindAll(a =>
-                    (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower())); //emparejo el texto para la busqueda
-            }
+                List<Cliente> clientes = (List<Cliente>)Session["listaClientesEntrenador"];
+                List<Cliente> filtrado = clientes;
 
-            dgvClientes.DataSource = filtrado;
-            dgvClientes.DataBind();
+                if (txtBuscar.Text != "")
+                {
+                    filtrado = filtrado.FindAll(a =>
+                        (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
+                }
+
+                dgvClientes.DataSource = filtrado;
+                dgvClientes.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al aplicar filtros de clientes (PanelEntrenador.aplicarFiltros()): ", ex);
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
