@@ -66,8 +66,6 @@ VALUES
 ('Micaela', 'Suárez', 'mica.s@email.com', '2001-01-28', 57.00, 3, '2026-04-10 14:15:00', 1),
 ('Tomás', 'Verón', 'tomas.v@email.com', '1989-06-11', 76.20, 3, '2026-04-15 17:00:00', 1),
 ('Natalia', 'Blanco', 'naty.b@email.com', '1994-10-05', 68.90, 3, '2026-04-20 09:15:00', 1),
-
-----
 ('Bruno', 'Navarro', 'bruno.n@email.com', '1996-04-18', 81.50, 3, '2026-05-01 09:00:00', 1),
 ('Melina', 'Quiroga', 'melina.q@email.com', '1998-12-03', 59.80, 3, '2026-05-03 18:30:00', 1),
 ('Kevin', 'Morales', 'kevin.m@email.com', '1992-07-25', 88.10, 3, '2026-05-05 11:00:00', 1),
@@ -340,4 +338,47 @@ VALUES
 
 (24, 7, 80, 8, 1, 0),
 (24, 23, 110, 10, 1, 1);
+GO
+
+-- Contraseñas semilla
+-- Admins          -> Admin123!
+-- Entrenadores    → Profe123!
+-- Administrativos → Recep123!
+-- Clientes        → Cliente123!
+INSERT INTO AccesoUsuarios (IdUsuarios, Pass)
+VALUES
+-- Admins (IdRol = 1)
+(1,  '100000.s1gZGwXaK9IXfjFUDLfD1A==.83iEJhswZcxY7VAEeHeeqj9O6cNJmqvZvFz8hYaeVys='),
+(2,  '100000.KCjLwoMmF331PDrAMV4BSw==.lbZhkVmxHFWK80fa19CSJhUYwrG7OYavfI4vjhxQJPA='),
+-- Entrenadores (IdRol = 4)
+(3,  '100000.O7qnXOBk0rU9VwR80a43dw==.rgZIdCCePaHnLIeAvKL9ZUCrOzXYY5SCtWrY6CADJww='),
+(4,  '100000.TV/XoddFrAcvjLxNPhpqrQ==.IBTPLUIW17TpyLqVkA1+fxWk+9vGM5dqYhAyOOSn7Z4='),
+(5,  '100000.qD/hgCapv0n1P4lIR5ixKw==.FoGIdLx7Hn33Y5bEoNHhXjT5g4Vzh7HqzBSm2yXO8is='),
+-- Administrativos (IdRol = 2)
+(6,  '100000.lN0wZlc3ee1dZu1POVB7Cw==.92P3r3xVA5dvnll3A/jTOi8fY+ciBG4RJkRC8PjJskQ='),
+(7,  '100000.xEvgDHoP3QIhlUrI88cpsw==.csyHX9+95YlNo/45KqBw/Y9YXFHWNH3x+i87EjWStQI='),
+-- Clientes (IdRol = 3)
+(8,  '100000./f2Re75PP9mzDgwik+69/w==.p54Q4HNT3ZCyyEvCxN6hsCmgTXbh0OEHnUTm7TBGYX0='),
+(9,  '100000.GUmxo/rvVtJ7KxlXm0Jqng==.pwqVtEYO/l4oIDPdbWmQTtsr3uTmEQ0/UYWim/kpENc='),
+(10, '100000.fTYBUImMu8Qix/i3JRMS+A==.HXzFkhuKgzePFZU/FaC5tt4SWS/P+wLhXGVNxTI70W4='),
+(11, '100000.uxZPuhyes7zn5eqxNQs+CA==.HzFpli5mxT0aavbZtmfNPR34rlZr9QbqIFjU5MdE7EY='),
+(12, '100000.2vGTqbM12HRoylSKA9zbPA==.C+nxZKag4+V5X8pE4aHrz1u9L+aaadVUKlfswhc7OvQ='),
+(13, '100000.2eFigehiCmyo4AhqVIbnJA==.yH6JyZvVi12IcPgPLgrNHOnnrzxJ/M1De+l+XAq7NYM='),
+(14, '100000.5v/VDTINVBeTBlkJVL37QA==.lU1mOaMLQ9/aS4dydvoRaGOlCdb/Z7tQhnl7IOxVyis='),
+(15, '100000.A48vh/e9y+umuxuTMZyWEg==.KP+Ei1sicUlFLcZEnk/SPeRWW9/F2G2ikW++MGquw9k='),
+(16, '100000.fber1YFpsqNEQk5neovi0Q==.MaxOC1XBg1S/lRLxj70i1h+atQ/YAz5pBrXI0LVyeBc='),
+(17, '100000.JBfP973Ty0CrlhruJnWYiw==.efnlqpMI586aR/NYoHcxEWuK8z2i6cFJl2dw/sEUhSk='),
+(18, '100000.yrsfOHHuFGg1+0hijMY5Hw==.y4CaF6okxVj/pk8nzT4uxRa8dPBRbMPU6QC9fFOGpoE='),
+(19, '100000.uRZeMhwz7m3iTNCdkswIPA==.eJj+gRgRSvZnQrgHb2CS5NYgE3/4NA8f20pkqNBLV00='),
+(20, '100000.mHSIoZeXFFtcRR+9mPB5TA==.QH6ByA8J0fo+Zkl0KG1dLQ8ek9SfpdX8+AMLfcrs1+Y='),
+(21, '100000.8hWeXzZHDdTjn8I4NLXlBA==.ExU3tayAj3io633Sl1BsgdkIq0Fb6KEtAoWlYtG0RA8='),
+(22, '100000.DtZxhJidnsI2EAC3V6KKpA==.gFc17drmPXBx81AP5lMvc5oG/2UtSZQvyn4OKOTL3Pg='),
+(23, '100000.t40g9Q6vYv94FTuZTXmdow==.H6cCKwhcl7NIJ4ctHiyZeQfhJMdKj/vkpLTGplcz1T4='),
+(24, '100000.3LOfkmK+HGIm6Gx9nN0Vyw==.TRmw7vrtMwrkzsKGPfejxgyJXKnSZ8GRYVcfjvCJNJs='),
+(25, '100000.5t0tiztch43SavPjsuPExQ==.pGbzYxHs1RE1J2EteLyddSLsm28ioPUISzkTP5KPlyA='),
+(26, '100000.x+wyutt22xHlNKT9S+Nqsw==.3uwoV1HKGkzP841cBMddCPdNrPZT689F5Yd4MHJFW6Q='),
+(27, '100000.f09OZ0AYHK8C+x3oLgG+cg==.46GISz1PVkbL2afNAsiiFHV0J7GOMvjI68JNlThnWws='),
+(28, '100000.s5mwo2R34u0VQvTo+KYZNw==.DB6Q1SrMGHsWCiDsRi0PdsU+ybBYEtz6YAQnlLvnW48='),
+(29, '100000.DH/O3xuSSkuen31wHY71EQ==.uQo8Hgp0BvlhLlLWmdwlWiO+K5kqvbU/EI88dhbl/c0='),
+(30, '100000.lKVev2Ga6Zf814jPbZlfgg==.11WHI1iQKmthWuTC0V984SHEKksEmibMka2euWKm0bM=');
 GO
