@@ -58,17 +58,19 @@ namespace Gimnasio_app
                 }
                 else
                 {
+                    // Sin suscripcion vigente: se permite contratar la primera pero no renovar
                     lblVencimiento.Text = "No tenes una suscripción activa.";
-                    btnCambiarPlan.Enabled = false;
+                    btnCambiarPlan.Enabled = true;
                     btnRenovarPlan.Enabled = false;
                 }
-                
+
 
                 if (TienePlanProximo)
                 {
                     btnRenovarPlan.Enabled = false;
                     btnCambiarPlan.Enabled = false;
                     txtProximoPlan.Text = suscripcionVPendiente.Plan.NombrePlan;
+                    txtVencimientoProximo.Text = suscripcionVPendiente.FechaFin.ToString("yyyy-MM-dd");
                 }
             }
         }
@@ -300,27 +302,44 @@ namespace Gimnasio_app
                 return false;
             }
 
-            // Al cambiar de plan, se crea una nueva suscripcion
+            // Al contratar/cambiar de plan, se crea una nueva suscripcion
             Suscripcion suscripcionNueva = new Suscripcion();
             suscripcionNueva.Plan = new PlanNegocio().GetPlan(ddlPlan.SelectedValue);
 
-            // Fecha de inicio igual al vencimiento de la anterior si aun no esta vencida
-            if (cliente.SuscripcionCliente.FechaFin > DateTime.Now)
+            // Hay una suscripcion vigente (todavia no vencida) si existe y su vencimiento es futuro.
+            bool tieneVigente = cliente.SuscripcionCliente != null && cliente.SuscripcionCliente.FechaFin > DateTime.Now;
+
+            if (tieneVigente)
+            {
+                // Queda pendiente: entra en vigencia recien al vencer la actual.
                 suscripcionNueva.FechaInicio = cliente.SuscripcionCliente.FechaFin;
-            // Fecha de hoy si no hay suscripcion vigente
+                suscripcionNueva.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
+            }
             else
+            {
+                // Primera suscripcion (o la anterior ya vencio): entra en vigencia inmediata.
                 suscripcionNueva.FechaInicio = DateTime.Now;
+                suscripcionNueva.Estado = EstadoSuscripcion.ACTIVA;
+            }
 
             suscripcionNueva.FechaFin = suscripcionNueva.FechaInicio.AddDays(suscripcionNueva.Plan.DuracionDiasPlan);
-            suscripcionNueva.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
-
-            txtVencimiento.Text = suscripcionNueva.FechaFin.ToString("yyyy-MM-dd");
-            int vencimiento = (suscripcionNueva.FechaFin - DateTime.Now).Days;
-            lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
-            txtProximoPlan.Text = suscripcionNueva.Plan.NombrePlan;
 
             negocio.Agregar(suscripcionNueva, cliente);
 
+            if (tieneVigente)
+            {
+                // Reflejar el plan pendiente en el panel.
+                txtProximoPlan.Text = suscripcionNueva.Plan.NombrePlan;
+                txtVencimientoProximo.Text = suscripcionNueva.FechaFin.ToString("yyyy-MM-dd");
+            }
+            else
+            {
+                // Reflejar la nueva suscripcion activa en el panel.
+                cliente.SuscripcionCliente = suscripcionNueva;
+                txtVencimiento.Text = suscripcionNueva.FechaFin.ToString("yyyy-MM-dd");
+                int vencimiento = (suscripcionNueva.FechaFin - DateTime.Now).Days;
+                lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
+            }
 
             return true;
         }
