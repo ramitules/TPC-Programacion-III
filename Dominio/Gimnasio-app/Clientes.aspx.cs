@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,13 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.SessionActiva(Session["usuario"]) ||
+                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN))
+            {
+                Response.Redirect("Default", false);
+                return;
+            }
+
             AdminNegocio adminNegocio = new AdminNegocio();
             List<Cliente> clientes = new List<Cliente>();
             try
@@ -187,7 +195,7 @@ namespace Gimnasio_app
                     }
                     if (ddlEstadoSuscripcion.SelectedValue != "0")
                     {
-                        filtrado = filtrado.FindAll(a => a.SuscripcionCliente.IdSuscripcion == estadoSuscripcionSeleccionado);
+                        filtrado = filtrado.FindAll(a => a.SuscripcionCliente != null && a.SuscripcionCliente.IdSuscripcion == estadoSuscripcionSeleccionado);
                     }
                     if (txtBuscar.Text != "")
                     {
