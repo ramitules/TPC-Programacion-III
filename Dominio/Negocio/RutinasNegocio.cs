@@ -191,6 +191,57 @@ namespace Negocio
             return idRutina;
          }
 
+        public int CrearRutinaParaCliente(int idCliente, string nombre, List<RutinaEjercicio> ejercicios)
+        {
+            AccesoADatos datos = new AccesoADatos();
+            int idRutina = 0;
+
+            string excepcion = "Ocurrio un error al guardar la rutina para el cliente;\n\n (RutinasNegocio.CrearRutinaParaCliente()): ";
+
+            try
+            {
+                datos.SetearConsulta("INSERT INTO Rutinas (Nombre, IdUsuario, FechaCreacion, Dia, Activo) OUTPUT INSERTED.IdRutinas VALUES (@Nombre, @IdUsuario, GETDATE(), NULL, 1)");
+                datos.setearParametro("@Nombre", nombre);
+                datos.setearParametro("@IdUsuario", idCliente);
+                idRutina = datos.EjecutarScalar();
+
+                if (ejercicios != null)
+                {
+                    foreach (RutinaEjercicio re in ejercicios)
+                    {
+                        AccesoADatos datosEjercicios = new AccesoADatos();
+
+                        try
+                        {
+                            datosEjercicios.SetearConsulta("INSERT INTO RutinaEjercicios (IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio) VALUES (@IdEjercicio, @IdRutina, @ObjetivoKG, @ObjetivoSeries, @ObjetivoRepeticiones, @Orden)");
+
+                            datosEjercicios.setearParametro("@IdEjercicio", re.Ejercicio.IdEjercicio);
+                            datosEjercicios.setearParametro("@IdRutina", idRutina);
+                            datosEjercicios.setearParametro("@ObjetivoKG", re.ObjetivoKG);
+                            datosEjercicios.setearParametro("@ObjetivoSeries", re.ObjetivoSeries);
+                            datosEjercicios.setearParametro("@ObjetivoRepeticiones", re.ObjetivoRepeticiones);
+                            datosEjercicios.setearParametro("@Orden", re.OrdenEjercicio);
+
+                            datosEjercicios.ejecutarAccion();
+                        }
+                        finally
+                        {
+                            datosEjercicios.cerrarConexion();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return idRutina;
+        }
+
         /// <summary>
         /// Obtiene los ejercicios (con sus objetivos de series, repeticiones, peso y orden)
         /// que componen una rutina. Puede devolver lista vacia.
