@@ -11,50 +11,6 @@ namespace Negocio
     public class SesionEntrenamientoNegocio
     {
         /// <summary>
-        /// Obtiene la sesion de entrenamiento segun su ID, o la ultima sesion agregada si ID == ""
-        /// </summary>
-        public SesionEntrenamiento Get(string id = "")
-        {
-            string Excepcion = "Ocurrio un error al obtener la sesion de entrenamiento (SesionEntrenamientoNegocio.Get())\n";
-
-            AccesoADatos datos = new AccesoADatos();
-            SesionEntrenamiento sesion = new SesionEntrenamiento();
-            try
-            {
-                if (id != "")
-                {
-                    datos.SetearConsulta("SELECT * FROM SesionesEntrenamiento WHERE IdSesionesEntrenamiento = @ID");
-                    datos.setearParametro("@ID", id);
-                }
-                else
-                {
-                    datos.SetearConsulta("SELECT TOP 1 * FROM SesionesEntrenamiento ORDER BY IdSesionesEntrenamiento DESC");
-                }
-
-                datos.ejecutarLectura();
-
-                while (datos.Lector.Read())
-                {
-                    sesion.IdSesion = int.Parse(datos.Lector["IdSesionesEntrenamiento"].ToString());
-                    sesion.FechaHoraInicio = DateTime.Parse(datos.Lector["FechaHoraInicio"].ToString());
-                    sesion.FechaHoraFin = DateTime.Parse(datos.Lector["FechaHoraFin"].ToString());
-                    sesion.Cliente = new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString());
-
-                    if (!(datos.Lector["IdRutina"] is DBNull))
-                        sesion.Rutina = new RutinasNegocio().Get(datos.Lector["IdRutina"].ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Excepcion + ex.ToString());
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-            return sesion;
-        }
-        /// <summary>
         /// Obtiene todas las sesiones de entrenamiento de un cliente (solo metadata: rutina y cantidad de
         /// series). No trae las series completadas; estas se cargan aparte y bajo demanda al expandir cada
         /// sesion. Evita el N+1 de Get() (que resuelve Cliente y Rutina por separado en cada fila).
@@ -91,7 +47,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -133,7 +89,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -152,7 +108,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
