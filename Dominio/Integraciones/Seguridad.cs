@@ -74,6 +74,10 @@ namespace Integraciones
                     {
                         usuario = new Entrenador();
                     }
+                    // Un usuario dado de baja no puede iniciar sesion.
+                    if (!usuario.Activo)
+                        return null;
+
                     usuario.IdUsuario = (int)datos.Lector["IdUsuarios"];
                     usuario.Nombre = (string)datos.Lector["Nombre"];
                     usuario.Apellido = (string)datos.Lector["Apellido"];
@@ -83,7 +87,7 @@ namespace Integraciones
                     usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     usuario.Activo = (bool)datos.Lector["Activo"];
-
+                    
                     return usuario;
                 }
                 else
