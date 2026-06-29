@@ -1,36 +1,6 @@
 USE GestionGimnasio
 GO
 
--- Trigger para detectar y actualizar el record personal luego de insertar una serie.
--- Regla de negocio: Para el record personal se mide el peso levantado, en caso de empate se chequea las repeticiones.
-
-CREATE TRIGGER dbo.tr_DetectarRecordPersonal 
-ON SeriesCompletadas
-AFTER INSERT 
-AS
-BEGIN
-    UPDATE SC 
-    SET SC.EsRecordPersonal = CASE 
-        WHEN SC.IdSeriesCompletadas IN (
-            SELECT TOP 1 WITH TIES SCR.IdSeriesCompletadas
-            FROM SeriesCompletadas AS SCR -- Series Completatas Ranking
-            INNER JOIN SesionesEntrenamiento AS SER ON SCR.IdSesion = SER.IdSesionesEntrenamiento
-                WHERE SER.IdUsuario = SE.IdUsuario AND SCR.IdEjercicio = SC.IdEjercicio
-                ORDER BY SCR.PesoLevantadoKG DESC, SCR.RepeticionesLogradas DESC
-        ) THEN 1
-        ELSE 0
-    END
-    FROM SeriesCompletadas AS SC
-    INNER JOIN SesionesEntrenamiento AS SE ON SC.IdSesion = SE.IdSesionesEntrenamiento
-    INNER JOIN (
-        SELECT DISTINCT IdEjercicio, IdSesion 
-        FROM inserted
-    ) AS I ON SC.IdEjercicio = I.IdEjercicio
-    INNER JOIN SesionesEntrenamiento AS SEI ON I.IdSesion = SEI.IdSesionesEntrenamiento
-    WHERE SE.IdUsuario = SEI.IdUsuario;
-END;
-GO
-
 -- Trigger para validar que los socios esten activos antes de iniciar una sesion de entrenamiento.
 -- Regla de negocio: Si el socio no tiene suscripcion activa no puede uniciar una sesion de entrenamiento.
 
