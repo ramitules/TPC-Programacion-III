@@ -42,7 +42,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -82,7 +82,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -116,7 +116,9 @@ namespace Negocio
                     rutina = new Rutina() {
                         IdRutina = int.Parse(id),
                         Nombre = datos.Lector["Nombre"].ToString(),
-                        Cliente = datos.Lector["IdUsuario"] is DBNull ? null : new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString()),
+                        Cliente = (ClienteCompleto && !(datos.Lector["IdUsuario"] is DBNull))
+                            ? new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString())
+                            : null,
                         FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
@@ -126,7 +128,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -180,7 +182,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {
@@ -232,7 +234,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {
@@ -277,7 +279,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {
