@@ -364,7 +364,7 @@ GO
 CREATE PROCEDURE sp_CrearSerieCompletada (
 	@IdSesion INT,
 	@IdEjercicio INT,
-	@PesoLevantadoKG SMALLINT,
+	@PesoLevantadoKG DECIMAL(6, 2),
 	@RepeticionesLogradas SMALLINT,
 	@RIR TINYINT,
 	@EsRecordPersonal BIT
@@ -443,6 +443,6 @@ FechaInicio,
 FechaVencimiento,
 Pass
 FROM VW_Usuarios
-WHERE Email = @Email
+WHERE Email = @Email AND Activo = 1
 END
 GO
