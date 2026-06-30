@@ -18,8 +18,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <!-- PENDIENTE: Crear página RutinasAsignadas.aspx -->
-                    <a runat="server" href="~/RutinasAsignadas" class="btn btn-outline-primary w-100 py-3">
+                    <a runat="server" href="~/PanelEntrenadorRutinasAsignadas.aspx" class="btn btn-outline-primary w-100 py-3">
                         Rutinas Asignadas
                     </a>
                 </div>
