@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Integraciones;
 
 namespace Gimnasio_app
 {
@@ -13,6 +15,12 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.SessionActiva(Session["usuario"]) || !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ENTRENADOR))
+            {
+                Response.Redirect("Default", false);
+                return;
+            }
+
             if (!IsPostBack)
             {
                 EjerciciosNegocio ejerciciosNegocio = new EjerciciosNegocio();
