@@ -42,6 +42,10 @@ namespace Gimnasio_app
                             Session.Add("usuario", cliente);
                             Response.Redirect("~/perfil.aspx", false);
                             break;
+                        case (int)Roles.ENTRENADOR:
+                            Session.Add("usuario", usuario);
+                            Response.Redirect("~/PanelEntrenador.aspx", false);
+                            break;
                         default:
                             break;
                     }
