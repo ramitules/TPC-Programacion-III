@@ -88,7 +88,49 @@ namespace Negocio
             {
                 datos.cerrarConexion();
             }
-            
+
+            return rutinas;
+        }
+
+        public List<Rutina> GetRutinasAsignadas()
+        {
+            string Excepcion = "Ocurrio un error al obtener rutinas asignadas (RutinasNegocio.GetRutinasAsignadas())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            List<Rutina> rutinas = new List<Rutina>();
+
+            try
+            {
+                datos.SetearConsulta(@"SELECT R.IdRutinas, R.Nombre, R.FechaCreacion, R.Dia, U.Nombre AS NombreCliente, U.Apellido AS ApellidoCliente
+                FROM Rutinas R INNER JOIN Usuarios U ON R.IdUsuario = U.IdUsuarios WHERE R.IdUsuario IS NOT NULL AND R.Activo = 1 ORDER BY R.FechaCreacion DESC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Cliente cliente = new Cliente();
+                    cliente.Nombre = datos.Lector["NombreCliente"].ToString();
+                    cliente.Apellido = datos.Lector["ApellidoCliente"].ToString();
+
+                    rutinas.Add(new Rutina()
+                    {
+                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        Nombre = datos.Lector["Nombre"].ToString(),
+                        Cliente = cliente,
+                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        Dia = datos.Lector["Dia"] is DBNull ? "" : datos.Lector["Dia"].ToString(),
+                        Activo = true
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
             return rutinas;
         }
 
