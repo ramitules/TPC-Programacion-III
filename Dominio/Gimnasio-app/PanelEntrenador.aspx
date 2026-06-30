@@ -18,6 +18,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
+                    <!-- PENDIENTE: Crear página RutinasAsignadas.aspx -->
                     <a runat="server" href="~/RutinasAsignadas" class="btn btn-outline-primary w-100 py-3">
                         Rutinas Asignadas
                     </a>
@@ -53,6 +54,7 @@
                                 <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de Ingreso" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:TemplateField HeaderText="Acciones">
                                     <ItemTemplate>
+                                        <!-- PENDIENTE: Crear PanelEntrenadorClienteDetalle.aspx para ver datos del cliente -->
                                         <a href=PanelEntrenadorAsignarRutina.aspx?idCliente=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm">
                                             Ver Detalle
                                         </a>

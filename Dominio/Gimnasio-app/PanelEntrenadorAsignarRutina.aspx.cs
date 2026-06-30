@@ -84,7 +84,7 @@ namespace Gimnasio_app
 
         protected void btnQuitar_Click(object sender, EventArgs e)
         {
-
+            // PENDIENTE: Implementar lógica para quitar ejercicio de la lista
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
