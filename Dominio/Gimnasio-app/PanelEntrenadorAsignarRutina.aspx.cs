@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace Gimnasio_app
 {
-    public partial class PanelEntrenadorAsignarRutina : System.Web.UI.Page
+    public partial class PanelEntrenadorAsignarRutina : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

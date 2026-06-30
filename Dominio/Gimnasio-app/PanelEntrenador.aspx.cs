@@ -17,9 +17,16 @@ namespace Gimnasio_app
             {
                 if (!IsPostBack)
                 {
-                    ClienteNegocio clienteNegocio = new ClienteNegocio();
-                    List<Cliente> clientes = clienteNegocio.ListarClientes(true);
-                    Session["listaClientesEntrenador"] = clientes;
+                    List<Cliente> clientes;
+                    if (Session["listaClientesEntrenador"] == null)
+                    {
+                        clientes = new ClienteNegocio().ListarClientes(true);
+                        Session.Add("listaClientesEntrenador", clientes);
+                    }
+                    else
+                    {
+                        clientes = (List<Cliente>)Session["listaClientesEntrenador"];
+                    }
 
                     dgvClientes.DataSource = clientes;
                     dgvClientes.DataBind();

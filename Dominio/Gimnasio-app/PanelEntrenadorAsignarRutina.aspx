@@ -1,5 +1,4 @@
-﻿Abrí PanelEntrenadorAsignarRutina.aspx y reemplazá todo el contenido por esto:
-<%@ Page Title="Asignar Rutina" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PanelEntrenadorAsignarRutina.aspx.cs" Inherits="Gimnasio_app.PanelEntrenadorAsignarRutina" %>
+﻿<%@ Page Title="Asignar Rutina" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="PanelEntrenadorAsignarRutina.aspx.cs" Inherits="Gimnasio_app.PanelEntrenadorAsignarRutina" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 

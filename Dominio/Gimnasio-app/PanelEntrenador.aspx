@@ -54,10 +54,7 @@
                                 <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de Ingreso" DataFormatString="{0:dd/MM/yyyy}" />
                                 <asp:TemplateField HeaderText="Acciones">
                                     <ItemTemplate>
-                                        <!-- PENDIENTE: Crear PanelEntrenadorClienteDetalle.aspx para ver datos del cliente -->
-                                        <a href=PanelEntrenadorAsignarRutina.aspx?idCliente=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm">
-                                            Ver Detalle
-                                        </a>
+                                        <a href='PanelEntrenadorClienteDetalle.aspx?idCliente=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm"> Ver Detalle </a>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
