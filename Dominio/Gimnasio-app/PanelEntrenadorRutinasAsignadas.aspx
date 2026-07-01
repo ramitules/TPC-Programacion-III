@@ -20,6 +20,13 @@
                     </asp:TemplateField>
                     <asp:BoundField DataField="Dia" HeaderText="Día" />
                     <asp:BoundField DataField="FechaCreacion" HeaderText="Creada" DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <a href='PanelEntrenadorDetalleRutina.aspx?id=<%# Eval("IdRutina") %>&origen=PanelEntrenadorRutinasAsignadas' class="btn btn-sm btn-outline-info">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
         </section>
