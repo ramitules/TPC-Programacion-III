@@ -11,7 +11,10 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["error"] != null) lblMensaje.Text = Session["Error"].ToString();
+            if (Session["error"] != null)
+                Session.Remove("error");
+
+            lblMensaje.Text = "Ocurrió un error inesperado. Por favor, intentá nuevamente más tarde.";
         }
     }
 }

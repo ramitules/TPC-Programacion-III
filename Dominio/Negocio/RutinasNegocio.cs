@@ -31,10 +31,10 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     rutinas.Add(new Rutina() {
-                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Cliente = cliente,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     });
@@ -71,10 +71,10 @@ namespace Negocio
                 {
                     rutinas.Add(new Rutina()
                     {
-                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Cliente = null,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     });
@@ -113,10 +113,10 @@ namespace Negocio
 
                     rutinas.Add(new Rutina()
                     {
-                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Cliente = cliente,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"] is DBNull ? "" : datos.Lector["Dia"].ToString(),
                         Activo = true
                     });
@@ -155,13 +155,14 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
+                    bool tieneDueño = !(datos.Lector["IdUsuario"] is DBNull);
                     rutina = new Rutina() {
                         IdRutina = int.Parse(id),
                         Nombre = datos.Lector["Nombre"].ToString(),
-                        Cliente = (ClienteCompleto && !(datos.Lector["IdUsuario"] is DBNull))
+                        Cliente = (ClienteCompleto && tieneDueño)
                             ? new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString())
                             : null,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     };
@@ -305,20 +306,20 @@ namespace Negocio
                 {
                     RutinaEjercicio re = new RutinaEjercicio();
 
-                    re.IdRutinaEjercicio = int.Parse(datos.Lector["IdRutinaEjercicio"].ToString());
+                    re.IdRutinaEjercicio = Convert.ToInt32(datos.Lector["IdRutinaEjercicio"]);
                     re.ObjetivoKG = datos.Lector["ObjetivoKG"] is DBNull ? 0 : int.Parse(datos.Lector["ObjetivoKG"].ToString());
-                    re.ObjetivoSeries = int.Parse(datos.Lector["ObjetivoSeries"].ToString());
-                    re.ObjetivoRepeticiones = int.Parse(datos.Lector["ObjetivoRepeticiones"].ToString());
-                    re.OrdenEjercicio = int.Parse(datos.Lector["OrdenEjercicio"].ToString());
+                    re.ObjetivoSeries = Convert.ToInt32(datos.Lector["ObjetivoSeries"]);
+                    re.ObjetivoRepeticiones = Convert.ToInt32(datos.Lector["ObjetivoRepeticiones"]);
+                    re.OrdenEjercicio = Convert.ToInt32(datos.Lector["OrdenEjercicio"]);
 
                     re.Ejercicio = new Ejercicio();
-                    re.Ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
+                    re.Ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
                     re.Ejercicio.NombreEjercicio = datos.Lector["NombreEjercicio"].ToString();
                     re.Ejercicio.LinkExplicacion = datos.Lector["LinkExplicacion"].ToString();
 
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
-                        re.Ejercicio.GrupoMuscular.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
+                        re.Ejercicio.GrupoMuscular.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
                         re.Ejercicio.GrupoMuscular.NombreGrupoMuscular = datos.Lector["NombreGrupoMuscular"].ToString();
                     }
 
@@ -346,7 +347,7 @@ namespace Negocio
                 resultado.Add(new DiaRutina
                 {
                     DiaDeRutina = dia,
-                    Rutinas = rutinas.Where(r => r.Dia == dia).ToList()
+                    Rutinas = rutinas.Where(r => r.Dia.ToLower() == dia).ToList()
                 });
 
             resultado.Add(new DiaRutina

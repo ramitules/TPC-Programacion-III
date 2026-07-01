@@ -29,20 +29,20 @@ namespace Negocio
                     GrupoMuscular grupo = new GrupoMuscular();
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
-                        grupo.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
+                        grupo.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
                         grupo.NombreGrupoMuscular = datos.Lector["GrupoMuscularNombre"].ToString();
                     }
 
                     Ejercicio ejercicio = new Ejercicio();
-                    ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
+                    ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
                     ejercicio.NombreEjercicio = datos.Lector["EjercicioNombre"].ToString();
                     ejercicio.GrupoMuscular = grupo;
 
                     Records record = new Records();
                     record.Ejercicio = ejercicio;
-                    record.PesoKG = float.Parse(datos.Lector["PesoKG"].ToString());
-                    record.Repeticiones = int.Parse(datos.Lector["Repeticiones"].ToString());
-                    record.FechaRecord = DateTime.Parse(datos.Lector["FechaRecord"].ToString());
+                    record.PesoKG = Convert.ToSingle(datos.Lector["PesoKG"]);
+                    record.Repeticiones = Convert.ToInt32(datos.Lector["Repeticiones"]);
+                    record.FechaRecord = Convert.ToDateTime(datos.Lector["FechaRecord"]);
 
                     records.Add(record);
                 }
