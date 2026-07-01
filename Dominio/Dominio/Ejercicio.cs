@@ -21,5 +21,6 @@ namespace Dominio
         public string NombreEjercicio { get; set; }
         public GrupoMuscular GrupoMuscular { get; set; }
         public string LinkExplicacion { get; set; }
+        public bool Activo { get; set; }
     }
 }

@@ -219,6 +219,7 @@ namespace Negocio
                     GrupoMuscular grupo = new GrupoMuscular();
                     grupo.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGruposMusculares"]);
                     grupo.NombreGrupoMuscular = (string)datos.Lector["Nombre"];
+                    grupo.Activo = (bool)datos.Lector["Activo"];
                     listaGrupos.Add(grupo);
                 }
             }
@@ -249,12 +250,13 @@ namespace Negocio
                     ejercicio.GrupoMuscular.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
                     ejercicio.GrupoMuscular.NombreGrupoMuscular = (string)datos.Lector["GrupoMuscular"];
                     ejercicio.LinkExplicacion = datos.Lector["LinkExplicacion"] != DBNull.Value? (string)datos.Lector["LinkExplicacion"] : "";
+                    ejercicio.Activo = (bool)datos.Lector["Activo"];
                     listaEjercicios.Add(ejercicio);
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -277,6 +279,7 @@ namespace Negocio
                     plan.NombrePlan = (string)datos.Lector["Nombre"];
                     plan.PrecioPlan = Convert.ToSingle(datos.Lector["PrecioMensual"]);
                     plan.DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionDias"]);
+                    plan.Activo = (bool)datos.Lector["Activo"];
                     listaPlanes.Add(plan);
                 }
             }
