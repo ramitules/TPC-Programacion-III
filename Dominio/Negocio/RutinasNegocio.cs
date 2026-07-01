@@ -31,10 +31,10 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     rutinas.Add(new Rutina() {
-                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Cliente = cliente,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     });
@@ -42,7 +42,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -71,10 +71,10 @@ namespace Negocio
                 {
                     rutinas.Add(new Rutina()
                     {
-                        IdRutina = int.Parse(datos.Lector["IdRutinas"].ToString()),
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Cliente = null,
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     });
@@ -82,13 +82,55 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
                 datos.cerrarConexion();
             }
-            
+
+            return rutinas;
+        }
+
+        public List<Rutina> GetRutinasAsignadas()
+        {
+            string Excepcion = "Ocurrio un error al obtener rutinas asignadas (RutinasNegocio.GetRutinasAsignadas())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            List<Rutina> rutinas = new List<Rutina>();
+
+            try
+            {
+                datos.SetearConsulta(@"SELECT R.IdRutinas, R.Nombre, R.FechaCreacion, R.Dia, U.Nombre AS NombreCliente, U.Apellido AS ApellidoCliente
+                FROM Rutinas R INNER JOIN Usuarios U ON R.IdUsuario = U.IdUsuarios WHERE R.IdUsuario IS NOT NULL AND R.Activo = 1 ORDER BY R.FechaCreacion DESC");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Cliente cliente = new Cliente();
+                    cliente.Nombre = datos.Lector["NombreCliente"].ToString();
+                    cliente.Apellido = datos.Lector["ApellidoCliente"].ToString();
+
+                    rutinas.Add(new Rutina()
+                    {
+                        IdRutina = Convert.ToInt32(datos.Lector["IdRutinas"]),
+                        Nombre = datos.Lector["Nombre"].ToString(),
+                        Cliente = cliente,
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
+                        Dia = datos.Lector["Dia"] is DBNull ? "" : datos.Lector["Dia"].ToString(),
+                        Activo = true
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
             return rutinas;
         }
 
@@ -113,11 +155,14 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
+                    bool tieneDueño = !(datos.Lector["IdUsuario"] is DBNull);
                     rutina = new Rutina() {
                         IdRutina = int.Parse(id),
                         Nombre = datos.Lector["Nombre"].ToString(),
-                        Cliente = datos.Lector["IdUsuario"] is DBNull ? null : new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString()),
-                        FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
+                        Cliente = (ClienteCompleto && tieneDueño)
+                            ? new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString())
+                            : null,
+                        FechaCreacion = Convert.ToDateTime(datos.Lector["FechaCreacion"]),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
                     };
@@ -126,7 +171,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -180,7 +225,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {
@@ -188,6 +233,57 @@ namespace Negocio
             }
             return idRutina;
          }
+
+        public int CrearRutinaParaCliente(int idCliente, string nombre, List<RutinaEjercicio> ejercicios)
+        {
+            AccesoADatos datos = new AccesoADatos();
+            int idRutina = 0;
+
+            string excepcion = "Ocurrio un error al guardar la rutina para el cliente;\n\n (RutinasNegocio.CrearRutinaParaCliente()): ";
+
+            try
+            {
+                datos.SetearConsulta("INSERT INTO Rutinas (Nombre, IdUsuario, FechaCreacion, Dia, Activo) OUTPUT INSERTED.IdRutinas VALUES (@Nombre, @IdUsuario, GETDATE(), NULL, 1)");
+                datos.setearParametro("@Nombre", nombre);
+                datos.setearParametro("@IdUsuario", idCliente);
+                idRutina = datos.EjecutarScalar();
+
+                if (ejercicios != null)
+                {
+                    foreach (RutinaEjercicio re in ejercicios)
+                    {
+                        AccesoADatos datosEjercicios = new AccesoADatos();
+
+                        try
+                        {
+                            datosEjercicios.SetearConsulta("INSERT INTO RutinaEjercicios (IdEjercicio, IdRutina, ObjetivoKG, ObjetivoSeries, ObjetivoRepeticiones, OrdenEjercicio) VALUES (@IdEjercicio, @IdRutina, @ObjetivoKG, @ObjetivoSeries, @ObjetivoRepeticiones, @Orden)");
+
+                            datosEjercicios.setearParametro("@IdEjercicio", re.Ejercicio.IdEjercicio);
+                            datosEjercicios.setearParametro("@IdRutina", idRutina);
+                            datosEjercicios.setearParametro("@ObjetivoKG", re.ObjetivoKG);
+                            datosEjercicios.setearParametro("@ObjetivoSeries", re.ObjetivoSeries);
+                            datosEjercicios.setearParametro("@ObjetivoRepeticiones", re.ObjetivoRepeticiones);
+                            datosEjercicios.setearParametro("@Orden", re.OrdenEjercicio);
+
+                            datosEjercicios.ejecutarAccion();
+                        }
+                        finally
+                        {
+                            datosEjercicios.cerrarConexion();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return idRutina;
+        }
 
         /// <summary>
         /// Obtiene los ejercicios (con sus objetivos de series, repeticiones, peso y orden)
@@ -210,20 +306,20 @@ namespace Negocio
                 {
                     RutinaEjercicio re = new RutinaEjercicio();
 
-                    re.IdRutinaEjercicio = int.Parse(datos.Lector["IdRutinaEjercicio"].ToString());
+                    re.IdRutinaEjercicio = Convert.ToInt32(datos.Lector["IdRutinaEjercicio"]);
                     re.ObjetivoKG = datos.Lector["ObjetivoKG"] is DBNull ? 0 : int.Parse(datos.Lector["ObjetivoKG"].ToString());
-                    re.ObjetivoSeries = int.Parse(datos.Lector["ObjetivoSeries"].ToString());
-                    re.ObjetivoRepeticiones = int.Parse(datos.Lector["ObjetivoRepeticiones"].ToString());
-                    re.OrdenEjercicio = int.Parse(datos.Lector["OrdenEjercicio"].ToString());
+                    re.ObjetivoSeries = Convert.ToInt32(datos.Lector["ObjetivoSeries"]);
+                    re.ObjetivoRepeticiones = Convert.ToInt32(datos.Lector["ObjetivoRepeticiones"]);
+                    re.OrdenEjercicio = Convert.ToInt32(datos.Lector["OrdenEjercicio"]);
 
                     re.Ejercicio = new Ejercicio();
-                    re.Ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
+                    re.Ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
                     re.Ejercicio.NombreEjercicio = datos.Lector["NombreEjercicio"].ToString();
                     re.Ejercicio.LinkExplicacion = datos.Lector["LinkExplicacion"].ToString();
 
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
-                        re.Ejercicio.GrupoMuscular.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
+                        re.Ejercicio.GrupoMuscular.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
                         re.Ejercicio.GrupoMuscular.NombreGrupoMuscular = datos.Lector["NombreGrupoMuscular"].ToString();
                     }
 
@@ -232,7 +328,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {
@@ -251,7 +347,7 @@ namespace Negocio
                 resultado.Add(new DiaRutina
                 {
                     DiaDeRutina = dia,
-                    Rutinas = rutinas.Where(r => r.Dia == dia).ToList()
+                    Rutinas = rutinas.Where(r => r.Dia.ToLower() == dia).ToList()
                 });
 
             resultado.Add(new DiaRutina
@@ -277,7 +373,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(excepcion + ex.ToString());
+                throw new Exception(excepcion, ex);
             }
             finally
             {

@@ -71,7 +71,8 @@ namespace Gimnasio_app
                     Apellido = apellido,
                     Email = email,
                     FechaNacimiento = DateTime.Parse(fechaNacimiento),
-                    FechaIngreso = DateTime.Now
+                    FechaIngreso = DateTime.Now,
+                    PesoCorporal = Validaciones.validarPeso("")  // Inicializar con minimo
                 };
 
                 negocio.Agregar(cliente, txtPassword.Text);

@@ -243,6 +243,7 @@ BEGIN
 	END TRY
 	BEGIN CATCH
 		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+		THROW;
 	END CATCH
 END
 GO
@@ -253,11 +254,18 @@ CREATE PROCEDURE sp_EliminarCliente (
 )
 AS
 BEGIN
-	UPDATE Usuarios SET Activo = 0 WHERE IdUsuarios = @IdUsuario;
-	DELETE FROM SeriesCompletadas WHERE IdSesion IN (SELECT IdSesionesEntrenamiento FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario);
-	DELETE FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario;
-	DELETE FROM RutinaEjercicios WHERE IdRutina IN (SELECT IdRutinas FROM Rutinas WHERE IdUsuario = @IdUsuario);
-	DELETE FROM Rutinas WHERE IdUsuario = @IdUsuario;
+	BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE Usuarios SET Activo = 0 WHERE IdUsuarios = @IdUsuario;
+			DELETE FROM SeriesCompletadas WHERE IdSesion IN (SELECT IdSesionesEntrenamiento FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario);
+			DELETE FROM SesionesEntrenamiento WHERE IdUsuario = @IdUsuario;
+			UPDATE Rutinas SET Activo = 0 WHERE IdUsuario = @IdUsuario;
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+		THROW;
+	END CATCH
 END
 GO
 
@@ -364,7 +372,7 @@ GO
 CREATE PROCEDURE sp_CrearSerieCompletada (
 	@IdSesion INT,
 	@IdEjercicio INT,
-	@PesoLevantadoKG SMALLINT,
+	@PesoLevantadoKG DECIMAL(6, 2),
 	@RepeticionesLogradas SMALLINT,
 	@RIR TINYINT,
 	@EsRecordPersonal BIT
@@ -443,7 +451,7 @@ FechaInicio,
 FechaVencimiento,
 Pass
 FROM VW_Usuarios
-WHERE Email = @Email
+WHERE Email = @Email AND Activo = 1
 END
 GO
 

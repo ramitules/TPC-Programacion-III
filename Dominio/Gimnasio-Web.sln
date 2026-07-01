@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script DB", "Script DB", "{
 		Inserts.sql = Inserts.sql
 		ProcedimientosAlmacenados.sql = ProcedimientosAlmacenados.sql
 		ScriptDB.sql = ScriptDB.sql
+<<<<<<< HEAD
+=======
+		triggers.sql = triggers.sql
+>>>>>>> d4fb2b4563a6050e2800aae811d2507fea1ec4e7
 		Vistas.sql = Vistas.sql
 	EndProjectSection
 EndProject

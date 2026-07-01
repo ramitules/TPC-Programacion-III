@@ -29,27 +29,27 @@ namespace Negocio
                     GrupoMuscular grupo = new GrupoMuscular();
                     if (!(datos.Lector["IdGrupoMuscular"] is DBNull))
                     {
-                        grupo.IdGrupoMuscular = int.Parse(datos.Lector["IdGrupoMuscular"].ToString());
+                        grupo.IdGrupoMuscular = Convert.ToInt32(datos.Lector["IdGrupoMuscular"]);
                         grupo.NombreGrupoMuscular = datos.Lector["GrupoMuscularNombre"].ToString();
                     }
 
                     Ejercicio ejercicio = new Ejercicio();
-                    ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
+                    ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
                     ejercicio.NombreEjercicio = datos.Lector["EjercicioNombre"].ToString();
                     ejercicio.GrupoMuscular = grupo;
 
                     Records record = new Records();
                     record.Ejercicio = ejercicio;
-                    record.PesoKG = float.Parse(datos.Lector["PesoKG"].ToString());
-                    record.Repeticiones = int.Parse(datos.Lector["Repeticiones"].ToString());
-                    record.FechaRecord = DateTime.Parse(datos.Lector["FechaRecord"].ToString());
+                    record.PesoKG = Convert.ToSingle(datos.Lector["PesoKG"]);
+                    record.Repeticiones = Convert.ToInt32(datos.Lector["Repeticiones"]);
+                    record.FechaRecord = Convert.ToDateTime(datos.Lector["FechaRecord"]);
 
                     records.Add(record);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -57,41 +57,6 @@ namespace Negocio
             }
 
             return records;
-        }
-
-        /// <summary>
-        /// Devuelve el peso maximo (en KG) que el cliente levanto historicamente en un ejercicio.
-        /// Devuelve 0 si todavia no registro ninguna serie de ese ejercicio.
-        /// Se usa al registrar una serie para determinar si constituye un nuevo record personal.
-        /// </summary>
-        public float GetMaxPesoEjercicio(int idUsuario, int idEjercicio)
-        {
-            string Excepcion = "Ocurrio un error al obtener el peso maximo del ejercicio (RecordsNegocio.GetMaxPesoEjercicio())\n";
-
-            AccesoADatos datos = new AccesoADatos();
-            try
-            {
-                datos.SetearConsulta(@"SELECT MAX(SC.PesoLevantadoKG)
-                    FROM SeriesCompletadas SC
-                    INNER JOIN SesionesEntrenamiento SE ON SC.IdSesion = SE.IdSesionesEntrenamiento
-                    WHERE SE.IdUsuario = @IdUsuario AND SC.IdEjercicio = @IdEjercicio");
-                datos.setearParametro("@IdUsuario", idUsuario);
-                datos.setearParametro("@IdEjercicio", idEjercicio);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read() && !(datos.Lector[0] is DBNull))
-                    return float.Parse(datos.Lector[0].ToString());
-
-                return 0;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(Excepcion + ex.ToString());
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
         }
     }
 }

@@ -30,14 +30,14 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    cliente.IdUsuario = int.Parse(datos.Lector["IdUsuarios"].ToString());
+                    cliente.IdUsuario = Convert.ToInt32(datos.Lector["IdUsuarios"]);
                     cliente.Nombre = datos.Lector["Nombre"].ToString();
                     cliente.Apellido = datos.Lector["Apellido"].ToString();
                     cliente.Email = datos.Lector["Email"].ToString();
-                    cliente.FechaNacimiento = DateTime.Parse(datos.Lector["FechaNacimiento"].ToString());
-                    cliente.FechaIngreso = DateTime.Parse(datos.Lector["FechaIngreso"].ToString());
-                    cliente.Activo = bool.Parse(datos.Lector["Activo"].ToString());
-                    cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
+                    cliente.FechaNacimiento = Convert.ToDateTime(datos.Lector["FechaNacimiento"]);
+                    cliente.FechaIngreso = Convert.ToDateTime(datos.Lector["FechaIngreso"]);
+                    cliente.Activo = Convert.ToBoolean(datos.Lector["Activo"]);
+                    cliente.PesoCorporal = Convert.ToSingle(datos.Lector["PesoCorporalKG"]);
 
                     if (full)
                     {
@@ -51,7 +51,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -80,14 +80,14 @@ namespace Negocio
                 {
                     Cliente cliente = new Cliente
                     {
-                        IdUsuario = int.Parse(datos.Lector["IdUsuarios"].ToString()),
+                        IdUsuario = Convert.ToInt32(datos.Lector["IdUsuarios"]),
                         Nombre = datos.Lector["Nombre"].ToString(),
                         Apellido = datos.Lector["Apellido"].ToString(),
                         Email = datos.Lector["Email"].ToString(),
-                        FechaNacimiento = DateTime.Parse(datos.Lector["FechaNacimiento"].ToString()),
-                        FechaIngreso = DateTime.Parse(datos.Lector["FechaIngreso"].ToString()),
-                        Activo = bool.Parse(datos.Lector["Activo"].ToString()),
-                        PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString())
+                        FechaNacimiento = Convert.ToDateTime(datos.Lector["FechaNacimiento"]),
+                        FechaIngreso = Convert.ToDateTime(datos.Lector["FechaIngreso"]),
+                        Activo = Convert.ToBoolean(datos.Lector["Activo"]),
+                        PesoCorporal = Convert.ToSingle(datos.Lector["PesoCorporalKG"])
                     };
 
                     lista.Add(cliente);
@@ -95,7 +95,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -144,7 +144,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -163,7 +163,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -186,29 +186,30 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
-        public bool ExisteEmail(string email)
+        public bool ExisteEmail(string email, int idExcluir = 0)
         {
             string Excepcion = "Ocurrio un error al chequear email de cliente (ClienteNegocio.ExisteEmail())\n";
 
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Email = @email");
+                datos.SetearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Email = @email AND IdUsuarios <> @idExcluir");
                 datos.setearParametro("@email", email);
+                datos.setearParametro("@idExcluir", idExcluir);
                 int cantidad = datos.EjecutarScalar();
 
                 if (cantidad > 0) return true;
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally { datos.cerrarConexion(); }
             

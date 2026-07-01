@@ -30,22 +30,22 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    suscripcion.IdSuscripcion = int.Parse(datos.Lector["IdSuscripcion"].ToString());
-                    suscripcion.FechaInicio = DateTime.Parse(datos.Lector["FechaInicio"].ToString());
-                    suscripcion.FechaFin = DateTime.Parse(datos.Lector["FechaVencimiento"].ToString());
+                    suscripcion.IdSuscripcion = Convert.ToInt32(datos.Lector["IdSuscripcion"]);
+                    suscripcion.FechaInicio = Convert.ToDateTime(datos.Lector["FechaInicio"]);
+                    suscripcion.FechaFin = Convert.ToDateTime(datos.Lector["FechaVencimiento"]);
                     suscripcion.Estado = estado;
                     suscripcion.Plan = new Plan()
                     {
-                        IdPlan = int.Parse(datos.Lector["IdPlan"].ToString()),
+                        IdPlan = Convert.ToInt32(datos.Lector["IdPlan"]),
                         NombrePlan = datos.Lector["NombrePlan"].ToString(),
-                        PrecioPlan = float.Parse(datos.Lector["PrecioPlan"].ToString()),
-                        DuracionDiasPlan = int.Parse(datos.Lector["DuracionPlan"].ToString())
+                        PrecioPlan = Convert.ToSingle(datos.Lector["PrecioPlan"]),
+                        DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionPlan"])
                     };
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -85,7 +85,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -103,7 +103,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -123,12 +123,24 @@ namespace Negocio
                 {
                     suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
                     negocio.Modificar(suscripcionActual, cliente);
+
+                    // Si habia una suscripcion pendiente, entra en vigencia de inmediato
+                    // (se recalculan sus fechas ya que se anticipa su inicio).
+                    Suscripcion suscripcionPendiente = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE);
+                    if (suscripcionPendiente.IdSuscripcion != 0)
+                    {
+                        suscripcionPendiente.Estado = EstadoSuscripcion.ACTIVA;
+                        suscripcionPendiente.FechaInicio = DateTime.Now;
+                        suscripcionPendiente.FechaFin = suscripcionPendiente.FechaInicio.AddDays(suscripcionPendiente.Plan.DuracionDiasPlan);
+                        negocio.Modificar(suscripcionPendiente, cliente);
+                    }
+
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
 
             return false;

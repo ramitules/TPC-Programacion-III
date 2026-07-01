@@ -66,7 +66,7 @@ namespace Integraciones
                     {
                         usuario = new Cliente()
                         {
-                            PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
+                            PesoCorporal = Convert.ToSingle(datos.Lector["PesoCorporalKG"])
                         };
                     } 
                     else if (rol == (int)Roles.ADMIN)
@@ -86,7 +86,7 @@ namespace Integraciones
                     usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     usuario.Activo = (bool)datos.Lector["Activo"];
-
+                    
                     return usuario;
                 }
                 else

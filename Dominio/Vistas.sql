@@ -1,3 +1,6 @@
+USE GestionGimnasio;
+GO
+
 CREATE VIEW VW_Usuarios
 AS
 SELECT

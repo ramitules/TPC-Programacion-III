@@ -51,6 +51,8 @@ namespace Gimnasio_app
                             //Recepcionista recepcionista = new RecepcionistaNegocio().Get(usuario.IdUsuario.ToString(), full: true);
                             //Session.Add("usuario", recepcionista);
                             Response.Redirect("~/perfilRecepcionista.aspx", false);
+                            Session.Add("usuario", usuario);
+                            Response.Redirect("~/PanelEntrenador.aspx", false);
                             break;
                         default:
                             break;

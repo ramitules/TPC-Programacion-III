@@ -32,7 +32,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -59,20 +59,20 @@ namespace Negocio
                 while (datos.Lector.Read())
                 {
                     SerieCompletada serie = new SerieCompletada();
-                    serie.IdSerieCompletada = int.Parse(datos.Lector["IdSeriesCompletadas"].ToString());
+                    serie.IdSerieCompletada = Convert.ToInt32(datos.Lector["IdSeriesCompletadas"]);
                     serie.Ejercicio = new Ejercicio();
-                    serie.Ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
-                    serie.PesoLevantadoKG = float.Parse(datos.Lector["PesoLevantadoKG"].ToString());
-                    serie.RepeticionesLogradas = int.Parse(datos.Lector["RepeticionesLogradas"].ToString());
-                    serie.RIR = datos.Lector["RIR"] is DBNull ? 0 : int.Parse(datos.Lector["RIR"].ToString());
-                    serie.EsRecordPersonal = bool.Parse(datos.Lector["EsRecordPersonal"].ToString());
+                    serie.Ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
+                    serie.PesoLevantadoKG = Convert.ToSingle(datos.Lector["PesoLevantadoKG"]);
+                    serie.RepeticionesLogradas = Convert.ToInt32(datos.Lector["RepeticionesLogradas"]);
+                    serie.RIR = datos.Lector["RIR"] is DBNull ? 0 : Convert.ToInt32(datos.Lector["RIR"]);
+                    serie.EsRecordPersonal = Convert.ToBoolean(datos.Lector["EsRecordPersonal"]);
 
                     series.Add(serie);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {
@@ -105,13 +105,13 @@ namespace Negocio
 
                     SerieCompletada serie = new SerieCompletada();
                     serie.Ejercicio = new Ejercicio();
-                    serie.Ejercicio.IdEjercicio = int.Parse(datos.Lector["IdEjercicio"].ToString());
+                    serie.Ejercicio.IdEjercicio = Convert.ToInt32(datos.Lector["IdEjercicio"]);
                     serie.Ejercicio.NombreEjercicio = nombreEjercicio;
                     serie.Ejercicio.GrupoMuscular = new GrupoMuscular { NombreGrupoMuscular = nombreGrupoMuscular };
-                    serie.PesoLevantadoKG = float.Parse(datos.Lector["PesoLevantadoKG"].ToString());
-                    serie.RepeticionesLogradas = int.Parse(datos.Lector["RepeticionesLogradas"].ToString());
-                    serie.RIR = datos.Lector["RIR"] is DBNull ? 0 : int.Parse(datos.Lector["RIR"].ToString());
-                    serie.EsRecordPersonal = bool.Parse(datos.Lector["EsRecordPersonal"].ToString());
+                    serie.PesoLevantadoKG = Convert.ToSingle(datos.Lector["PesoLevantadoKG"]);
+                    serie.RepeticionesLogradas = Convert.ToInt32(datos.Lector["RepeticionesLogradas"]);
+                    serie.RIR = datos.Lector["RIR"] is DBNull ? 0 : Convert.ToInt32(datos.Lector["RIR"]);
+                    serie.EsRecordPersonal = Convert.ToBoolean(datos.Lector["EsRecordPersonal"]);
 
                     // Las filas vienen ordenadas por nombre de ejercicio: agrupamos por el ultimo grupo abierto.
                     SeriesPorEjercicio grupo = grupos.Count > 0 && grupos[grupos.Count - 1].NombreEjercicio == nombreEjercicio
@@ -134,7 +134,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception(Excepcion + ex.ToString());
+                throw new Exception(Excepcion, ex);
             }
             finally
             {

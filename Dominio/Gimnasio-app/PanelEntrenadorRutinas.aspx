@@ -10,8 +10,11 @@
                 <Columns>
                     <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                     <asp:BoundField DataField="FechaCreacion" HeaderText="Creada" DataFormatString="{0:dd/MM/yyyy}" />
-                    <asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acciones">
                         <ItemTemplate>
+                            <a href='PanelEntrenadorDetalleRutina.aspx?id=<%# Eval("IdRutina") %>&origen=PanelEntrenadorRutinas' class="btn btn-sm btn-outline-info me-1">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
                             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-outline-danger btn-sm" OnClick="btnEliminar_Click" />
                         </ItemTemplate>
                     </asp:TemplateField>

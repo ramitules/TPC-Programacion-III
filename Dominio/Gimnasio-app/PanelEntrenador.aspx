@@ -18,7 +18,7 @@
                     </a>
                 </div>
                 <div class="col-md-4">
-                    <a runat="server" href="~/RutinasAsignadas" class="btn btn-outline-primary w-100 py-3">
+                    <a runat="server" href="~/PanelEntrenadorRutinasAsignadas.aspx" class="btn btn-outline-primary w-100 py-3">
                         Rutinas Asignadas
                     </a>
                 </div>
@@ -30,14 +30,38 @@
                         <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" 
                             Placeholder="Nombre o apellido..." />
                         <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary" 
-                            Text="Buscar" />
+                            Text="Buscar" OnClick="btnBuscar_Click" />
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm mb-4">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"
+                            CssClass="table table-hover align-middle mb-0"
+                            HeaderStyle-CssClass="table-primary text-white"
+                            GridLines="None">
+                            <Columns>
+                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                                <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                                <asp:TemplateField HeaderText="Edad">
+                                    <ItemTemplate>
+                                        <%# CalcularEdad(Eval("FechaNacimiento")) %>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                                <asp:BoundField DataField="PesoCorporal" HeaderText="Peso (kg)" />
+                                <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de Ingreso" DataFormatString="{0:dd/MM/yyyy}" />
+                                <asp:TemplateField HeaderText="Acciones">
+                                    <ItemTemplate>
+                                        <a href='PanelEntrenadorClienteDetalle.aspx?idCliente=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm"> Ver Detalle </a>
+                                    </ItemTemplate>
+                                </asp:TemplateField>
+                            </Columns>
+                        </asp:GridView>
                     </div>
                 </div>
             </div>
         </section>
-
-        
-
     </main>
 
 </asp:Content>
