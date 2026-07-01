@@ -160,7 +160,7 @@
 
                     <div class="mt-4">
                         <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar Cambios" CssClass="btn btn-success me-2" OnClick="btnGuardar_Click"/>
-                        <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-outline-light" />
+                        <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-outline-light" OnClick="btnCancelar_Click"/>
                     </div>
                 </div>
             </asp:Panel>

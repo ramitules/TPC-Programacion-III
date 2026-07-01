@@ -85,7 +85,7 @@
                         <%-- Columna Acciones (Última columna con el botón de Bootstrap) --%>
                         <asp:TemplateField HeaderText="Acciones" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
                             <ItemTemplate>
-                                <a href='FormularioRecepcionista.aspx?id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
+                                <a href='FormularioAdmins.aspx?idRol=2&id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
                                     <i class="bi bi-pencil-square me-1"></i>Ver Detalle
                                 </a>
                             </ItemTemplate>

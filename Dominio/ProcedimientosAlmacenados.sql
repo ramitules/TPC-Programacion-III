@@ -446,3 +446,195 @@ FROM VW_Usuarios
 WHERE Email = @Email
 END
 GO
+
+--Crear Usuario (Admin, Entrenador)
+CREATE PROCEDURE sp_CrearUsuario (
+	@Nombre VARCHAR(70),
+	@Apellido VARCHAR(70),
+	@Email VARCHAR(150),
+	@FechaNacimiento DATETIME,
+	@PesoCorporalKG DECIMAL(5, 2),
+	@IdRol TINYINT,
+	@FechaIngreso DATETIME,
+	@Pass VARCHAR(40)
+)
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION
+			DECLARE @IdUsuario INT; 
+			INSERT INTO Usuarios (Nombre, Apellido, Email, FechaNacimiento, PesoCorporalKG, IdRol, FechaIngreso)
+			VALUES (@Nombre, @Apellido, @Email, @FechaNacimiento, @PesoCorporalKG, @IdRol, @FechaIngreso)
+			SET @IdUsuario = (SELECT SCOPE_IDENTITY());
+			INSERT INTO AccesoUsuarios (IdUsuarios, Pass)
+			VALUES (@IdUsuario, @Pass)
+		COMMIT TRANSACTION
+		SELECT @IdUsuario
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;   
+        PRINT 'Error al registrar usuario: ' + ERROR_MESSAGE();
+	END CATCH
+END;
+GO
+
+
+--Modificar Usuario (Admin, Entrenador)
+CREATE PROCEDURE sp_ModificarUsuario (
+	@Nombre VARCHAR(70),
+	@Apellido VARCHAR(70),
+	@Email VARCHAR(150),
+	@FechaNacimiento DATETIME,
+	@PesoCorporal DECIMAL(5, 2),
+	@IdRol TINYINT,
+	@FechaIngreso DATETIME,
+	@Activo BIT,
+	@IdUsuario INT,
+	@Pass VARCHAR(150)
+)
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION
+			UPDATE Usuarios SET
+				Nombre = @Nombre, 
+				Apellido = @Apellido, 
+				Email = @Email, 
+				FechaNacimiento = @FechaNacimiento,
+				PesoCorporalKG = @PesoCorporal, 
+				IdRol = @IdRol, 
+				FechaIngreso = @FechaIngreso,
+				Activo = @Activo
+			WHERE IdUsuarios = @IdUsuario
+			IF @Pass IS NOT NULL AND @Pass != ''
+			BEGIN
+				UPDATE AccesoUsuarios SET
+					Pass = @Pass
+				WHERE IdUsuarios = @IdUsuario
+			END
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
+	END CATCH
+END;
+GO
+
+--Trae todos los usuarios con rol de Admin
+CREATE PROCEDURE sp_Traer_Admins
+AS
+  BEGIN
+    SELECT U.IdUsuarios, 
+    U.Nombre, 
+    U.Apellido, 
+    U.Email, 
+    U.FechaNacimiento AS [Fecha de Nacimiento],
+    U.IdRol,
+    R.Nombre AS [Rol],
+    U.FechaIngreso AS [Fecha de Ingreso],
+    U.Activo
+    FROM Usuarios U
+    INNER JOIN Roles R ON U.IdRol = R.IdRoles
+    WHERE U.IdRol = 1
+END;
+GO
+
+--Trae todos los usuarios con rol de Cliente
+CREATE PROCEDURE sp_Traer_Clientes
+AS
+  BEGIN
+    SELECT U.IdUsuarios, 
+    U.Nombre, 
+    U.Apellido, 
+    U.Email, 
+    U.FechaNacimiento AS [Fecha de Nacimiento],
+    U.IdRol,
+    R.Nombre AS [Rol],
+    U.FechaIngreso AS [Fecha de Ingreso],
+    U.PesoCorporalKG,
+    S.IdEstado,
+    SE.Nombre,
+    U.Activo
+    FROM Usuarios U
+    LEFT JOIN Roles R ON U.IdRol = R.IdRoles
+    LEFT JOIN Suscripciones S ON S.IdUsuario = U.IdUsuarios
+    LEFT JOIN SuscripcionesEstados SE ON SE.IdSuscripcionesEstados = S.IdEstado
+    WHERE U.IdRol = 3
+END;
+GO
+
+--Trae todos los usuarios con rol de Entrenador
+CREATE PROCEDURE sp_Traer_Entrenadores
+AS
+  BEGIN
+    SELECT U.IdUsuarios, 
+    U.Nombre, 
+    U.Apellido, 
+    U.Email, 
+    U.FechaNacimiento AS [Fecha de Nacimiento],
+    U.IdRol,
+    R.Nombre AS [Rol],
+    U.FechaIngreso AS [Fecha de Ingreso],
+    U.Activo
+    FROM Usuarios U
+    INNER JOIN Roles R ON U.IdRol = R.IdRoles
+    WHERE U.IdRol = 4
+END;
+GO
+
+
+--Trae todos los ejercicios con su grupo muscular
+CREATE PROCEDURE sp_Traer_Ejercicios
+AS
+BEGIN
+SELECT E.IdEjercicios, E.Nombre, E.IdGrupoMuscular, GM.Nombre AS GrupoMuscular, E.LinkExplicacion FROM Ejercicios E
+INNER JOIN GruposMusculares GM ON E.IdGrupoMuscular = GM.IdGruposMusculares
+END;
+GO
+
+
+--Trae todos los estados de suscripciones
+CREATE PROCEDURE sp_Traer_Estados_De_Suscripciones
+AS 
+BEGIN
+SELECT IdSuscripcionesEstados, Nombre FROM SuscripcionesEstados
+END;
+GO
+
+
+--Trae todos los grupos musculares
+CREATE PROCEDURE sp_Traer_Grupos_Musculares
+AS
+BEGIN
+SELECT IdGruposMusculares, Nombre FROM GruposMusculares
+END;
+GO
+
+
+--Trae todos los planes
+CREATE PROCEDURE sp_Traer_Planes
+AS
+BEGIN
+SELECT IdPlanes, Nombre, PrecioMensual, DuracionDias FROM Planes
+END;
+GO
+
+
+--Inactiva un usuario (baja logica)
+CREATE PROCEDURE sp_Inactivar_Usuario
+  @IdUsuario INT
+AS
+  BEGIN
+	UPDATE Usuarios SET Activo = 0 WHERE IdUsuarios = @IdUsuario
+END;
+GO
+
+
+--Activa un usuario (alta logica)
+CREATE PROCEDURE sp_Activa_Usuario
+  @IdUsuario INT
+AS
+  BEGIN
+    UPDATE Usuarios SET Activo = 1 WHERE IdUsuarios = @IdUsuario
+END;
+GO

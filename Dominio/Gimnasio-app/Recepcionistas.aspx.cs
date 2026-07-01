@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!(Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN)))
+            {
+                Response.Redirect("Login.aspx", false);
+            }
             AdminNegocio adminNegocio = new AdminNegocio();
             List<Recepcionista> recepcionistas = new List<Recepcionista>();
             try
@@ -26,7 +31,7 @@ namespace Gimnasio_app
                     }
                     else
                     {
-                        recepcionistas = (List<Recepcionista>)Session["listaRecepcionistas"];
+                        recepcionistas = ((List<Recepcionista>)Session["listaRecepcionistas"]);
                     }
                     dgvRecepcionistas.DataSource = recepcionistas != null ? recepcionistas : new List<Recepcionista>();
                     dgvRecepcionistas.DataBind();
@@ -34,13 +39,21 @@ namespace Gimnasio_app
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Response.Redirect("FormularioAdmins.aspx?IdRol=" + (int)Roles.RECEPCIONISTA, false);
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
         }
 
         protected void txtBuscar_TextChanged(object sender, EventArgs e)

@@ -52,7 +52,7 @@
         <div class="card-body p-0">
             <div class="table-responsive">
 
-                <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"
+                <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false" OnRowCommand="dgvClientes_RowCommand"
                     CssClass="table table-hover align-middle mb-0"
                     HeaderStyle-CssClass="table-primary text-white"
                     GridLines="None">
@@ -100,13 +100,15 @@
                         <%-- Columna Acciones (Última columna con el botón de Bootstrap) --%>
                         <asp:TemplateField HeaderText="Acciones" ItemStyle-HorizontalAlign="Center" HeaderStyle-CssClass="text-center">
                             <ItemTemplate>
-                                <a href='RegistrarUsuario.aspx?id=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm px-3 shadow-sm">
-                                    <%if (true)
-                                        {
-
-                                        } %>
-                                    <i class="bi bi-pencil-square me-1"></i>Ver Detalle
-                                </a>
+                                <asp:LinkButton ID="btnEstado" runat="server" OnClick="btnEstado_Click" 
+                                    CommandArgument='<%# Eval("IdUsuario") %>'
+                                    CommandName="CambiarEstado"
+                                    CssClass='<%# Convert.ToBoolean(Eval("Activo")) ? "btn btn-outline-danger btn-sm px-3 shadow-sm" : "btn btn-outline-success btn-sm px-3 shadow-sm" %>'>
+            
+                                    <i class='<%# Convert.ToBoolean(Eval("Activo")) ? "bi bi-person-x me-1" : "bi bi-person-check me-1" %>'></i>
+                                    <%# Convert.ToBoolean(Eval("Activo")) ? "Inactivar Cliente" : "Activar Cliente" %>
+                                    
+                                </asp:LinkButton>
                             </ItemTemplate>
                         </asp:TemplateField>
                     </Columns>

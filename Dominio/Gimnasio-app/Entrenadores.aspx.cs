@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,10 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!(Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN)))
+            {
+                Response.Redirect("Login.aspx", false);
+            }
             AdminNegocio adminNegocio = new AdminNegocio();
             List<Entrenador> entrenadores = new List<Entrenador>();
             try
@@ -35,13 +39,21 @@ namespace Gimnasio_app
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
         protected void btnRegistrar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Response.Redirect("FormularioAdmins.aspx?IdRol=" + (int)Roles.ENTRENADOR, false);
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
         }
 
         protected void ddlEstado_TextChanged(object sender, EventArgs e)

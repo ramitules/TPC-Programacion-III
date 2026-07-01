@@ -42,6 +42,16 @@ namespace Gimnasio_app
                             Session.Add("usuario", cliente);
                             Response.Redirect("~/perfil.aspx", false);
                             break;
+                        case (int)Roles.ENTRENADOR:
+                            //Entrenador entrenador = new EntrenadorNegocio().Get(usuario.IdUsuario.ToString(), full: true);
+                            //Session.Add("usuario", entrenador);
+                            Response.Redirect("~/perfilEntrenador.aspx", false);
+                            break;
+                        case (int)Roles.RECEPCIONISTA:
+                            //Recepcionista recepcionista = new RecepcionistaNegocio().Get(usuario.IdUsuario.ToString(), full: true);
+                            //Session.Add("usuario", recepcionista);
+                            Response.Redirect("~/perfilRecepcionista.aspx", false);
+                            break;
                         default:
                             break;
                     }

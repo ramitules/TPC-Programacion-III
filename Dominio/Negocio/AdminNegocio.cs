@@ -49,14 +49,23 @@ namespace Negocio
                             case "Entrenador":
                                 user = new Entrenador();
                                 break;
-                            case "Administrativo":
+                            case "Recepcionista":
                                 user = new Recepcionista();
                                 break;
                             case "Cliente":
                                 Cliente cliente = new Cliente();
                                 cliente.SuscripcionCliente = new Suscripcion();
-                                cliente.SuscripcionCliente.IdSuscripcion = Convert.ToInt32(datos.Lector["IdEstado"]);
-                                cliente.SuscripcionCliente.Estado = (EstadoSuscripcion)(Convert.ToInt32(datos.Lector["IdEstado"]));
+                                if (datos.Lector["IdEstado"] != DBNull.Value)
+                                {
+                                    cliente.SuscripcionCliente.IdSuscripcion = Convert.ToInt32(datos.Lector["IdEstado"]);
+                                    cliente.SuscripcionCliente.Estado = (EstadoSuscripcion)(Convert.ToInt32(datos.Lector["IdEstado"]));
+                                }
+                                else
+                                {
+                                    cliente.SuscripcionCliente.IdSuscripcion = 4;
+                                    cliente.SuscripcionCliente.Estado = EstadoSuscripcion.VIGENTE_PENDIENTE;
+                                }
+
                                 cliente.PesoCorporal = float.Parse(datos.Lector["PesoCorporalKG"].ToString());
                                 user = cliente;
                                 break;
@@ -78,7 +87,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
                 //throw new Exception("Ocurrio un problema al traer los admins de base de datos - AdminNegocio/ObtenerAdmins");
             }
             finally
@@ -87,18 +96,18 @@ namespace Negocio
             }
             return listaUsuario;
         }  // Funcion que ya esta ok. Trae todo sim problemas
-        public void crearAdmin(Admin admin, string pass) 
+        public void crearUsuario(Usuario usuario, string pass) 
         { 
             AccesoADatos datos = new AccesoADatos();
             try
             {
                 datos.SetearConsultaSP("sp_CrearUsuario");
-                datos.setearParametro("@Nombre", admin.Nombre);
-                datos.setearParametro("@Apellido", admin.Apellido);
-                datos.setearParametro("@Email", admin.Email);
-                datos.setearParametro("@FechaNacimiento", admin.FechaNacimiento);
+                datos.setearParametro("@Nombre", usuario.Nombre);
+                datos.setearParametro("@Apellido", usuario.Apellido);
+                datos.setearParametro("@Email", usuario.Email);
+                datos.setearParametro("@FechaNacimiento", usuario.FechaNacimiento);
                 datos.setearParametro("@PesoCorporalKG", 0);
-                datos.setearParametro("@IdRol", admin.Rol.IdRol);
+                datos.setearParametro("@IdRol", usuario.Rol.IdRol);
                 datos.setearParametro("@FechaIngreso", DateTime.Now);
                 // datos.setearParametro("@Pass", pass);
                 datos.setearParametro("@Pass", string.IsNullOrEmpty(pass) ? pass : HashContrasenia.Hashear(pass));
@@ -106,35 +115,54 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw new Exception("Ocurrio un problema al crear el admin en la base de datos - AdminNegocio/createAdmin");
+                throw new Exception("Ocurrio un problema al crear el usuario en la base de datos - AdminNegocio/crearUsuario");
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
-        public void modificarAdmin(Admin admin, string pass) 
+        public void modificarUsuario(Usuario user, string pass) 
         { 
             AccesoADatos datos = new AccesoADatos();
             try
             {
                 datos.SetearConsultaSP("sp_ModificarUsuario");
-                datos.setearParametro("@Nombre", admin.Nombre);
-                datos.setearParametro("@Apellido", admin.Apellido);
-                datos.setearParametro("@Email", admin.Email);
-                datos.setearParametro("@FechaNacimiento", admin.FechaNacimiento);
+                datos.setearParametro("@Nombre", user.Nombre);
+                datos.setearParametro("@Apellido", user.Apellido);
+                datos.setearParametro("@Email", user.Email);
+                datos.setearParametro("@FechaNacimiento", user.FechaNacimiento);
                 datos.setearParametro("@PesoCorporal", 0);
-                datos.setearParametro("@IdRol", admin.Rol.IdRol);
-                datos.setearParametro("@FechaIngreso", admin.FechaIngreso);
-                datos.setearParametro("@Activo", admin.Activo);
+                datos.setearParametro("@IdRol", user.Rol.IdRol);
+                datos.setearParametro("@FechaIngreso", user.FechaIngreso);
+                datos.setearParametro("@Activo", user.Activo);
                 // datos.setearParametro("@Pass", pass);
                 datos.setearParametro("@Pass", string.IsNullOrEmpty(pass) ? pass : HashContrasenia.Hashear(pass));
-                datos.setearParametro("@IdUsuario", admin.IdUsuario);
+                datos.setearParametro("@IdUsuario", user.IdUsuario);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void activarInactivarUsuario(int id) 
+        { 
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Activar_Inactivar_Usuario");
+                datos.setearParametro("@IdUsuario", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
             finally
@@ -289,6 +317,24 @@ namespace Negocio
             {
                 datos.SetearConsultaSP("sp_Eliminar_Ejercicio");
                 datos.setearParametro("@IdEjercicio", ejercicio.IdEjercicio);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void eliminarPlan(Plan plan) 
+        {
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_Eliminar_Plan");
+                datos.setearParametro("@IdPlan", plan.IdPlan);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

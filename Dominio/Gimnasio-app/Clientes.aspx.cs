@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!(Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN)))
+            {
+                Response.Redirect("Login.aspx", false);
+            }
             AdminNegocio adminNegocio = new AdminNegocio();
             List<Cliente> clientes = new List<Cliente>();
             try
@@ -200,6 +205,33 @@ namespace Gimnasio_app
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        protected void btnEstado_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void dgvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            try
+            {
+                if (e.CommandName == "CambiarEstado")
+                {
+                    int idUsuario = Convert.ToInt32(e.CommandArgument);
+                    AdminNegocio negocio = new AdminNegocio();
+                    negocio.activarInactivarUsuario(idUsuario);
+                    List<Cliente> clientes = negocio.ObtenerUsuarioPorRol("sp_Traer_Clientes").Cast<Cliente>().ToList();
+                    Session["listaClientes"] = clientes;
+                    dgvClientes.DataSource = clientes != null ? clientes : new List<Cliente>();
+                    dgvClientes.DataBind();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
     }

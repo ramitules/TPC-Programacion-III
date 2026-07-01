@@ -50,8 +50,11 @@ namespace Integraciones
             try
             {
                 datos.SetearConsultaSP("sp_logueo");
-                datos.setearParametro("@email", email);
+                datos.setearParametro("@Email", email);
+                datos.setearParametro("@Pass", pass);
                 datos.ejecutarLectura();
+                //string contraseia = HashContrasenia.Hashear(pass);
+                //Object algo = datos.Lector.Read();
                 if (datos.Lector.Read())
                 {
                     // La validacion de la contrasenia se hace aca (PBKDF2), no en SQL.
@@ -90,6 +93,10 @@ namespace Integraciones
                 {
                     return null; // No se encontró un usuario con esas credenciales
                 }
+            }
+            catch
+            {
+                throw new Exception("La contraseña no coincide");
             }
             finally
             {

@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Integraciones;
 using Negocio;
 using System;
 using System.Collections.Generic;
@@ -13,28 +14,32 @@ namespace Gimnasio_app
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!(Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN)))
+            {
+                Response.Redirect("Login.aspx", false);
+            }
             AdminNegocio adminNegocio = new AdminNegocio();
-            List<Usuario> admins = new List<Usuario>();
+            List<Admin> admins = new List<Admin>();
             try
             {
                 if (!IsPostBack)
                 {
                     if (Session["listaAdmins"] == null)
                     {
-                        admins = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins");
+                        admins = adminNegocio.ObtenerUsuarioPorRol("sp_Traer_Admins").Cast<Admin>().ToList();
                         Session.Add("listaAdmins", admins);
                     }
                     else
                     {
-                        admins = (List<Usuario>)Session["listaAdmins"];
+                        admins = (List<Admin>)Session["listaAdmins"];
                     }
-                    dgvAdmins.DataSource = admins != null ? admins : new List<Usuario>();
+                    dgvAdmins.DataSource = admins != null ? admins : new List<Admin>();
                     dgvAdmins.DataBind();
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -42,46 +47,46 @@ namespace Gimnasio_app
         {
             try
             {
-                Response.Redirect("FormularioAdmins", false);
+                Response.Redirect("FormularioAdmins.aspx?IdRol=" + (int)Roles.ADMIN, false);
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
         protected void txtBuscar_TextChanged(object sender, EventArgs e)
         {
-            List<Usuario> filtrado;
+            List<Admin> filtrado;
             try
             {
                 if (Session["listaAdmins"] != null)
                 {
-                    List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                    List<Admin> admins = (List<Admin>)Session["listaAdmins"];
                     filtrado = admins.FindAll(a => (a.Nombre + " " + a.Apellido).ToLower().Contains(txtBuscar.Text.ToLower()));
                 }
                 else
                 {
-                    filtrado = new List<Usuario>();
+                    filtrado = new List<Admin>();
                 }
-                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Usuario>();
+                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Admin>();
                 dgvAdmins.DataBind();
             }
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
         }
 
         protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<Usuario> filtrado;
+            List<Admin> filtrado;
             bool estadoSeleccionado = ddlEstado.SelectedValue == "activos" ? true : false;
             if (Session["listaAdmins"] != null)
             {
-                List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
+                List<Admin> admins = (List<Admin>)Session["listaAdmins"];
                 if (ddlEstado.SelectedValue == "todos")
                 {
                     filtrado = admins;
@@ -90,7 +95,7 @@ namespace Gimnasio_app
                 {
                     filtrado = admins.FindAll(a => a.Activo == estadoSeleccionado);
                 }
-                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Usuario>();
+                dgvAdmins.DataSource = filtrado != null ? filtrado : new List<Admin>();
                 dgvAdmins.DataBind();
             }
         }

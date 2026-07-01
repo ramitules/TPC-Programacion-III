@@ -1,0 +1,637 @@
+[1mdiff --git a/.opencode/plans/PanelEntrenador-PlanDeTrabajo.md b/.opencode/plans/PanelEntrenador-PlanDeTrabajo.md[m
+[1mnew file mode 100644[m
+[1mindex 0000000..6ea7b52[m
+[1m--- /dev/null[m
+[1m+++ b/.opencode/plans/PanelEntrenador-PlanDeTrabajo.md[m
+[36m@@ -0,0 +1,301 @@[m
+[32m+[m[32m# Panel de Entrenador - Plan de Trabajo[m
+[32m+[m
+[32m+[m[32m## Proyecto: GimnasioApp[m
+[32m+[m
+[32m+[m[32m**Stack:** ASP.NET Web Forms (.NET Framework 4.8), C#, SQL Server, arquitectura N-Layer[m[41m  [m
+[32m+[m[32m**Ubicación:** `C:\Home\Dev\csharp\programacion III\GimnasioApp`[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Estado Actual del Panel de Entrenador[m
+[32m+[m
+[32m+[m[32m### Funcionalidades Completadas:[m
+[32m+[m
+[32m+[m[32m| # | Funcionalidad | Estado | Archivos |[m
+[32m+[m[32m|---|---------------|--------|----------|[m
+[32m+[m[32m| 1 | **Ver lista de socios** (solo activos, datos restringidos) | ✅ Completado | `PanelEntrenador.aspx`, `PanelEntrenador.aspx.cs` |[m
+[32m+[m[32m| 2 | **Asignar rutinas a socios** (crear rutina nueva y asignarla) | ✅ Completado | `PanelEntrenadorAsignarRutina.aspx`, `PanelEntrenadorAsignarRutina.aspx.cs`, `RutinasNegocio.cs` |[m
+[32m+[m[32m| 3 | **Ver detalle del cliente** (datos + rutinas asignadas) | ✅ Completado | `PanelEntrenadorClienteDetalle.aspx`, `PanelEntrenadorClienteDetalle.aspx.cs` |[m
+[32m+[m[32m| 4 | **Ver sesiones/progreso** de los socios | ✅ Completado | `PanelEntrenadorProgresoCliente.aspx`, `PanelEntrenadorProgresoCliente.aspx.cs`, `PanelEntrenadorProgresoSesionDetalle.aspx`, `PanelEntrenadorProgresoSesionDetalle.aspx.cs` |[m
+[32m+[m[32m| 5 | **Ver rutinas asignadas** a clientes | ✅ Completado | `PanelEntrenadorRutinasAsignadas.aspx`, `PanelEntrenadorRutinasAsignadas.aspx.cs`, `RutinasNegocio.cs` |[m
+[32m+[m[32m| 6 | **Ver detalle de rutina** (lectura + usar como plantilla) | 🔄 En Progreso | `PanelEntrenadorDetalleRutina.aspx`, `PanelEntrenadorDetalleRutina.aspx.cs` |[m
+[32m+[m
+[32m+[m[32m### Funcionalidades Pendientes:[m
+[32m+[m
+[32m+[m[32m| # | Funcionalidad | Prioridad | Estado |[m
+[32m+[m[32m|---|---------------|-----------|--------|[m
+[32m+[m[32m| 7 | **Ver su propio perfil** | Baja | Pendiente |[m
+[32m+[m
+[32m+[m[32m### Tareas Pendientes Menores:[m
+[32m+[m
+[32m+[m[32m| Tarea | Descripción |[m
+[32m+[m[32m|-------|-------------|[m
+[32m+[m[32m| Implementar `btnQuitar_Click` | En `PanelEntrenadorAsignarRutina.aspx.cs` (tiene comentario PENDIENTE) |[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Archivos Creados/Modificados en Esta Sesión[m
+[32m+[m
+[32m+[m[32m### Archivos NUEVOS:[m
+[32m+[m[32m1. **`PanelEntrenadorAsignarRutina.aspx`** — Vista para crear y asignar rutina a un socio[m
+[32m+[m[32m2. **`PanelEntrenadorAsignarRutina.aspx.cs`** — Code-behind con Page_Load, btnAgregar_Click, btnQuitar_Click (PENDIENTE), btnGuardar_Click[m
+[32m+[m[32m3. **`PanelEntrenadorClienteDetalle.aspx`** — Vista con datos del cliente y rutinas asignadas[m
+[32m+[m[32m4. **`PanelEntrenadorClienteDetalle.aspx.cs`** — Code-behind con Page_Load, CalcularEdad, btnCrearRutina_Click[m
+[32m+[m[32m5. **`PanelEntrenadorProgresoCliente.aspx`** — Vista con GridView de sesiones del cliente (fecha, rutina, duración, series)[m
+[32m+[m[32m6. **`PanelEntrenadorProgresoCliente.aspx.cs`** — Code-behind con Page_Load (busca cliente en Session, carga sesiones de BD), gvSesiones_RowDataBound, CalcularDuracion, btnVolver_Click[m
+[32m+[m[32m7. **`PanelEntrenadorProgresoSesionDetalle.aspx`** — Vista con GridView de series de una sesión (ejercicio, peso, reps, RIR, record)[m
+[32m+[m[32m8. **`PanelEntrenadorProgresoSesionDetalle.aspx.cs`** — Code-behind con Page_Load (carga series agrupadas), btnVolver_Click[m
+[32m+[m[32m9. **`PanelEntrenadorRutinasAsignadas.aspx`** — Vista con GridView de rutinas asignadas a clientes (nombre, cliente, día, fecha)[m
+[32m+[m[32m10. **`PanelEntrenadorRutinasAsignadas.aspx.cs`** — Code-behind con Page_Load simple (carga de BD)[m
+[32m+[m[32m11. **`PanelEntrenadorDetalleRutina.aspx`** — Vista de detalle de rutina (solo lectura) con ejercicios, botones "Usar como plantilla" y "Asignar a cliente"[m
+[32m+[m[32m12. **`PanelEntrenadorDetalleRutina.aspx.cs`** — Code-behind con Page_Load (carga rutina y ejercicios), btnVolver_Click, btnUsarPlantilla_Click, btnAsignarCliente_Click[m
+[32m+[m
+[32m+[m[32m### Archivos MODIFICADOS:[m
+[32m+[m[32m1. **`PanelEntrenador.aspx`** — Agregado GridView con columnas (Nombre, Apellido, Edad, Peso, Fecha Ingreso, Acciones), link "Ver Detalle" apunta a PanelEntrenadorClienteDetalle.aspx[m
+[32m+[m[32m2. **`PanelEntrenador.aspx.cs`** — Agregado Page_Load, CalcularEdad, aplicarFiltros, btnBuscar_Click con try-catch. **Modificado para usar patrón Session** (verifica si Session tiene datos antes de cargar de BD)[m
+[32m+[m[32m3. **`RutinasNegocio.cs`** — Agregado método `CrearRutinaParaCliente(int idCliente, string nombre, List<RutinaEjercicio> ejercicios)` y `GetRutinasAsignadas()`[m
+[32m+[m[32m4. **`PanelEntrenadorClienteDetalle.aspx.cs`** — **Modificado para buscar cliente en Session** en vez de ir a BD. Agregado btnVerProgreso_Click[m
+[32m+[m[32m5. **`PanelEntrenadorClienteDetalle.aspx`** — Agregado botón "Ver Progreso" entre "Crear Rutina" y "Volver". Agregada columna "Ver" en GridView de rutinas[m
+[32m+[m[32m6. **`Login.aspx.cs`** — Agregado `case (int)Roles.ENTRENADOR` en el switch del login (EN-02)[m
+[32m+[m[32m7. **`Site.Master`** — Agregada sección ENTRENADOR en menú lateral + link a Login cuando no hay sesión[m
+[32m+[m[32m8. **8 páginas del panel** — Agregada validación de sesión/rol al inicio de Page_Load (EN-01): `PanelEntrenador`, `PanelEntrenadorCrearRutina`, `PanelEntrenadorRutinas`, `PanelEntrenadorAsignarRutina`, `PanelEntrenadorClienteDetalle`, `PanelEntrenadorProgresoCliente`, `PanelEntrenadorProgresoSesionDetalle`, `PanelEntrenadorRutinasAsignadas`[m
+[32m+[m[32m9. **`PanelEntrenadorRutinas.aspx`** — Agregada columna "Ver" con link a PanelEntrenadorDetalleRutina.aspx[m
+[32m+[m[32m10. **`PanelEntrenadorRutinasAsignadas.aspx`** — Agregada columna "Ver" con link a PanelEntrenadorDetalleRutina.aspx[m
+[32m+[m[32m11. **`PanelEntrenadorAsignarRutina.aspx`** — Agregado DropDownList para seleccionar cliente (cuando no viene idCliente por URL)[m
+[32m+[m[32m12. **`PanelEntrenadorAsignarRutina.aspx.cs`** — Modificado Page_Load para aceptar `idRutinaBase` por URL y precargar ejercicios. Modificado btnGuardar_Click para manejar cliente desde dropdown[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Flujo Actual de Navegación[m
+[32m+[m
+[32m+[m[32m```[m
+[32m+[m[32mPanelEntrenador.aspx (lista socios activos)[m
+[32m+[m[32m  ├─→ "Ver Detalle" → PanelEntrenadorClienteDetalle.aspx?idCliente=X[m
+[32m+[m[32m  │                     ├─→ Datos del cliente (nombre, apellido, edad, peso, fecha ingreso)[m
+[32m+[m[32m  │                     ├─→ Lista de rutinas asignadas (nombre, fecha creación, día)[m
+[32m+[m[32m  │                     │     └─→ "Ver" → PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorClienteDetalle&idCliente=X[m
+[32m+[m[32m  │                     │                   ├─→ GridView de ejercicios (solo lectura)[m
+[32m+[m[32m  │                     │                   ├─→ "Usar como plantilla" → PanelEntrenadorAsignarRutina.aspx?idCliente=X&idRutinaBase=X[m
+[32m+[m[32m  │                     │                   └─→ "Asignar a cliente" → PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X[m
+[32m+[m[32m  │                     ├─→ "Crear Rutina" → PanelEntrenadorAsignarRutina.aspx?idCliente=X[m
+[32m+[m[32m  │                     ├─→ "Ver Progreso" → PanelEntrenadorProgresoCliente.aspx?idCliente=X[m
+[32m+[m[32m  │                     │                     ├─→ GridView de sesiones (rutina, fecha, duración, series)[m
+[32m+[m[32m  │                     │                     ├─→ "Ver Detalle" → PanelEntrenadorProgresoSesionDetalle.aspx?idSesion=Z&idCliente=X[m
+[32m+[m[32m  │                     │                     │                     └─→ GridView de series (ejercicio, grupo muscular, peso, reps, RIR, record)[m
+[32m+[m[32m  │                     │                     └─→ "Volver" → PanelEntrenadorClienteDetalle.aspx?idCliente=X[m
+[32m+[m[32m  │                     └─→ "Volver" → PanelEntrenador.aspx[m
+[32m+[m[32m  │[m
+[32m+[m[32m  ├─→ "Crear Rutina" → PanelEntrenadorCrearRutina.aspx (crea rutina general, ya existía)[m
+[32m+[m[32m  ├─→ "Panel de Rutinas" → PanelEntrenadorRutinas.aspx (ver/eliminar generales)[m
+[32m+[m[32m  │                          └─→ "Ver" → PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorRutinas[m
+[32m+[m[32m  │                                        ├─→ GridView de ejercicios (solo lectura)[m
+[32m+[m[32m  │                                        ├─→ "Usar como plantilla" → PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X[m
+[32m+[m[32m  │                                        └─→ "Asignar a cliente" → PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X[m
+[32m+[m[32m  └─→ "Rutinas Asignadas" → PanelEntrenadorRutinasAsignadas.aspx (ver rutinas asignadas a clientes)[m
+[32m+[m[32m                              └─→ "Ver" → PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorRutinasAsignadas[m
+[32m+[m[32m                                            ├─→ GridView de ejercicios (solo lectura)[m
+[32m+[m[32m                                            ├─→ "Usar como plantilla" → PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X[m
+[32m+[m[32m                                            └─→ "Asignar a cliente" → PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Base de Datos Local (Configurada)[m
+[32m+[m
+[32m+[m[32mLa base de datos local ya está configurada en SQL Server Express:[m
+[32m+[m[32m- **Servidor:** `.\SQLEXPRESS` (DESKTOP-21C03Q4\SQLEXPRESS)[m
+[32m+[m[32m- **Base de datos:** `GestionGimnasio`[m
+[32m+[m[32m- **Connection string:** `Server=.\SQLEXPRESS;Database=GestionGimnasio;Integrated Security=True;TrustServerCertificate=True;`[m
+[32m+[m[32m- **Scripts ejecutados:** ScriptDB.sql, Vistas.sql, ProcedimientosAlmacenados.sql, triggers.sql, Inserts.sql[m
+[32m+[m[32m- **Datos de prueba:** 30 usuarios (23 clientes activos), ejercicios, rutinas, sesiones y series cargados[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Patrón Session (Consistente con Clientes/Admins)[m
+[32m+[m
+[32m+[m[32mPanelEntrenador usa el mismo patrón de Session que las secciones de Clientes y Admins del proyecto:[m
+[32m+[m
+[32m+[m[32m### Cómo funciona:[m
+[32m+[m
+[32m+[m[32m| Paso | Qué hace | Cómo |[m
+[32m+[m[32m|------|----------|------|[m
+[32m+[m[32m| **Primera carga** | Carga lista de BD → guarda en Session | `Session.Add("listaClientesEntrenador", clientes)` |[m
+[32m+[m[32m| **Cargas siguientes** | Usa datos de Session (no va a BD) | `clientes = (List<Cliente>)Session["listaClientesEntrenador"]` |[m
+[32m+[m[32m| **Navegación a detalle** | Pasa ID por QueryString | `?idCliente=8` |[m
+[32m+[m[32m| **Búsqueda en detalle** | Busca en Session por ID | `clientes.Find(c => c.IdUsuario == int.Parse(idCliente))` |[m
+[32m+[m[32m| **Volver al listado** | Usa Session (no recarga BD) | Link estático o Response.Redirect |[m
+[32m+[m
+[32m+[m[32m### Claves de Session usadas:[m
+[32m+[m
+[32m+[m[32m| Clave | Qué guarda | Dónde se usa |[m
+[32m+[m[32m|-------|------------|--------------|[m
+[32m+[m[32m| `listaClientesEntrenador` | Lista completa de clientes activos | PanelEntrenador, PanelEntrenadorClienteDetalle, PanelEntrenadorProgresoCliente |[m
+[32m+[m[32m| `idClienteDetalle` | ID del cliente en detalle | PanelEntrenadorClienteDetalle |[m
+[32m+[m[32m| `idClienteProgreso` | ID del cliente en progreso | PanelEntrenadorProgresoCliente |[m
+[32m+[m[32m| `idClienteProgresoDetalle` | ID del cliente en detalle de sesión | PanelEntrenadorProgresoSesionDetalle |[m
+[32m+[m[32m| `idSesionDetalle` | ID de la sesión en detalle | PanelEntrenadorProgresoSesionDetalle |[m
+[32m+[m
+[32m+[m[32m### Nota importante:[m
+[32m+[m[32mLas sesiones de entrenamiento y las series se cargan siempre de BD (no se cachean en Session) porque son datos que cambian frecuentemente.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Línea de Trabajo: Seguridad (Completada)[m
+[32m+[m
+[32m+[m[32m### Hallazgos de Auditoría Resueltos:[m
+[32m+[m
+[32m+[m[32m| ID | Severidad | Problema | Estado | Archivos |[m
+[32m+[m[32m|----|-----------|----------|--------|----------|[m
+[32m+[m[32m| **EN-01** | 🔴 Crítico | Ninguna página del panel valida sesión/rol | ✅ Resuelto | 8 archivos .aspx.cs del panel |[m
+[32m+[m[32m| **EN-02** | 🟠 Alto | Login no maneja rol ENTRENADOR | ✅ Resuelto | `Login.aspx.cs` |[m
+[32m+[m
+[32m+[m[32m### EN-01: Validación de sesión/rol en páginas del panel[m
+[32m+[m
+[32m+[m[32m**Solución implementada:** Agregar al inicio de cada `Page_Load`:[m
+[32m+[m[32m```csharp[m
+[32m+[m[32mif (!Seguridad.SessionActiva(Session["usuario"]) ||[m
+[32m+[m[32m    !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ENTRENADOR))[m
+[32m+[m[32m{[m
+[32m+[m[32m    Response.Redirect("Default", false);[m
+[32m+[m[32m    return;[m
+[32m+[m[32m}[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m**Patrón usado:** Consistente con páginas de Cliente (Rutinas.aspx.cs, DetalleRutina.aspx.cs, perfil.aspx.cs).[m
+[32m+[m
+[32m+[m[32m**Archivos modificados:**[m
+[32m+[m[32m1. PanelEntrenador.aspx.cs[m
+[32m+[m[32m2. PanelEntrenadorCrearRutina.aspx.cs[m
+[32m+[m[32m3. PanelEntrenadorRutinas.aspx.cs[m
+[32m+[m[32m4. PanelEntrenadorAsignarRutina.aspx.cs[m
+[32m+[m[32m5. PanelEntrenadorClienteDetalle.aspx.cs[m
+[32m+[m[32m6. PanelEntrenadorProgresoCliente.aspx.cs[m
+[32m+[m[32m7. PanelEntrenadorProgresoSesionDetalle.aspx.cs[m
+[32m+[m[32m8. PanelEntrenadorRutinasAsignadas.aspx.cs[m
+[32m+[m
+[32m+[m[32m### EN-02: Login para entrenador[m
+[32m+[m
+[32m+[m[32m**Solución implementada:** Agregar case en Login.aspx.cs:[m
+[32m+[m[32m```csharp[m
+[32m+[m[32mcase (int)Roles.ENTRENADOR:[m
+[32m+[m[32m    Session.Add("usuario", usuario);[m
+[32m+[m[32m    Response.Redirect("~/PanelEntrenador.aspx", false);[m
+[32m+[m[32m    break;[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m**Patrón usado:** Consistente con case ADMIN (simple, sin carga extra de datos).[m
+[32m+[m
+[32m+[m[32m### Site.Master: Menú lateral para entrenador[m
+[32m+[m
+[32m+[m[32m**Solución implementada:** Agregar sección ENTRENADOR en el menú lateral:[m
+[32m+[m[32m- Panel de Entrenador[m
+[32m+[m[32m- Rutinas Generales[m
+[32m+[m[32m- Rutinas Asignadas[m
+[32m+[m
+[32m+[m[32m**También:** Link "Iniciar sesión" cuando no hay usuario logueado.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Funcionalidad en Progreso: Ver Detalle de Rutina[m
+[32m+[m
+[32m+[m[32m### Objetivo:[m
+[32m+[m[32mQue el entrenador pueda ver los ejercicios de cualquier rutina (generales o asignadas) y usarla como plantilla para crear/asignar nuevas rutinas.[m
+[32m+[m
+[32m+[m[32m### Archivos creados:[m
+[32m+[m[32m- **`PanelEntrenadorDetalleRutina.aspx`** — Vista de solo lectura con GridView de ejercicios + botones "Usar como plantilla" y "Asignar a cliente"[m
+[32m+[m[32m- **`PanelEntrenadorDetalleRutina.aspx.cs`** — Page_Load (carga rutina y ejercicios), btnVolver_Click, btnUsarPlantilla_Click, btnAsignarCliente_Click[m
+[32m+[m
+[32m+[m[32m### Archivos modificados:[m
+[32m+[m[32m- **`PanelEntrenadorClienteDetalle.aspx`** — Agregada columna "Ver" en GridView de rutinas → link a `PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorClienteDetalle&idCliente=X`[m
+[32m+[m[32m- **`PanelEntrenadorRutinas.aspx`** — Agregada columna "Ver" → link a `PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorRutinas`[m
+[32m+[m[32m- **`PanelEntrenadorRutinasAsignadas.aspx`** — Agregada columna "Ver" → link a `PanelEntrenadorDetalleRutina.aspx?id=X&origen=PanelEntrenadorRutinasAsignadas`[m
+[32m+[m[32m- **`PanelEntrenadorAsignarRutina.aspx`** — Agregado DropDownList `ddlClientes` para seleccionar cliente cuando no viene por URL[m
+[32m+[m[32m- **`PanelEntrenadorAsignarRutina.aspx.cs`** — Modificado Page_Load para aceptar `idRutinaBase` por URL y precargar ejercicios + nombre. Modificado btnGuardar_Click para manejar cliente desde dropdown[m
+[32m+[m
+[32m+[m[32m### Parámetros de URL:[m
+[32m+[m[32m- `id` → ID de la rutina a ver[m
+[32m+[m[32m- `origen` → Página de origen para el botón Volver (PanelEntrenadorClienteDetalle, PanelEntrenadorRutinas, PanelEntrenadorRutinasAsignadas)[m
+[32m+[m[32m- `idCliente` → Opcional, si viene desde el detalle de un cliente específico[m
+[32m+[m
+[32m+[m[32m### Flujo de "Usar como plantilla":[m
+[32m+[m[32m1. Entrenador ve detalle de una rutina[m
+[32m+[m[32m2. Clic en "Usar como plantilla"[m
+[32m+[m[32m3. Redirige a `PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X` (y `idCliente=X` si viene del detalle de un cliente)[m
+[32m+[m[32m4. La página precarga: nombre de rutina + ejercicios de la rutina base[m
+[32m+[m[32m5. Entrenador puede modificar y guardar[m
+[32m+[m
+[32m+[m[32m### Flujo de "Asignar a cliente":[m
+[32m+[m[32m1. Entrenador ve detalle de una rutina[m
+[32m+[m[32m2. Clic en "Asignar a cliente"[m
+[32m+[m[32m3. Redirige a `PanelEntrenadorAsignarRutina.aspx?idRutinaBase=X`[m
+[32m+[m[32m4. La página muestra dropdown de clientes + ejercicios precargados[m
+[32m+[m[32m5. Entrenador elige cliente, puede modificar y guardar[m
+[32m+[m
+[32m+[m[32m### Estado: Archivos creados, pendiente probar funcionalidad completa[m
+[32m+[m
+[32m+[m[32m### Nota importante:[m
+[32m+[m[32mEl dropdown de clientes usa `Nombre` como DataTextField porque no se puede modificar la clase `Cliente` para agregar un `NombreCompleto`. Esto significa que si hay clientes con el mismo nombre, no se distinguen por apellido. Posible mejora futura: concatenar en el code-behind con un foreach.[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Próxima Tarea: Terminar Ver Detalle de Rutina + Ver Perfil Propio[m
+[32m+[m
+[32m+[m[32m### Tarea actual: Probar "Ver Detalle de Rutina"[m
+[32m+[m[32mLos archivos ya están creados pero falta probar que todo funcione:[m
+[32m+[m[32m- Navegar desde PanelEntrenadorClienteDetalle → Ver rutina → ver ejercicios[m
+[32m+[m[32m- Navegar desde PanelEntrenadorRutinas → Ver rutina → ver ejercicios[m
+[32m+[m[32m- Navegar desde PanelEntrenadorRutinasAsignadas → Ver rutina → ver ejercicios[m
+[32m+[m[32m- Probar botón "Usar como plantilla" (debe llevar a PanelEntrenadorAsignarRutina con ejercicios precargados)[m
+[32m+[m[32m- Probar botón "Asignar a cliente" (debe llevar a PanelEntrenadorAsignarRutina con ejercicios precargados y dropdown de clientes)[m
+[32m+[m[32m- Verificar que el dropdown de clientes muestre Nombre + Apellido[m
+[32m+[m
+[32m+[m[32m### Futuro: Ver Perfil Propio del Entrenador[m
+[32m+[m[32m- Qué datos mostrar[m
+[32m+[m[32m- Si se puede modificar o solo ver[m
+[32m+[m[32m- Qué patrón seguir (similar a perfil.aspx del cliente)[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Prompt para Retomar la Próxima Sesión[m
+[32m+[m
+[32m+[m[32m```[m
+[32m+[m[32mNecesito continuar con el desarrollo del panel de entrenador en GimnasioApp.[m
+[32m+[m
+[32m+[m[32mLeé primero el archivo .opencode/plans/PanelEntrenador-PlanDeTrabajo.md para tener todo el contexto.[m
+[32m+[m
+[32m+[m[32mContexto:[m
+[32m+[m[32m- Proyecto ASP.NET Web Forms en C:\Home\Dev\csharp\programacion III\GimnasioApp[m
+[32m+[m[32m- Panel de entrenador con 5 funcionalidades completadas, 1 en progreso y 1 pendiente[m
+[32m+[m[32m- Completadas: ver lista de socios, asignar rutinas, ver detalle del cliente, ver sesiones/progreso, ver rutinas asignadas[m
+[32m+[m[32m- En progreso: ver detalle de rutina (archivos creados, falta probar)[m
+[32m+[m[32m- Pendientes: ver perfil propio[m
+[32m+[m[32m- Tareas menores: implementar btnQuitar_Click[m
+[32m+[m[32m- Seguridad completada: EN-01 (validación sesión/rol) y EN-02 (login entrenador) resueltos[m
+[32m+[m[32m- Site.Master actualizado con menú lateral para entrenador[m
+[32m+[m[32m- Base de datos local ya configurada en SQL Server Express (.\SQLEXPRESS)[m
+[32m+[m[32m- PanelEntrenador usa patrón Session consistente con Clientes/Admins[m
+[32m+[m
+[32m+[m[32mLo que necesito hacer ahora:[m
+[32m+[m[32m- PRIMERO: Probar que funcione "Ver Detalle de Rutina" (navegación, botones "Usar como plantilla" y "Asignar a cliente")[m
+[32m+[m[32m- DESPUÉS: Implementar "Ver perfil propio" del entrenador[m
+[32m+[m
+[32m+[m[32mReferencias:[m
+[32m+[m[32m- Todo con try-catch (patrón inline: throw new Exception("mensaje", ex))[m
+[32m+[m[32m- Usar Session.Add() para guardar datos[m
+[32m+[m[32m- Mantener consistencia con el patrón Session ya implementado[m
+[32m+[m[32m- NO modificar clases del dominio (ej: no agregar propiedades a Cliente)[m
+[32m+[m
+[32m+[m[32mSoy estudiante, así que explicame claro y paso a paso lo que vamos haciendo. No hagas los cambios vos, explicame y yo los hago.[m
+[32m+[m[32m```[m
+[32m+[m
+[32m+[m[32m---[m
+[32m+[m
+[32m+[m[32m## Notas Importantes[m
+[32m+[m
+[32m+[m[32m- **Modo mentor:** El usuario es estudiante, necesita explicaciones claras y paso a paso. NO hacer los cambios, explicarlos para que el usuario los implemente.[m
+[32m+[m[32m- **Consistencia:** Basarse siempre en código existente del proyecto, no inventar patrones nuevos.[m
+[32m+[m[32m- **Try-catch:** Usar patrón inline `throw new Exception("mensaje (Archivo.Método())", ex)` en todos los métodos que interactúan con BD o Session.[m
+[32m+[m[32m- **Session:** Usar `Session.Add("clave", valor)` para guardar, `Session["clave"]` para leer.[m
+[32m+[m[32m- **Un cliente puede tener varias rutinas:** No validar "una sola activa" (puede tener rutina de mañana, tarde, diferentes días, etc.).[m
+[32m+[m[32m- **Comentarios PENDIENTE:** Los bloques marcados con `// PENDIENTE` son funcionalidades en desarrollo (para la auditoría de Claude).[m
+[32m+[m[32m- **Seguridad:** Todas las páginas del panel validan sesión/rol con patrón consistente con Cliente (SessionActiva + accesoYPermisos). Login maneja rol ENTRENADOR.[m
+[1mdiff --git a/Dominio/AccesoDB/AccesoADatos.cs b/Dominio/AccesoDB/AccesoADatos.cs[m
+[1mindex 0387f13..cef48a8 100644[m
+[1m--- a/Dominio/AccesoDB/AccesoADatos.cs[m
+[1m+++ b/Dominio/AccesoDB/AccesoADatos.cs[m
+[36m@@ -39,7 +39,10 @@[m [mnamespace AccesoDB[m
+         {[m
+             comando.Connection = conexion;[m
+             conexion.Open();[m
+[31m-            return int.Parse(comando.ExecuteScalar().ToString());[m
+[32m+[m[32m            object resultado = comando.ExecuteScalar();[m
+[32m+[m[32m            if (resultado == null || resultado == DBNull.Value)[m
+[32m+[m[32m                throw new InvalidOperationException("La consulta no devolvio un identificador.");[m
+[32m+[m[32m            return Convert.ToInt32(resultado);[m
+         }[m
+         public void ejecutarLectura()[m
+         {[m
+[1mdiff --git a/Dominio/Dominio/Cliente.cs b/Dominio/Dominio/Cliente.cs[m
+[1mindex 8e5660b..5cd5833 100644[m
+[1m--- a/Dominio/Dominio/Cliente.cs[m
+[1m+++ b/Dominio/Dominio/Cliente.cs[m
+[36m@@ -23,15 +23,5 @@[m [mnamespace Dominio[m
+         public float PesoCorporal { get; set; }[m
+         public Suscripcion SuscripcionCliente { get; set; }[m
+         public List<Records> RecordsPersonales { get; set; }[m
+[31m-[m
+[31m-        public List<Plan> elegirPlan() { return new List<Plan>(); }[m
+[31m-        //Ver perfil mas que una funcion, seria una ventana donde se muetren los datos del cliente[m
+[31m-        public void modificarPerfil() { }[m
+[31m-        public List<Rutina> seleccionarRutinaGeneral() { return new List<Rutina>(); }[m
+[31m-        public List<Rutina> seleccionarRutinasAsignadas() { return new List<Rutina>(); }[m
+[31m-        public void iniciarRutinaAsignada() { }[m
+[31m-        public void registrarRutinaRealizada() { }[m
+[31m-        //Listar sesiones realizadas => falta crear clase[m
+[31m-        public List<Records> verRecordsPersonales() { return new List<Records>(); }[m
+     }[m
+ }[m
+[1mdiff --git a/Dominio/Gimnasio-Web.sln b/Dominio/Gimnasio-Web.sln[m
+[1mindex c177023..6acacea 100644[m
+[1m--- a/Dominio/Gimnasio-Web.sln[m
+[1m+++ b/Dominio/Gimnasio-Web.sln[m
+[36m@@ -12,6 +12,8 @@[m [mProject("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script DB", "Script DB", "{[m
+ 		Inserts.sql = Inserts.sql[m
+ 		ProcedimientosAlmacenados.sql = ProcedimientosAlmacenados.sql[m
+ 		ScriptDB.sql = ScriptDB.sql[m
+[32m+[m		[32mtriggers.sql = triggers.sql[m
+[32m+[m		[32mVistas.sql = Vistas.sql[m
+ 	EndProjectSection[m
+ EndProject[m
+ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"[m
+[1mdiff --git a/Dominio/Gimnasio-app/Clientes.aspx.cs b/Dominio/Gimnasio-app/Clientes.aspx.cs[m
+[1mindex 598cc33..b462283 100644[m
+[1m--- a/Dominio/Gimnasio-app/Clientes.aspx.cs[m
+[1m+++ b/Dominio/Gimnasio-app/Clientes.aspx.cs[m
+[36m@@ -1,4 +1,5 @@[m
+ ﻿using Dominio;[m
+[32m+[m[32musing Integraciones;[m
+ using Negocio;[m
+ using System;[m
+ using System.Collections.Generic;[m
+[36m@@ -13,6 +14,13 @@[m [mnamespace Gimnasio_app[m
+     {[m
+         protected void Page_Load(object sender, EventArgs e)[m
+         {[m
+[32m+[m[32m            if (!Seguridad.SessionActiva(Session["usuario"]) ||[m
+[32m+[m[32m                !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ADMIN))[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Response.Redirect("Default", false);[m
+[32m+[m[32m                return;[m
+[32m+[m[32m            }[m
+[32m+[m
+             AdminNegocio adminNegocio = new AdminNegocio();[m
+             List<Cliente> clientes = new List<Cliente>();[m
+             try[m
+[36m@@ -187,7 +195,7 @@[m [mnamespace Gimnasio_app[m
+                     }[m
+                     if (ddlEstadoSuscripcion.SelectedValue != "0")[m
+                     {[m
+[31m-                        filtrado = filtrado.FindAll(a => a.SuscripcionCliente.IdSuscripcion == estadoSuscripcionSeleccionado);[m
+[32m+[m[32m                        filtrado = filtrado.FindAll(a => a.SuscripcionCliente != null && a.SuscripcionCliente.IdSuscripcion == estadoSuscripcionSeleccionado);[m
+                     }[m
+                     if (txtBuscar.Text != "")[m
+                     {[m
+[1mdiff --git a/Dominio/Gimnasio-app/DetalleRutina.aspx.cs b/Dominio/Gimnasio-app/DetalleRutina.aspx.cs[m
+[1mindex 03734b3..92b8b34 100644[m
+[1m--- a/Dominio/Gimnasio-app/DetalleRutina.aspx.cs[m
+[1m+++ b/Dominio/Gimnasio-app/DetalleRutina.aspx.cs[m
+[36m@@ -54,9 +54,10 @@[m [mnamespace Gimnasio_app[m
+         private void CargarResumen(string id)[m
+         {[m
+             RutinasNegocio negocio = new RutinasNegocio();[m
+[31m-            Rutina rutina = negocio.Get(id);[m
+[32m+[m[32m            Rutina rutina = negocio.Get(id, ClienteCompleto: true);[m
+[32m+[m[32m            Cliente cliente = (Cliente)Session["usuario"];[m
+ [m
+[31m-            if (rutina is null)[m
+[32m+[m[32m            if (!EsRutinaDelCliente(rutina, cliente))[m
+             {[m
+                 Response.Redirect("Rutinas", false);[m
+                 return;[m
+[36m@@ -87,7 +88,15 @@[m [mnamespace Gimnasio_app[m
+             SesionEntrenamiento sesion = (SesionEntrenamiento)Session["sesionActiva"];[m
+ [m
+             RutinasNegocio negocio = new RutinasNegocio();[m
+[31m-            Rutina rutina = negocio.Get(id);[m
+[32m+[m[32m            Rutina rutina = negocio.Get(id, ClienteCompleto: true);[m
+[32m+[m[32m            Cliente cliente = (Cliente)Session["usuario"];[m
+[32m+[m
+[32m+[m[32m            if (!EsRutinaDelCliente(rutina, cliente))[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Response.Redirect("Rutinas", false);[m
+[32m+[m[32m                return;[m
+[32m+[m[32m            }[m
+[32m+[m
+             rutina.Ejercicios = negocio.GetEjerciciosDeRutina(id);[m
+ [m
+             litNombre.Text = rutina.Nombre;[m
+[36m@@ -129,17 +138,33 @@[m [mnamespace Gimnasio_app[m
+             }[m
+ [m
+             Cliente cliente = (Cliente)Session["usuario"];[m
+[31m-            Rutina rutina = new RutinasNegocio().Get(id);[m
+[31m-            if (rutina is null)[m
+[32m+[m[32m            Rutina rutina = new RutinasNegocio().Get(id, ClienteCompleto: true);[m
+[32m+[m[32m            if (!EsRutinaDelCliente(rutina, cliente))[m
+             {[m
+                 Response.Redirect("Rutinas", false);[m
+                 return;[m
+             }[m
+ [m
+[31m-            SesionEntrenamiento sesion = new SesionEntrenamientoNegocio().IniciarSesionEntrenamiento(cliente, rutina);[m
+[31m-            Session["sesionActiva"] = sesion;[m
+[32m+[m[32m            try[m
+[32m+[m[32m            {[m
+[32m+[m[32m                SesionEntrenamiento sesion = new SesionEntrenamientoNegocio().IniciarSesionEntrenamiento(cliente, rutina);[m
+[32m+[m[32m                Session["sesionActiva"] = sesion;[m
+ [m
+[31m-            CargarModoActivo(id);[m
+[32m+[m[32m                CargarModoActivo(id);[m
+[32m+[m[32m            }[m
+[32m+[m[32m            catch (Exception)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Toasts.ToastError(this, "Necesitás una suscripción activa para iniciar una sesión de entrenamiento.");[m
+[32m+[m[32m                CargarResumen(id);[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        /// <summary>[m
+[32m+[m[32m        /// Indica si la rutina es general (sin dueño) o pertenece al cliente indicado.[m
+[32m+[m[32m        /// </summary>[m
+[32m+[m[32m        private bool EsRutinaDelCliente(Rutina rutina, Cliente cliente)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            return rutina != null && (rutina.Cliente == null || rutina.Cliente.IdUsuario == cliente.IdUsuario);[m
+         }[m
+ [m
+         protected void rptEjecucion_ItemCommand(object source, RepeaterCommandEventArgs e)[m
+[36m@@ -179,11 +204,7 @@[m [mnamespace Gimnasio_app[m
+             serie.PesoLevantadoKG = ParsearEntero(txtPeso.Text);[m
+             serie.RepeticionesLogradas = (int)ParsearEntero(txtReps.Text);[m
+             serie.RIR = (int)ParsearEntero(txtRir.Text);[m
+[31m-[m
+[31m-            // Es record si supera el peso maximo historico del cliente en este ejercicio[m
+[31m-            // (igualar la marca previa no cuenta como record).[m
+[31m-            float maxAnterior = new RecordsNegocio().GetMaxPesoEjercicio(sesion.Cliente.IdUsuario, idEjercicio);[m
+[31m-            serie.EsRecordPersonal = serie.PesoLevantadoKG > maxAnterior;[m
+[32m+[m[32m            serie.EsRecordPersonal = false;  // Manejado por trigger TR_SeriesCompletadas_Record[m
+ [m
+             new SerieCompletadaNegocio().Agregar(serie);[m
+ [m
+[1mdiff --git a/Dominio/Gimnasio-app/Error.aspx.cs b/Dominio/Gimnasio-app/Error.aspx.cs[m
+[1mindex a0c9085..8d71528 100644[m
+[1m--- a/Dominio/Gimnasio-app/Error.aspx.cs[m
+[1m+++ b/Dominio/Gimnasio-app/Error.aspx.cs[m
+[36m@@ -11,7 +11,10 @@[m [mnamespace Gimnasio_app[m
+     {[m
+         protected void Page_Load(object sender, EventArgs e)[m
+         {[m
+[31m-            if (Session["error"] != null) lblMensaje.Text = Session["Error"].ToString();[m
+[32m+[m[32m            if (Session["error"] != null)[m
+[32m+[m[32m                Session.Remove("error");[m
+[32m+[m
+[32m+[m[32m            lblMensaje.Text = "Ocurrió un error inesperado. Por favor, intentá nuevamente más tarde.";[m
+         }[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/Dominio/Gimnasio-app/Login.aspx b/Dominio/Gimnasio-app/Login.aspx[m
+[1mindex 844f53b..60d8188 100644[m
+[1m--- a/Dominio/Gimnasio-app/Login.aspx[m
+[1m+++ b/Dominio/Gimnasio-app/Login.aspx[m
+[36m@@ -2,21 +2,19 @@[m
+ [m
+ <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">[m
+     <h1>Login</h1>[m
+[31m-    <form>[m
+[31m-        <div class="mb-3">[m
+[31m-            <label for="exampleInputEmail1" class="form-label">Email address</label>[m
+[31m-            <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server"></asp:TextBox>[m
+[31m-            <div id="emailHelp" class="form-text"></div>[m
+[31m-        </div>[m
+[31m-        <div class="mb-3">[m
+[31m-            <label for="exampleInputPassword1" class="form-label">Password</label>[m
+[31m-            <asp:TextBox ID="tbxPass" CssClass="form-control" TextMode="Password" runat="server"></asp:TextBox>[m
+[31m-        </div>[m
+[31m-        <div>[m
+[31m-            <asp:Label ID="lblError" runat="server" ForeColor="Red" Visible="false">Credenciales incorrectas</asp:Label>[m
+[31m-        </div>[m
+[31m-        [m
+[31m-        [m
+[31m-        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-primary" OnClick="btnLogin_Click" />[m
+[31m-    </form>[m
+[32m+[m[32m    <div class="mb-3">[m
+[32m+[m[32m        <label for="exampleInputEmail1" class="form-label">Email</label>[m
+[32m+[m[32m        <asp:TextBox ID="tbxEmail" CssClass="form-control" runat="server"></asp:TextBox>[m
+[32m+[m[32m        <div id="emailHelp" class="form-text"></div>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m    <div class="mb-3">[m
+[32m+[m[32m        <label for="exampleInputPassword1" class="form-label">Contraseña</label>[m
+[32m+[m[32m        <asp:TextBox ID="tbxPass" CssClass="form-control" TextMode="Password" runat="server"></asp:TextBox>[m
+[32m+[m[32m    </div>[m
+[32m+[m[32m    <div>[m
+[32m+[m[32m        <asp:Label ID="lblError" runat="server" ForeColor="Red" Visible="false">Credenciales incorrectas</asp:Label>[m
+[32m+[m[32m    </div>[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    <asp:Button ID="btnLogin" runat="server" Text="Entrar" CssClass="btn btn-primary" OnClick="btnLogin_Click" />[m
+ </asp:Content>[m
+[1mdiff --git a/Dominio/Gimnasio-app/Login.aspx.cs b/Dominio/Gimnasio-app/Login.aspx.cs[m
+[1mindex 2934eda..d7048e3 100644[m
+[1m--- a/Dominio/Gimnasio-app/Login.aspx.cs[m
+[1m+++ b/Dominio/Gimnasio-app/Login.aspx.cs[m
+[36m@@ -42,6 +42,10 @@[m [mnamespace Gimnasio_app[m
+                             Session.Add("usuario", cliente);[m
+                             Response.Redirect("~/perfil.aspx", false);[m
+                             break;[m
+[32m+[m[32m                        case (int)Roles.ENTRENADOR:[m
+[32m+[m[32m                            Session.Add("usuario", usuario);[m
+[32m+[m[32m                            Response.Redirect("~/PanelEntrenador.aspx", false);[m
+[32m+[m[32m                            break;[m
+                         default:[m
+                             break;[m
+                     }[m
+[1mdiff --git a/Dominio/Gimnasio-app/PanelEntrenador.aspx b/Dominio/Gimnasio-app/PanelEntrenador.aspx[m
+[1mindex 2992a38..04f62c4 100644[m
+[1m--- a/Dominio/Gimnasio-app/PanelEntrenador.aspx[m
+[1m+++ b/Dominio/Gimnasio-app/PanelEntrenador.aspx[m
+[36m@@ -18,7 +18,7 @@[m
+                     </a>[m
+                 </div>[m
+                 <div class="col-md-4">[m
+[31m-                    <a runat="server" href="~/RutinasAsignadas" class="btn btn-outline-primary w-100 py-3">[m
+[32m+[m[32m                    <a runat="server" href="~/PanelEntrenadorRutinasAsignadas.aspx" class="btn btn-outline-primary w-100 py-3">[m
+                         Rutinas Asignadas[m
+                     </a>[m
+                 </div>[m
+[36m@@ -30,14 +30,38 @@[m
+                         <asp:TextBox ID="txtBuscar" runat="server" CssClass="form-control" [m
+                             Placeholder="Nombre o apellido..." />[m
+                         <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-primary" [m
+[31m-                            Text="Buscar" />[m
+[32m+[m[32m                            Text="Buscar" OnClick="btnBuscar_Click" />[m
+[32m+[m[32m                    </div>[m
+[32m+[m[32m                </div>[m
+[32m+[m[32m            </div>[m
+[32m+[m[32m            <div class="card shadow-sm mb-4">[m
+[32m+[m[32m                <div class="card-body p-0">[m
+[32m+[m[32m                    <div class="table-responsive">[m
+[32m+[m[32m                        <asp:GridView ID="dgvClientes" runat="server" AutoGenerateColumns="false"[m
+[32m+[m[32m                            CssClass="table table-hover align-middle mb-0"[m
+[32m+[m[32m                            HeaderStyle-CssClass="table-primary text-white"[m
+[32m+[m[32m                            GridLines="None">[m
+[32m+[m[32m                            <Columns>[m
+[32m+[m[32m                                <asp:BoundField DataField="Nombre" HeaderText="Nombre" />[m
+[32m+[m[32m                                <asp:BoundField DataField="Apellido" HeaderText="Apellido" />[m
+[32m+[m[32m                                <asp:TemplateField HeaderText="Edad">[m
+[32m+[m[32m                                    <ItemTemplate>[m
+[32m+[m[32m                                        <%# CalcularEdad(Eval("FechaNacimiento")) %>[m
+[32m+[m[32m                                    </ItemTemplate>[m
+[32m+[m[32m                                </asp:TemplateField>[m
+[32m+[m[32m                                <asp:BoundField DataField="PesoCorporal" HeaderText="Peso (kg)" />[m
+[32m+[m[32m                                <asp:BoundField DataField="FechaIngreso" HeaderText="Fecha de Ingreso" DataFormatString="{0:dd/MM/yyyy}" />[m
+[32m+[m[32m                                <asp:TemplateField HeaderText="Acciones">[m
+[32m+[m[32m                                    <ItemTemplate>[m
+[32m+[m[32m                                        <a href='PanelEntrenadorClienteDetalle.aspx?idCliente=<%# Eval("IdUsuario") %>' class="btn btn-outline-primary btn-sm"> Ver Detalle </a>[m
+[32m+[m[32m                                    </ItemTemplate>[m
+[32m+[m[32m                                </asp:TemplateField>[m
+[32m+[m[32m                            </Columns>[m
+[32m+[m[32m                        </asp:GridView>[m
+                     </div>[m
+                 </div>[m
+             </div>[m
+         </section>[m
+[31m-[m
+[31m-        [m
+[31m-[m
+     </main>[m
+ [m
+ </asp:Content>[m
+[1mdiff --git a/Dominio/Gimnasio-app/PanelEntrenador.aspx.cs b/Dominio/Gimnasio-app/PanelEntrenador.aspx.cs[m
+[1mindex 25c6baa..a7dac92 100644[m
+[1m--- a/Dominio/Gimnasio-app/PanelEntrenador.aspx.cs[m
+[1m+++ b/Dominio/Gimnasio-app/PanelEntrenador.aspx.cs[m
+[36m@@ -1,11 +1,12 @@[m
+[31m-﻿using System;[m
+[32m+[m[32m﻿using Dominio;[m
+[32m+[m[32musing Integraciones;[m
+[32m+[m[32musing Negocio;[m
+[32m+[m[32musing System;[m
+ using System.Collections.Generic;[m
+ using System.Linq;[m
+ using System.Web;[m
+ using System.Web.UI;[m
+ using System.Web.UI.WebControls;[m
+[31m-using Dominio;[m
+[31m-using Negocio;[m
+ [m
+ namespace Gimnasio_app[m
+ {[m
+[36m@@ -13,7 +14,71 @@[m [mnamespace Gimnasio_app[m
+     {[m
+         protected void Page_Load(object sender, EventArgs e)[m
+         {[m
+[31m-            [m
+[32m+[m
+[32m+[m[32m            if (!Seguridad.SessionActiva(Session["usuario"]) || !Seguridad.accesoYPermisos((Usuario)Session["usuario"], Roles.ENTRENADOR))[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Response.Redirect("Default", false);[m
+[32m+[m[32m                return;[m
+[32m+[m[32m            }[m
+[32m+[m
+[32m+[m[32m   
