@@ -33,7 +33,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white active" runat="server" href="~/">
-                        <i class="bi bi-house-door"></i>Inicio
+                        <i class="bi bi-house-door"></i> Inicio
                     </a>
                 </li>
                 <%------------------------ADMIN SUPERUSUARIO------------------------%>
@@ -42,42 +42,42 @@
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Socios">
-                        <i class="bi bi-people"></i>Socios
+                        <i class="bi bi-people"></i> Socios
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/PanelEntrenador">
-                        <i class="bi bi-people"></i>Entrenador: Panel
+                        <i class="bi bi-people"></i> Entrenador: Panel
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">
-                        <i class="bi bi-journal-text"></i>Rutinas
+                        <i class="bi bi-journal-text"></i> Rutinas
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Clientes">
-                        <i class="bi bi-journal-text"></i>Clientes(Admin)
+                        <i class="bi bi-journal-text"></i> Clientes(Admin)
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Entrenadores">
-                        <i class="bi bi-journal-text"></i>Entrenadores(Admin)
+                        <i class="bi bi-journal-text"></i> Entrenadores(Admin)
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Recepcionistas">
-                        <i class="bi bi-journal-text"></i>Recepcionistas(Admin)
+                        <i class="bi bi-journal-text"></i> Recepcionistas(Admin)
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Planes">
-                        <i class="bi bi-journal-text"></i>Planes
+                        <i class="bi bi-journal-text"></i> Planes
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Suscripciones">
-                        <i class="bi bi-journal-text"></i>Suscripciones
+                        <i class="bi bi-journal-text"></i> Suscripciones
                     </a>
                 </li>
                 <%} %>
@@ -86,17 +86,17 @@
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Rutinas">
-                        <i class="bi bi-journal-text"></i>Mis rutinas
+                        <i class="bi bi-journal-text"></i> Mis rutinas
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Records">
-                        <i class="bi bi-trophy"></i>Mis records personales
+                        <i class="bi bi-trophy"></i> Mis records personales
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/SesionesEntrenamiento">
-                        <i class="bi bi-journal-text"></i>Historial de Entrenamientos
+                        <i class="bi bi-journal-text"></i> Historial de Entrenamientos
                     </a>
                 </li>
                 <%} %>
@@ -107,17 +107,17 @@
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/PanelEntrenador">
-                        <i class="bi bi-speedometer2"></i>Panel de Entrenador
+                        <i class="bi bi-speedometer2"></i> Panel de Entrenador
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/PanelEntrenadorRutinas">
-                        <i class="bi bi-journal-text"></i>Rutinas Generales
+                        <i class="bi bi-journal-text"></i> Rutinas Generales
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/PanelEntrenadorRutinasAsignadas">
-                        <i class="bi bi-person-check"></i>Rutinas Asignadas
+                        <i class="bi bi-person-check"></i> Rutinas Asignadas
                     </a>
                 </li>
                 <%} %>
@@ -125,12 +125,12 @@
                     {%>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/Login">
-                        <i class="bi bi-box-arrow-in-right"></i>Iniciar sesión
+                        <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
                     </a>
                 </li>
                 <li class="nav-item mb-2">
                     <a class="nav-link text-white" runat="server" href="~/RegistrarUsuario">
-                        <i class="bi bi-box-arrow-in-down-right"></i>Crear cuenta
+                        <i class="bi bi-box-arrow-in-down-right"></i> Crear cuenta
                     </a>
                 </li>
                 <%} %>
@@ -149,7 +149,7 @@
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow w-100" aria-labelledby="dropdownUser">
                         <li>
                             <a class="dropdown-item" runat="server" href="~/Perfil">
-                                <i class="bi bi-person me-2"></i>Mi perfil
+                                <i class="bi bi-person me-2"></i> Mi perfil
                             </a>
                         </li>
                         <li>
@@ -157,7 +157,7 @@
                         </li>
                         <li>
                             <a class="dropdown-item text-danger" runat="server" href="~/Logout">
-                                <i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión
+                                <i class="bi bi-box-arrow-right me-2"></i> Cerrar sesión
                             </a>
                         </li>
                     </ul>
@@ -170,7 +170,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Gimnasio web</p>
             </footer>
         </div>
     </form>
