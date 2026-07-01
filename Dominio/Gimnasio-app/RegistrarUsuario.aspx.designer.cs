@@ -24,15 +24,6 @@ namespace Gimnasio_app
         protected global::System.Web.UI.WebControls.Panel pnlFormulario;
 
         /// <summary>
-        /// Control pnlExito.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlExito;
-
-        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -94,5 +85,14 @@ namespace Gimnasio_app
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnRegistrar;
+
+        /// <summary>
+        /// Control pnlExito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlExito;
     }
 }
