@@ -25,16 +25,24 @@ namespace Gimnasio_app
                 if (!IsPostBack)
                 {
                     string idCliente = Request.QueryString["idCliente"];
-                    if (string.IsNullOrEmpty(idCliente))
+                    string idRutinaBase = Request.QueryString["idRutinaBase"];
+
+                    if (!string.IsNullOrEmpty(idCliente))
+                    {
+                        ClienteNegocio clienteNegocio = new ClienteNegocio();
+                        Cliente cliente = clienteNegocio.Get(idCliente);
+                        Session.Add("idClienteAsignar", idCliente);
+                        lblCliente.Text = cliente.Nombre + " " + cliente.Apellido;
+                    }
+                    else if (!string.IsNullOrEmpty(idRutinaBase))
+                    {
+                        lblCliente.Text = "Seleccionar cliente al guardar";
+                    }
+                    else
                     {
                         Response.Redirect("PanelEntrenador", false);
                         return;
                     }
-
-                    ClienteNegocio clienteNegocio = new ClienteNegocio();
-                    Cliente cliente = clienteNegocio.Get(idCliente);
-                    Session.Add("idClienteAsignar", idCliente);
-                    lblCliente.Text = cliente.Nombre + " " + cliente.Apellido;
 
                     EjerciciosNegocio ejerciciosNegocio = new EjerciciosNegocio();
                     List<Ejercicio> ejercicios = ejerciciosNegocio.ListarEjercicios();
@@ -44,6 +52,19 @@ namespace Gimnasio_app
                     ddlEjercicios.DataValueField = "IdEjercicio";
                     ddlEjercicios.DataBind();
                     ddlEjercicios.Items.Insert(0, new ListItem("--Seleccionar --", "0"));
+
+                    if (!string.IsNullOrEmpty(idRutinaBase))
+                    {
+                        RutinasNegocio rutinasNegocio = new RutinasNegocio();
+                        Rutina rutinaBase = rutinasNegocio.Get(idRutinaBase);
+                        List<RutinaEjercicio> ejerciciosBase = rutinasNegocio.GetEjerciciosDeRutina(idRutinaBase);
+
+                        txtNombre.Text = rutinaBase.Nombre;
+                        Session["EjerciciosRutina"] = ejerciciosBase;
+
+                        gvEjercicios.DataSource = ejerciciosBase;
+                        gvEjercicios.DataBind();
+                    }
                 }
             }
             catch (Exception ex)

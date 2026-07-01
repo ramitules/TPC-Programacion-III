@@ -8,6 +8,8 @@
         <div class="card-body">
             <h5 class="card-title">Cliente</h5>
             <asp:Label ID="lblCliente" runat="server" CssClass="fs-5 fw-bold" />
+            <asp:DropDownList ID="ddlClientes" runat="server" CssClass="form-select mt-2" Visible="false">
+            </asp:DropDownList>
         </div>
     </div>
 
