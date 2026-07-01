@@ -293,14 +293,11 @@ namespace Gimnasio_app
         }
 
         /// <summary>
-        /// Formatea la duracion de una sesion como "Xh Ym" (o "Ym" si es menos de una hora). Usado desde el markup.
+        /// Formatea la duracion de una sesion como "Xh Ym" (o "Ym" si es menos de una hora).
         /// </summary>
         protected string FormatearDuracion(DateTime inicio, DateTime fin)
         {
             TimeSpan duracion = fin - inicio;
-            if (duracion.TotalMinutes < 1)
-                return "-";
-
             int horas = (int)duracion.TotalHours;
             int minutos = duracion.Minutes;
 
