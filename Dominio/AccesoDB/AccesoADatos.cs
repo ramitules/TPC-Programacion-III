@@ -39,7 +39,10 @@ namespace AccesoDB
         {
             comando.Connection = conexion;
             conexion.Open();
-            return int.Parse(comando.ExecuteScalar().ToString());
+            object resultado = comando.ExecuteScalar();
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("La consulta no devolvio un identificador.");
+            return Convert.ToInt32(resultado);
         }
         public void ejecutarLectura()
         {
