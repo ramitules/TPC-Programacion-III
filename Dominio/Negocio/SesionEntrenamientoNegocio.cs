@@ -56,6 +56,49 @@ namespace Negocio
             return sesiones;
         }
 
+        /// <summary>
+        /// Obtiene la sesion de entrenamiento en curso de un cliente, si existe.
+        /// Es la fuente de verdad para saber si hay una sesion activa.
+        /// </summary>
+        public SesionEntrenamiento GetSesionActiva(int idUsuario)
+        {
+            string Excepcion = "Ocurrio un error al obtener la sesion activa del cliente (SesionEntrenamientoNegocio.GetSesionActiva())\n";
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_SesionActivaDeCliente");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (!datos.Lector.Read())
+                    return null;
+
+                SesionEntrenamiento sesion = new SesionEntrenamiento();
+                sesion.IdSesion = int.Parse(datos.Lector["IdSesion"].ToString());
+                sesion.Cliente = new Cliente { IdUsuario = idUsuario };
+                sesion.FechaHoraInicio = DateTime.Parse(datos.Lector["FechaHoraInicio"].ToString());
+                sesion.FechaHoraFin = DateTime.Parse(datos.Lector["FechaHoraFin"].ToString());
+
+                if (!(datos.Lector["IdRutina"] is DBNull))
+                {
+                    sesion.Rutina = new Rutina();
+                    sesion.Rutina.IdRutina = int.Parse(datos.Lector["IdRutina"].ToString());
+                    sesion.Rutina.Nombre = datos.Lector["NombreRutina"].ToString();
+                }
+
+                return sesion;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         private void AltaOModificacion(SesionEntrenamiento sesion, AccesoADatos datos)
         {
             // Creacion
