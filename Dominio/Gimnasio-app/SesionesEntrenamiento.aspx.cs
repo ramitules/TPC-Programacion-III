@@ -19,8 +19,11 @@ namespace Gimnasio_app
         private const string KeyDesdeValido = "DesdeValido";
         private const string KeyHastaValido = "HastaValido";
 
+        // Duracion maxima permitida al terminar una sesion manualmente desde esta pantalla.
+        private const int LimiteHorasSesion = 3;
+
         /// <summary>
-        /// Id de la sesion actualmente desplegada (-1 si ninguna). Usado tambien desde el markup.
+        /// Id de la sesion actualmente desplegada (-1 si ninguna)
         /// </summary>
         protected int IdSesionExpandida
         {
@@ -55,6 +58,16 @@ namespace Gimnasio_app
             if (!IsPostBack)
             {
                 Cliente cliente = (Cliente)Session["usuario"];
+                // Chequear que no haya una sesion activa de entrenamiento
+                SesionEntrenamiento activa = SesionActivaHelper.Obtener(Session, cliente);
+
+                // Hay una sesion en curso, pero de otra rutina: redirigir a esa rutina en modo activo.
+                if (activa != null && activa.Rutina != null && activa.Rutina.IdRutina.ToString() != Request.QueryString["id"])
+                {
+                    Response.Redirect("DetalleRutina?id=" + activa.Rutina.IdRutina, false);
+                    return;
+                }
+
                 // Cargar lista de sesiones de entrenamiento en Session
                 List<SesionEntrenamiento> sesiones = new SesionEntrenamientoNegocio().GetSesionesDeCliente(cliente.IdUsuario);
                 Session["sesionesCliente"] = sesiones;
@@ -218,14 +231,43 @@ namespace Gimnasio_app
 
         protected void rptSesiones_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            if (e.CommandName != "Toggle")
-                return;
-
             int idSesion = int.Parse(e.CommandArgument.ToString());
-            // Acordeon: si ya estaba abierta se cierra, si no se abre (cerrando la anterior).
-            IdSesionExpandida = IdSesionExpandida == idSesion ? -1 : idSesion;
+
+            if (e.CommandName == "Toggle")
+            {
+                // Acordeon: si ya estaba abierta se cierra
+                IdSesionExpandida = IdSesionExpandida == idSesion ? -1 : idSesion;
+            }
+            else if (e.CommandName == "Terminar")
+            {
+                TerminarSesion(idSesion);
+            }
 
             BindGrid();
+        }
+
+        /// <summary>
+        /// Establece la fecha y hora de fin de una sesion sin finalizar como la fecha y hora actual
+        /// </summary>
+        private void TerminarSesion(int idSesion)
+        {
+            List<SesionEntrenamiento> sesiones = (List<SesionEntrenamiento>)Session["sesionesCliente"];
+            SesionEntrenamiento sesion = sesiones?.FirstOrDefault(s => s.IdSesion == idSesion);
+
+            // Ya finalizada o no encontrada: nada que hacer.
+            if (sesion == null || sesion.FechaHoraFin != sesion.FechaHoraInicio)
+                return;
+
+            sesion.Cliente = (Cliente)Session["usuario"];
+
+            DateTime limite = sesion.FechaHoraInicio.AddHours(LimiteHorasSesion);
+            sesion.FechaHoraFin = DateTime.Now < limite ? DateTime.Now : limite;
+
+            new SesionEntrenamientoNegocio().Modificar(sesion);
+
+            Session.Remove("sesionActiva");
+
+            Toasts.ToastExito(this, "Sesion de entrenamiento finalizada", "Finalizada");
         }
 
         protected void rptSesiones_ItemDataBound(object sender, RepeaterItemEventArgs e)
