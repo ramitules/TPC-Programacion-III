@@ -70,7 +70,14 @@
                                                 <%# Eval("Rutina") == null ? "<span class='text-muted'>Sesion libre</span>" : Server.HtmlEncode(Eval("Rutina.Nombre").ToString()) %>
                                             </td>
                                             <td><%# Eval("FechaHoraInicio", "{0:dd/MM/yyyy HH:mm}") %></td>
-                                            <td class="text-center"><%# FormatearDuracion((DateTime)Eval("FechaHoraInicio"), (DateTime)Eval("FechaHoraFin")) %></td>
+                                            <td class="text-center">
+                                                <asp:LinkButton runat="server" CssClass="btn btn-danger btn-sm" CommandName="Terminar"
+                                                    CommandArgument='<%# Eval("IdSesion") %>' OnClientClick="event.stopPropagation();"
+                                                    Visible='<%# (DateTime)Eval("FechaHoraInicio") == (DateTime)Eval("FechaHoraFin") %>'>Terminar sesion</asp:LinkButton>
+                                                <asp:Literal runat="server"
+                                                    Visible='<%# (DateTime)Eval("FechaHoraInicio") != (DateTime)Eval("FechaHoraFin") %>'
+                                                    Text='<%# FormatearDuracion((DateTime)Eval("FechaHoraInicio"), (DateTime)Eval("FechaHoraFin")) %>' />
+                                            </td>
                                             <td class="text-center"><span class="badge bg-secondary"><%# Eval("CantidadSeries") %></span></td>
                                         </tr>
                                         <%-- Fila de detalle (se llena solo si la sesion esta expandida) --%>
@@ -89,7 +96,7 @@
                                                                         <table class="table table-sm mb-0">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th style="width: 60px;">#</th>
+                                                                                    <th style="width: 60px;">Serie</th>
                                                                                     <th class="text-center">Peso (kg)</th>
                                                                                     <th class="text-center">Reps</th>
                                                                                     <th class="text-center">RIR</th>
