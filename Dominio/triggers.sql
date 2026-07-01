@@ -4,15 +4,16 @@ GO
 -- Trigger para validar que los socios esten activos antes de iniciar una sesion de entrenamiento.
 -- Regla de negocio: Si el socio no tiene suscripcion activa no puede uniciar una sesion de entrenamiento.
 
-CREATE TRIGGER dbo.tr_ValidarSesionConSuscripcionActiva 
+CREATE TRIGGER dbo.tr_ValidarSesionConSuscripcionActiva
 ON SesionesEntrenamiento
-INSTEAD OF INSERT
+AFTER INSERT
 AS
 BEGIN
+    SET NOCOUNT ON;
     BEGIN TRY
         DECLARE @cantidadInvalidos INT;
 
-        SELECT @cantidadInvalidos = COUNT(*) 
+        SELECT @cantidadInvalidos = COUNT(*)
         FROM inserted AS I
         WHERE dbo.fn_VerificarSuscripcionActiva(I.IdUsuario) = 0
 
@@ -22,14 +23,9 @@ BEGIN
             ROLLBACK TRANSACTION;
             RETURN;
         END
-
-        INSERT INTO SesionesEntrenamiento (IdUsuario, IdRutina, FechaHoraInicio, FechaHoraFin)
-        SELECT I.IdUsuario, I.IdRutina, I.FechaHoraInicio, I.FechaHoraFin 
-        FROM inserted AS I;
-
     END TRY
     BEGIN CATCH
-        ROLLBACK TRANSACTION; 
+        IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION;
         RAISERROR('Error al procesar el alta de la sesión de entrenamiento: tr_ValidarSesionConSuscripcionActiva .', 16, 1);
     END CATCH
 END;
