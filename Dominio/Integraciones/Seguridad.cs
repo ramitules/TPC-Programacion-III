@@ -51,7 +51,7 @@ namespace Integraciones
             {
                 datos.SetearConsultaSP("sp_logueo");
                 datos.setearParametro("@Email", email);
-                datos.setearParametro("@Pass", pass);
+                //datos.setearParametro("@Pass", pass);
                 datos.ejecutarLectura();
                 //string contraseia = HashContrasenia.Hashear(pass);
                 //Object algo = datos.Lector.Read();
@@ -68,7 +68,7 @@ namespace Integraciones
                         {
                             PesoCorporal = Convert.ToSingle(datos.Lector["PesoCorporalKG"])
                         };
-                    } 
+                    }
                     else if (rol == (int)Roles.ADMIN)
                     {
                         usuario = new Admin(); //Elegi Admin, pero para el casteo podria ser cualquier tipo de rol distinto a cliente, es solo para poder almacenar los datos en session
@@ -86,7 +86,7 @@ namespace Integraciones
                     usuario.FechaNacimiento = (DateTime)datos.Lector["FechaNacimiento"];
                     usuario.FechaIngreso = (DateTime)datos.Lector["FechaIngreso"];
                     usuario.Activo = (bool)datos.Lector["Activo"];
-                    
+
                     return usuario;
                 }
                 else
@@ -94,9 +94,9 @@ namespace Integraciones
                     return null; // No se encontró un usuario con esas credenciales
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw new Exception("La contraseña no coincide");
+                throw new Exception("Ocurrió un error al loguear usuario (Seguridad.logueo()):", ex);
             }
             finally
             {
