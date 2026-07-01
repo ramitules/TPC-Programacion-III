@@ -54,9 +54,10 @@ namespace Gimnasio_app
         private void CargarResumen(string id)
         {
             RutinasNegocio negocio = new RutinasNegocio();
-            Rutina rutina = negocio.Get(id);
+            Rutina rutina = negocio.Get(id, ClienteCompleto: true);
+            Cliente cliente = (Cliente)Session["usuario"];
 
-            if (rutina is null)
+            if (!EsRutinaDelCliente(rutina, cliente))
             {
                 Response.Redirect("Rutinas", false);
                 return;
@@ -87,7 +88,15 @@ namespace Gimnasio_app
             SesionEntrenamiento sesion = (SesionEntrenamiento)Session["sesionActiva"];
 
             RutinasNegocio negocio = new RutinasNegocio();
-            Rutina rutina = negocio.Get(id);
+            Rutina rutina = negocio.Get(id, ClienteCompleto: true);
+            Cliente cliente = (Cliente)Session["usuario"];
+
+            if (!EsRutinaDelCliente(rutina, cliente))
+            {
+                Response.Redirect("Rutinas", false);
+                return;
+            }
+
             rutina.Ejercicios = negocio.GetEjerciciosDeRutina(id);
 
             litNombre.Text = rutina.Nombre;
@@ -129,17 +138,33 @@ namespace Gimnasio_app
             }
 
             Cliente cliente = (Cliente)Session["usuario"];
-            Rutina rutina = new RutinasNegocio().Get(id);
-            if (rutina is null)
+            Rutina rutina = new RutinasNegocio().Get(id, ClienteCompleto: true);
+            if (!EsRutinaDelCliente(rutina, cliente))
             {
                 Response.Redirect("Rutinas", false);
                 return;
             }
 
-            SesionEntrenamiento sesion = new SesionEntrenamientoNegocio().IniciarSesionEntrenamiento(cliente, rutina);
-            Session["sesionActiva"] = sesion;
+            try
+            {
+                SesionEntrenamiento sesion = new SesionEntrenamientoNegocio().IniciarSesionEntrenamiento(cliente, rutina);
+                Session["sesionActiva"] = sesion;
 
-            CargarModoActivo(id);
+                CargarModoActivo(id);
+            }
+            catch (Exception)
+            {
+                Toasts.ToastError(this, "Necesitás una suscripción activa para iniciar una sesión de entrenamiento.");
+                CargarResumen(id);
+            }
+        }
+
+        /// <summary>
+        /// Indica si la rutina es general (sin dueño) o pertenece al cliente indicado.
+        /// </summary>
+        private bool EsRutinaDelCliente(Rutina rutina, Cliente cliente)
+        {
+            return rutina != null && (rutina.Cliente == null || rutina.Cliente.IdUsuario == cliente.IdUsuario);
         }
 
         protected void rptEjecucion_ItemCommand(object source, RepeaterCommandEventArgs e)

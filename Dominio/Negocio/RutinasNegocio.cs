@@ -162,7 +162,6 @@ namespace Negocio
                         Cliente = (ClienteCompleto && tieneDueño)
                             ? new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString())
                             : null,
-                        IdUsuarioPropietario = tieneDueño ? int.Parse(datos.Lector["IdUsuario"].ToString()) : (int?)null,
                         FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
