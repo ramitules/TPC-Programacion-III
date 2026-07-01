@@ -63,7 +63,7 @@ namespace Integraciones
                     {
                         usuario = new Cliente()
                         {
-                            PesoCorporal = (float)datos.Lector["PesoCorporalKG"]
+                            PesoCorporal = Convert.ToSingle(datos.Lector["PesoCorporalKG"])
                         };
                     } 
                     else if (rol == (int)Roles.ADMIN)
