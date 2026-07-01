@@ -1,4 +1,4 @@
-using Dominio;
+﻿using Dominio;
 using Negocio;
 using Integraciones;
 using System;
@@ -180,6 +180,64 @@ namespace Gimnasio_app
 
             Editando = false;
             SetReadOnly();
+        }
+
+        protected void btnConfirmarCambioPass_click(object sender, EventArgs e)
+        {
+            if (Session["usuario"] == null) return;
+            Cliente cliente = (Cliente)Session["usuario"];
+
+            try
+            {
+                string passActual = txtPassActual.Text;
+                string passNueva = txtPassNueva.Text;
+                string passConfirmar = txtPassNuevaConfirmar.Text;
+
+                if (string.IsNullOrEmpty(passActual) || string.IsNullOrEmpty(passNueva))
+                {
+                    Toasts.ToastAdvertencia(this, "Por favor complete todos los campos.");
+                    ReabrirModalCambiarPass();
+                    return;
+                }
+
+                if (!Validaciones.validarContrasenias(passNueva, passConfirmar))
+                {
+                    Toasts.ToastAdvertencia(this, "Las contraseñas nuevas no coinciden.");
+                    ReabrirModalCambiarPass();
+                    return;
+                }
+
+                if (!new ClienteNegocio().CambiarContrasenia(cliente.IdUsuario, passActual, passNueva))
+                {
+                    Toasts.ToastError(this, "La contraseña actual es incorrecta.");
+                    ReabrirModalCambiarPass();
+                    return;
+                }
+
+                LimpiarCamposCambiarPass();
+                Toasts.ToastExito(this, "Tu contraseña ha sido actualizada con exito.");
+
+                ScriptManager.RegisterStartupScript(this, GetType(), "cerrarCambiarPass",
+                    "var m = bootstrap.Modal.getInstance(document.getElementById('modalCambiarPass')); if (m) m.hide();", true);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error", false);
+            }
+        }
+
+        protected void ReabrirModalCambiarPass()
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "abrirCambiarPass",
+                "new bootstrap.Modal(document.getElementById('modalCambiarPass')).show();", true);
+        }
+
+        protected void LimpiarCamposCambiarPass()
+        {
+            txtPassActual.Text = "";
+            txtPassNueva.Text = "";
+            txtPassNuevaConfirmar.Text = "";
         }
 
         protected void btnDarDeBaja_click(object sender, EventArgs e)

@@ -193,6 +193,56 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+        /// <summary>
+        /// Verifica la contrasenia actual y, si es correcta, la reemplaza por la nueva.
+        /// Devuelve false si la contrasenia actual no coincide con la almacenada.
+        /// </summary>
+        public bool CambiarContrasenia(int idUsuario, string passActual, string passNueva)
+        {
+            string Excepcion = "Ocurrio un error al cambiar la contrasenia (ClienteNegocio.CambiarContrasenia())\n";
+
+            string hashActual = null;
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsulta("SELECT Pass FROM AccesoUsuarios WHERE IdUsuarios = @IdUsuario");
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    hashActual = datos.Lector["Pass"] as string;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            if (!HashContrasenia.Verificar(passActual, hashActual))
+                return false;
+
+            datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE AccesoUsuarios SET Pass = @Pass WHERE IdUsuarios = @IdUsuario");
+                datos.setearParametro("@Pass", HashContrasenia.Hashear(passNueva));
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(Excepcion, ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return true;
+        }
         public bool ExisteEmail(string email, int idExcluir = 0)
         {
             string Excepcion = "Ocurrio un error al chequear email de cliente (ClienteNegocio.ExisteEmail())\n";
