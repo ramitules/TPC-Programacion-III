@@ -121,70 +121,23 @@ namespace Gimnasio_app
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            //AdminNegocio negocio = new AdminNegocio();
-            //Usuario user;
-            //EmailService emailService = new EmailService();
-            //try
-            //{
-            //    var pass = string.IsNullOrEmpty(txtPassword.Text) ? "" : HashContrasenia.Hashear(txtPassword.Text);
-            //    if (Request.QueryString["id"] != null)
-            //    {
-            //        int id = int.Parse(Request.QueryString["id"]);
-            //        if (id == (int)Roles.ADMIN)
-            //        {                        
-            //            List<Usuario> admins = (List<Usuario>)Session["listaAdmins"];
-            //            Usuario adminAModificar = admins.Find(a => a.IdUsuario == id);
-            //            if (adminAModificar != null)
-            //            {
-            //                adminAModificar.Nombre = txtNombre.Text;
-            //                adminAModificar.Apellido = txtApellido.Text;
-            //                adminAModificar.Email = txtEmail.Text;
-            //                adminAModificar.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-            //                adminAModificar.Activo = bool.Parse(ddlEstadoAdmin.SelectedValue);
-            //                //string pass = string.IsNullOrEmpty(txtPassword.Text) ? "" : HashContrasenia.Hashear(txtPassword.Text);
-            //                user = adminAModificar;
-            //            }
-
-            //        }
-            //        negocio.modificarUsuario(user, pass);
-            //    }
-            //    else
-            //    {
-            //        if (!(string.IsNullOrEmpty(pass)))
-            //        {
-            //            admin.Nombre = txtNombre.Text;
-            //            admin.Apellido = txtApellido.Text;
-            //            admin.Email = txtEmail.Text;
-            //            admin.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-            //            negocio.crearAdmin(admin, pass);
-            //            emailService.armarCorreo(admin.Email, "Bienvenido al Gimnasio", $"Hola {admin.Nombre}, tu cuenta de administrador ha sido creada exitosamente. Tu contraseña es: {pass}");
-            //            emailService.enviarCorreo();
-            //        }
-            //    }
-            //    Session.Add("listaAdmins", negocio.ObtenerUsuarioPorRol("sp_Traer_Admins")); //esta linea actualiza la lista de Admins que esta guardada en Session
-            //    string scriptNativo = @"
-            //        alert('¡Administrador registrado con éxito!');
-            //        window.location.href = 'Admins.aspx';"; 
-
-            //    ScriptManager.RegisterStartupScript(this, this.GetType(), "alertNativo", scriptNativo, true);
 
             AdminNegocio negocio = new AdminNegocio();
-            Usuario user = null; // Inicializamos en null para evitar errores de compilación
+            Usuario user = null;
             EmailService emailService = new EmailService();
 
             try
             {
-                // 1. Recuperamos parámetros de la URL de forma segura
+
                 string paginaRetorno = "Admins.aspx";
                 int id = Request.QueryString["id"] != null ? int.Parse(Request.QueryString["id"]) : 0;
                 int idRol = Request.QueryString["idRol"] != null ? int.Parse(Request.QueryString["idRol"]) : 0;
 
-                // Hasheamos solo si el campo no está vacío (para modificaciones puede quedar vacío)
+
                 string pass = string.IsNullOrEmpty(txtPassword.Text) ? "" : txtPassword.Text;
 
-                if (id != 0) // ==================== MODO MODIFICAR ====================
-                {
-                    // Filtramos la lista de sesión correcta según el idRol que vino por URL
+                if (id != 0)
+                {  
                     if (idRol == (int)Roles.ADMIN)
                     {
                         List<Admin> admins = (List<Admin>)Session["listaAdmins"];
@@ -212,8 +165,6 @@ namespace Gimnasio_app
                         }
                         paginaRetorno = "Entrenadores.aspx";
                     }
-
-                    // Si encontramos al usuario, mapeamos los cambios de las cajas de texto
                     if (user != null)
                     {
                         user.Nombre = txtNombre.Text.Trim();
@@ -222,13 +173,11 @@ namespace Gimnasio_app
                         user.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
                         user.Activo = bool.Parse(ddlEstadoAdmin.SelectedValue);
 
-                        // Mandamos a actualizar (tu método se encarga de discriminar internamente o usar el SP correspondiente)
                         negocio.modificarUsuario(user, pass);
                     }
                 }
-                else // ==================== MODO CREAR (NUEVO) ====================
+                else
                 {
-                    // Para el alta, la contraseña SI O SI es obligatoria
                     if (!string.IsNullOrEmpty(txtPassword.Text))
                     {
                         Usuario nuevoUsuario = null;
@@ -239,7 +188,7 @@ namespace Gimnasio_app
                         }
                         else if (idRol == (int)Roles.RECEPCIONISTA)
                         {
-                            nuevoUsuario = new Recepcionista(); // o el nombre exacto de tu clase derivada
+                            nuevoUsuario = new Recepcionista();
                             paginaRetorno = "Recepcionistas.aspx";
                         }
                         else if (idRol == (int)Roles.ENTRENADOR)
@@ -247,7 +196,6 @@ namespace Gimnasio_app
                             nuevoUsuario = new Entrenador();
                             paginaRetorno = "Entrenadores.aspx";
                         }
-                        // Instanciamos un usuario nuevo genérico
 
                         nuevoUsuario.Nombre = txtNombre.Text.Trim();
                         nuevoUsuario.Apellido = txtApellido.Text.Trim();
@@ -257,27 +205,22 @@ namespace Gimnasio_app
                         nuevoUsuario.FechaIngreso = DateTime.Now;
                         nuevoUsuario.Rol = new RolUsuario { IdRol = idRol };
 
-                        negocio.crearUsuario(nuevoUsuario, pass); // Este método debería manejar la creación según el rol
+                        negocio.crearUsuario(nuevoUsuario, pass);
 
-
-                        // 📧 Envío de mail de bienvenida (Le mandamos el texto PLANO de la contraseña, no el hash)
                         emailService.armarCorreo(nuevoUsuario.Email, "Bienvenido al Gimnasio", $"Hola {nuevoUsuario.Nombre}, tu cuenta ha sido creada exitosamente. Tu contraseña de acceso es: {txtPassword.Text}");
                         emailService.enviarCorreo();
                     }
                     else
                     {
-                        // Validación rápida por si intentan guardar un alta sin contraseña
                         ScriptManager.RegisterStartupScript(this, this.GetType(), "errorPass", "alert('La contraseña es obligatoria para nuevos registros.');", true);
                         return;
                     }
                 }
 
-                // 3. Actualizamos TODAS las sesiones de staff para que queden sincronizadas
                 Session["listaAdmins"] = negocio.ObtenerUsuarioPorRol("sp_Traer_Admins").Cast<Admin>().ToList();
                 Session["listaRecepcionistas"] = negocio.ObtenerUsuarioPorRol("sp_Traer_Recepcionistas").Cast<Recepcionista>().ToList();
                 Session["listaEntrenadores"] = negocio.ObtenerUsuarioPorRol("sp_Traer_Entrenadores").Cast<Entrenador>().ToList();
 
-                // 4. Alerta de éxito y redirección a la grilla principal del Personal
                 string mensajeExito = id > 0 ? "¡Datos actualizados con éxito!" : "¡Personal registrado con éxito!";
                 string scriptNativo = $@"
             alert('{mensajeExito}');

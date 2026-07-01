@@ -64,7 +64,6 @@ namespace Gimnasio_app
             if (estadoObj == null)
                 return "<span class='badge bg-secondary'>Sin Info</span>";
 
-            // Convertimos el objeto que viene del Eval al tipo de tu Enum
             EstadoSuscripcion estado = (EstadoSuscripcion)estadoObj;
 
             string claseCss = "";
@@ -72,23 +71,23 @@ namespace Gimnasio_app
 
             switch (estado)
             {
-                case EstadoSuscripcion.ACTIVA: // Valor 1
-                    claseCss = "bg-success";   // Verde
+                case EstadoSuscripcion.ACTIVA: 
+                    claseCss = "bg-success";  
                     texto = "Activa";
                     break;
 
-                case EstadoSuscripcion.VENCIDA: // Valor 2
-                    claseCss = "bg-danger";    // Rojo
+                case EstadoSuscripcion.VENCIDA: 
+                    claseCss = "bg-danger";    
                     texto = "Vencida";
                     break;
 
-                case EstadoSuscripcion.CANCELADA: // Valor 3
-                    claseCss = "bg-secondary";  // Gris
+                case EstadoSuscripcion.CANCELADA: /
+                    claseCss = "bg-secondary";  
                     texto = "Cancelada";
                     break;
 
-                case EstadoSuscripcion.VIGENTE_PENDIENTE: // Valor 4 (O como figure exacto en tu enum)
-                    claseCss = "bg-warning text-dark"; // Amarillo con letras oscuras
+                case EstadoSuscripcion.VIGENTE_PENDIENTE: 
+                    claseCss = "bg-warning text-dark"; 
                     texto = "Pendiente";
                     break;
 
@@ -98,7 +97,6 @@ namespace Gimnasio_app
                     break;
             }
 
-            // Retornamos la etiqueta HTML armada dinámicamente
             return $"<span class='badge {claseCss}'>{texto}</span>";
         }
 

@@ -126,7 +126,7 @@
                     </asp:GridView>
                 </div>
             </div>
-            <asp:UpdatePanel ID="upAdminControl" runat="server">
+            <asp:UpdatePanel ID="upAdminControl" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
 
                     <div class="tab-content mt-3">
