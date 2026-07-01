@@ -123,6 +123,18 @@ namespace Negocio
                 {
                     suscripcionActual.Estado = EstadoSuscripcion.CANCELADA;
                     negocio.Modificar(suscripcionActual, cliente);
+
+                    // Si habia una suscripcion pendiente, entra en vigencia de inmediato
+                    // (se recalculan sus fechas ya que se anticipa su inicio).
+                    Suscripcion suscripcionPendiente = negocio.GetSuscripcionCliente(cliente.IdUsuario.ToString(), EstadoSuscripcion.VIGENTE_PENDIENTE);
+                    if (suscripcionPendiente.IdSuscripcion != 0)
+                    {
+                        suscripcionPendiente.Estado = EstadoSuscripcion.ACTIVA;
+                        suscripcionPendiente.FechaInicio = DateTime.Now;
+                        suscripcionPendiente.FechaFin = suscripcionPendiente.FechaInicio.AddDays(suscripcionPendiente.Plan.DuracionDiasPlan);
+                        negocio.Modificar(suscripcionPendiente, cliente);
+                    }
+
                     return true;
                 }
             }

@@ -151,6 +151,7 @@ namespace Gimnasio_app
                     new ClienteNegocio().Modificar(actualizado);
                     // Refrescar
                     Session["usuario"] = new ClienteNegocio().Get(cliente.IdUsuario.ToString(), true);
+                    txtPeso.Text = peso.ToString();  // Por si esta fuera de rango
 
                     Toasts.ToastExito(this, "Se han modificado sus datos personales con exito");
 
@@ -167,6 +168,17 @@ namespace Gimnasio_app
         
         protected void btnCancelarDatos_click(object sender, EventArgs e)
         {
+            if (Session["usuario"] == null) return;
+            Cliente cliente = (Cliente)Session["usuario"];
+
+            // Descartar cambios no guardados y restablecer los valores originales
+            txtNombre.Text = cliente.Nombre;
+            txtApellido.Text = cliente.Apellido;
+            txtEmail.Text = cliente.Email;
+            txtNacimiento.Text = cliente.FechaNacimiento.ToString("yyyy-MM-dd");
+            txtPeso.Text = cliente.PesoCorporal.ToString();
+
+            Editando = false;
             SetReadOnly();
         }
 
@@ -362,7 +374,7 @@ namespace Gimnasio_app
 
             if (tieneVigente)
             {
-                // Reflejar el plan pendiente en el panel.
+                TienePlanProximo = true;
                 txtProximoPlan.Text = suscripcionNueva.Plan.NombrePlan;
                 txtVencimientoProximo.Text = suscripcionNueva.FechaFin.ToString("yyyy-MM-dd");
             }
@@ -385,14 +397,33 @@ namespace Gimnasio_app
 
             if(new SuscripcionNegocio().BajaSuscripcionCliente(cliente))
             {
-                // Refrescar
-                Session["usuario"] = new ClienteNegocio().Get(cliente.IdUsuario.ToString(), true);
-                txtVencimiento.Text = "";
-                lblVencimiento.Text = "No tenes una suscripcion activa.";
-                btnCambiarPlan.Enabled = false;
-                btnRenovarPlan.Enabled = false;
+                // Refrescar (si habia una suscripcion pendiente, ya quedo activa en la BD)
+                cliente = new ClienteNegocio().Get(cliente.IdUsuario.ToString(), true);
+                Session["usuario"] = cliente;
 
-                Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
+                bool tieneNuevaVigente = cliente.SuscripcionCliente != null && cliente.SuscripcionCliente.IdSuscripcion != 0 && cliente.SuscripcionCliente.Plan != null;
+
+                if (tieneNuevaVigente)
+                {
+                    // La suscripcion que estaba pendiente entro en vigencia
+                    ddlPlan.SelectedValue = cliente.SuscripcionCliente.Plan.IdPlan.ToString();
+                    txtVencimiento.Text = cliente.SuscripcionCliente.FechaFin.ToString("yyyy-MM-dd");
+                    int vencimiento = (cliente.SuscripcionCliente.FechaFin - DateTime.Now).Days;
+                    lblVencimiento.Text = "Vence en " + vencimiento.ToString() + " dias";
+                    btnRenovarPlan.Enabled = vencimiento < 5;
+                    btnCambiarPlan.Enabled = false;
+
+                    Toasts.ToastInformacion(this, "Su suscripcion ha sido cancelada. La suscripcion pendiente ha entrado en vigencia.", "Suscripcion actualizada");
+                }
+                else
+                {
+                    txtVencimiento.Text = "";
+                    lblVencimiento.Text = "No tenes una suscripcion activa.";
+                    btnCambiarPlan.Enabled = true;
+                    btnRenovarPlan.Enabled = false;
+
+                    Toasts.ToastInformacion(this, "Su suscripcion ha sido dada de baja. Esperamos volver a verlo pronto.", "Dado de baja");
+                }
             }
             else
             {
