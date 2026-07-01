@@ -404,6 +404,27 @@ BEGIN
 END
 GO
 
+-- Obtener la sesion de entrenamiento en curso de un cliente (si existe).
+-- Una sesion se considera "en curso" mientras no fue finalizada: sp_CrearSesionEntrenamiento
+-- la crea con FechaHoraFin = FechaHoraInicio, y FinSesionEntrenamiento recien ahi actualiza FechaHoraFin.
+CREATE PROCEDURE sp_SesionActivaDeCliente (@IdUsuario INT)
+AS
+BEGIN
+	SELECT TOP 1
+		SE.IdSesionesEntrenamiento	AS IdSesion,
+		SE.FechaHoraInicio			AS FechaHoraInicio,
+		SE.FechaHoraFin				AS FechaHoraFin,
+		SE.IdRutina					AS IdRutina,
+		R.Nombre					AS NombreRutina
+	FROM SesionesEntrenamiento SE
+	LEFT JOIN Rutinas R
+		ON SE.IdRutina = R.IdRutinas
+	WHERE SE.IdUsuario = @IdUsuario
+		AND SE.FechaHoraFin = SE.FechaHoraInicio
+	ORDER BY SE.FechaHoraInicio DESC
+END
+GO
+
 -- Obtener las series completadas de una sesion, con el ejercicio y su grupo muscular.
 -- Ordenadas por nombre de ejercicio para que el agrupado quede contiguo.
 CREATE PROCEDURE sp_SeriesDeSesionAgrupadas (@IdSesion INT)

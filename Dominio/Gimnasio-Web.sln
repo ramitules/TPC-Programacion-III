@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.37111.16 d17.14
+# Visual Studio Version 18
+VisualStudioVersion = 18.7.11919.86 stable
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gimnasio-app", "Gimnasio-app\Gimnasio-app.csproj", "{B77D988B-B91E-46EA-A4DE-9265E25B9B80}"
 EndProject
@@ -9,13 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dominio", "Dominio\Dominio.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script DB", "Script DB", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
+		functions.sql = functions.sql
 		Inserts.sql = Inserts.sql
 		ProcedimientosAlmacenados.sql = ProcedimientosAlmacenados.sql
 		ScriptDB.sql = ScriptDB.sql
-<<<<<<< HEAD
-=======
 		triggers.sql = triggers.sql
->>>>>>> d4fb2b4563a6050e2800aae811d2507fea1ec4e7
 		Vistas.sql = Vistas.sql
 	EndProjectSection
 EndProject
