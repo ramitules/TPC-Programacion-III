@@ -686,3 +686,93 @@ AS
 	  END
 END;
 GO
+
+--Activa e inactiva ejercicios segun su estado
+CREATE PROCEDURE sp_Activar_Inactivar_Ejercicio
+  @IdEjercicios INT
+AS
+  BEGIN
+	DECLARE @Activo INT
+    SET @Activo = (SELECT Activo FROM Ejercicios WHERE IdEjercicios = @IdEjercicios)
+	IF @Activo = 1
+	  BEGIN
+	    UPDATE Ejercicios SET Activo = 0 WHERE IdEjercicios = @IdEjercicios
+	  END
+	ELSE
+	  BEGIN
+	    UPDATE Ejercicios SET Activo = 1 WHERE IdEjercicios = @IdEjercicios
+	  END
+END;
+GO
+
+
+--Activa e inactiva planes segun su estado
+CREATE PROCEDURE sp_Activar_Inactivar_Planes
+  @IdPlanes INT
+AS
+  BEGIN
+	DECLARE @Activo INT
+    SET @Activo = (SELECT Activo FROM Planes WHERE IdPlanes = @IdPlanes)
+	IF @Activo = 1
+	  BEGIN
+	    UPDATE Planes SET Activo = 0 WHERE IdPlanes = @IdPlanes
+	  END
+	ELSE
+	  BEGIN
+	    UPDATE Planes SET Activo = 1 WHERE IdPlanes = @IdPlanes
+	  END
+END;
+GO
+
+
+--Activa e inactiva grupos musculares segun su estado
+CREATE PROCEDURE sp_Activar_Inactivar_Grupos_Musculares
+  @IdGruposMusculares INT
+AS
+  BEGIN
+	DECLARE @Activo INT
+    SET @Activo = (SELECT Activo FROM GruposMusculares WHERE IdGruposMusculares = @IdGruposMusculares)
+	IF @Activo = 1
+	  BEGIN
+	    UPDATE GruposMusculares SET Activo = 0 WHERE IdGruposMusculares = @IdGruposMusculares
+	  END
+	ELSE
+	  BEGIN
+	    UPDATE GruposMusculares SET Activo = 1 WHERE IdGruposMusculares = @IdGruposMusculares
+	  END
+END;
+GO
+
+
+CREATE PROCEDURE sp_Crear_Plan
+  @Nombre VARCHAR (50),
+  @PrecioMensual DECIMAL(8,2),
+  @DuracionDias INT
+AS
+  BEGIN
+    INSERT INTO Planes (Nombre, PrecioMensual, DuracionDias) 
+	       VALUES(@Nombre, @PrecioMensual, @DuracionDias)
+END;
+GO
+
+
+CREATE PROCEDURE sp_Crear_Grupo_Muscular
+  @Nombre VARCHAR (50)
+AS
+  BEGIN
+    INSERT INTO GruposMusculares(Nombre) 
+	       VALUES(@Nombre)
+END;
+GO
+
+
+CREATE PROCEDURE sp_Crear_Ejercicios
+  @Nombre VARCHAR (50),
+  @IdGrupoMuscular INT,
+  @LinkExplicacion VARCHAR(250)
+AS
+  BEGIN
+    INSERT INTO Ejercicios (Nombre, IdGrupoMuscular, LinkExplicacion) 
+	       VALUES(@Nombre, @IdGrupoMuscular, @LinkExplicacion)
+END;
+GO

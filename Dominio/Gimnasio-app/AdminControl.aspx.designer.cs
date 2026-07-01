@@ -15,13 +15,40 @@ namespace Gimnasio_app
     {
 
         /// <summary>
-        /// Control panelGeneral.
+        /// Control btnTabEjercicios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel panelGeneral;
+        protected global::System.Web.UI.WebControls.LinkButton btnTabEjercicios;
+
+        /// <summary>
+        /// Control btnTabMusculos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnTabMusculos;
+
+        /// <summary>
+        /// Control btnTabPlanes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnTabPlanes;
+
+        /// <summary>
+        /// Control ejercicios.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ejercicios;
 
         /// <summary>
         /// Control btnNuevoEjercicio.
@@ -42,6 +69,15 @@ namespace Gimnasio_app
         protected global::System.Web.UI.WebControls.GridView dgvEjercicios;
 
         /// <summary>
+        /// Control musculos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl musculos;
+
+        /// <summary>
         /// Control btnNuevoMusculo.
         /// </summary>
         /// <remarks>
@@ -58,6 +94,15 @@ namespace Gimnasio_app
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgvGruposMusculares;
+
+        /// <summary>
+        /// Control planes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl planes;
 
         /// <summary>
         /// Control btnNuevoPlan.

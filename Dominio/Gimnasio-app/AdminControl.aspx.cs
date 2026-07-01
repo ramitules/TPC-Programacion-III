@@ -51,6 +51,14 @@ namespace Gimnasio_app
 
         protected void dgvEjercicios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            ejercicios.Attributes["class"] = "tab-pane fade show active";
+            //tabEjercicios.Attributes["class"] = "nav-link active";
+
+            musculos.Attributes["class"] = "tab-pane fade";
+            //tabMusculos.Attributes["class"] = "nav-link";
+
+            planes.Attributes["class"] = "tab-pane fade";
+            //tabPlanes.Attributes["class"] = "nav-link";
             string accion = e.CommandName.ToString();
             int idEjercicio = Convert.ToInt32(e.CommandArgument);
             AdminNegocio negocio = new AdminNegocio();
@@ -72,7 +80,7 @@ namespace Gimnasio_app
             }
             else if (accion == "Eliminar")
             {
-                negocio.eliminarEjercicio(ejercicioSeleccionado);
+                negocio.eliminarEjercicio(idEjercicio);
             }
             List<Ejercicio> listaEjercicios = negocio.listarEjercicios();
             Session["listaEjercicios"] = listaEjercicios;   
@@ -84,6 +92,14 @@ namespace Gimnasio_app
 
         protected void dgvGruposMusculares_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            ejercicios.Attributes["class"] = "tab-pane fade";
+            //tabEjercicios.Attributes["class"] = "nav-link";
+
+            musculos.Attributes["class"] = "tab-pane fade show active";
+            //tabMusculos.Attributes["class"] = "nav-link active";
+
+            planes.Attributes["class"] = "tab-pane fade";
+            //tabPlanes.Attributes["class"] = "nav-link";
             string accion = e.CommandName.ToString();
             int idGrupoMuscular = Convert.ToInt32(e.CommandArgument);
             AdminNegocio negocio = new AdminNegocio();
@@ -96,15 +112,15 @@ namespace Gimnasio_app
                 divCamposPlan.Visible = false;
                 txtNombre.Text = grupoMuscularSeleccionado.NombreGrupoMuscular;
 
-                hfTipoEntidad.Value = "Grupos Musculares";
+                hfTipoEntidad.Value = "Musculo";
                 hfIdEntidad.Value = idGrupoMuscular.ToString();
             }
             else if (accion == "Eliminar")
             {
-                negocio.eliminarGrupoMuscular(grupoMuscularSeleccionado);
+                negocio.eliminarGrupoMuscular(idGrupoMuscular);
             }
             List<GrupoMuscular> listaGruposMusculares = negocio.listarGruposMusculares();
-            Session["listaEjercicios"] = listaGruposMusculares;
+            Session["listaGruposMusculares"] = listaGruposMusculares;
             dgvGruposMusculares.DataSource = listaGruposMusculares;
             dgvGruposMusculares.DataBind();
             pnlFormularioABM.Visible = false;
@@ -112,6 +128,15 @@ namespace Gimnasio_app
 
         protected void dgvPlanes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            ejercicios.Attributes["class"] = "tab-pane fade";
+            //tabEjercicios.Attributes["class"] = "nav-link";
+
+            musculos.Attributes["class"] = "tab-pane fade";
+            //tabMusculos.Attributes["class"] = "nav-link";
+
+            planes.Attributes["class"] = "tab-pane fade show active";
+            //tabPlanes.Attributes["class"] = "nav-link active";
+
             string accion = e.CommandName.ToString();
             int idPlan = Convert.ToInt32(e.CommandArgument);
             AdminNegocio negocio = new AdminNegocio();
@@ -124,12 +149,12 @@ namespace Gimnasio_app
                 divCamposEjercicio.Visible = false;
                 txtNombre.Text = planSeleccionado.NombrePlan;
 
-                hfTipoEntidad.Value = "Planes ";
+                hfTipoEntidad.Value = "Planes";
                 hfIdEntidad.Value = idPlan.ToString();
             }
             else if (accion == "Eliminar")
             {
-                negocio.eliminarPlan(planSeleccionado);
+                negocio.eliminarPlan(idPlan);
             }
             List<Plan> listaPlan = negocio.listarPlanes();
             Session["listaPlanes"] = listaPlan;
@@ -327,6 +352,44 @@ namespace Gimnasio_app
         protected void dgvEjercicios_RowDataBound(object sender, GridViewRowEventArgs e)
         {
 
+        }
+
+        protected void btnTabEjercicios_Click(object sender, EventArgs e)
+        {
+            LinkButton botonClickeado = (LinkButton)sender;
+            string tabObjetivo = botonClickeado.CommandArgument;
+
+            // 1. Limpiamos TODAS las pestañas de arriba (les sacamos el 'active')
+            btnTabEjercicios.CssClass = "nav-link";
+            btnTabMusculos.CssClass = "nav-link";
+            btnTabPlanes.CssClass = "nav-link";
+
+            // 2. Ocultamos TODOS los paneles de abajo (les sacamos el 'show active')
+            ejercicios.Attributes["class"] = "tab-pane fade";
+            musculos.Attributes["class"] = "tab-pane fade";
+            planes.Attributes["class"] = "tab-pane fade";
+
+            // 3. Activamos SOLO lo que el usuario seleccionó y cargamos su respectiva info
+            switch (tabObjetivo)
+            {
+                case "ejercicios":
+                    btnTabEjercicios.CssClass = "nav-link active";
+                    ejercicios.Attributes["class"] = "tab-pane fade show active"; //
+                                                                                  // CargarGrillaEjercicios(); // Tu método que trae los datos de Ejercicios de la BD
+                    break;
+
+                case "musculos":
+                    btnTabMusculos.CssClass = "nav-link active";
+                    musculos.Attributes["class"] = "tab-pane fade show active"; //
+                                                                                // CargarGrillaMusculos(); // Tu método que trae los datos de Grupos Musculares de la BD
+                    break;
+
+                case "planes":
+                    btnTabPlanes.CssClass = "nav-link active";
+                    planes.Attributes["class"] = "tab-pane fade show active"; //
+                                                                              // CargarGrillaPlanes(); // Tu método que trae los datos de Planes de la BD
+                    break;
+            }
         }
     }
 }

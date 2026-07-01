@@ -295,13 +295,13 @@ namespace Negocio
         }
         //
         //grupo eliminar
-        public void eliminarGrupoMuscular(GrupoMuscular grupo) 
+        public void eliminarGrupoMuscular(int id) 
         {
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsultaSP("sp_Eliminar_Grupo_Muscular");
-                datos.setearParametro("@IdGrupoMuscular", grupo.IdGrupoMuscular);
+                datos.SetearConsultaSP("sp_Activar_Inactivar_Grupos_Musculares");
+                datos.setearParametro("@IdGruposMusculares", id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -313,13 +313,13 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void eliminarEjercicio(Ejercicio ejercicio) 
+        public void eliminarEjercicio(int id) 
         {
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsultaSP("sp_Eliminar_Ejercicio");
-                datos.setearParametro("@IdEjercicio", ejercicio.IdEjercicio);
+                datos.SetearConsultaSP("sp_Activar_Inactivar_Ejercicio");
+                datos.setearParametro("@IdEjercicios", id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
@@ -331,18 +331,18 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void eliminarPlan(Plan plan) 
+        public void eliminarPlan(int id) 
         {
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsultaSP("sp_Eliminar_Plan");
-                datos.setearParametro("@IdPlan", plan.IdPlan);
+                datos.SetearConsultaSP("sp_Activar_Inactivar_Planes");
+                datos.setearParametro("@IdPlanes", id);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {

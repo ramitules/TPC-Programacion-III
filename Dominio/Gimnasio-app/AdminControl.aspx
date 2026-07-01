@@ -60,18 +60,18 @@
     </div>
     <br />
 
-
-
-    <asp:UpdatePanel ID="panelGeneral" runat="server">
+    
+    
+    <asp:UpdatePanel ID="panelGeneral">
         <ContentTemplate>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#ejercicios">Ejercicios</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#musculos">Grupos Musculares</a></li>
-                <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#planes">Planes</a></li>
+                <li class="nav-item"><asp:LinkButton ID="btnTabEjercicios" runat="server" CssClass="nav-link active" OnClick="btnTabEjercicios_Click" CommandArgument="ejercicios">Ejercicios</asp:LinkButton></li>
+                <li class="nav-item"><asp:LinkButton ID="btnTabMusculos" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="musculos">Grupos Musculares</asp:LinkButton></li>
+                <li class="nav-item"><asp:LinkButton ID="btnTabPlanes" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="planes">Planes</asp:LinkButton></li>
             </ul>
 
             <div class="tab-content mt-3">
-                <div class="tab-pane fade show active" id="ejercicios">
+                <div class="tab-pane fade show active" id="ejercicios" runat="server">
                     <asp:Button ID="btnNuevoEjercicio" runat="server" Text="+ Nuevo Ejercicio" CssClass="btn btn-primary mb-2" OnClick="btnNuevoEjercicio_Click" CommandArgument="Ejercicio" />
                     <asp:GridView ID="dgvEjercicios" runat="server" CssClass="table table-dark table-hover" OnRowCommand="dgvEjercicios_RowCommand" AutoGenerateColumns="false" OnRowDataBound="dgvEjercicios_RowDataBound">
                         <Columns>
@@ -82,14 +82,14 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Button ID="btnEditarEjer" runat="server" Text="✏️" CommandName="Editar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass="btn btn-sm btn-warning" />
-                                    <asp:Button ID="btnEliminarEjer" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>' OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Esta acción no se puede deshacer.');"/>              
+                                    <asp:Button ID="btnEliminarEjer" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>'/>              
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
 
-                <div class="tab-pane fade" id="musculos">
+                <div class="tab-pane fade" id="musculos" runat="server">
                     <asp:Button ID="btnNuevoMusculo" runat="server" Text="+ Nuevo Grupo" CssClass="btn btn-primary mb-2" OnClick="btnNuevoMusculo_Click" CommandArgument="Musculo" />
                     <asp:GridView ID="dgvGruposMusculares" runat="server" CssClass="table table-dark table-hover" OnRowCommand="dgvGruposMusculares_RowCommand" AutoGenerateColumns="false">
                         <Columns>
@@ -98,14 +98,14 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Button ID="btnEditarMus" runat="server" Text="✏️" CommandName="Editar" CommandArgument='<%# Eval("IdGrupoMuscular") %>' CssClass="btn btn-sm btn-warning" />
-                                    <asp:Button ID="btnEliminarMus" runat="server" Text="🗑️" CommandName="Eliminar" CommandArgument='<%# Eval("IdGrupoMuscular") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Esta acción no se puede deshacer.');"/>
+                                    <asp:Button ID="btnEliminarMus" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdGrupoMuscular") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
 
-                <div class="tab-pane fade" id="planes">
+                <div class="tab-pane fade" id="planes" runat="server">
                     <asp:Button ID="btnNuevoPlan" runat="server" Text="+ Nuevo Plan" CssClass="btn btn-primary mb-2" OnClick="btnNuevoPlan_Click" CommandArgument="Plan" />
                     <asp:GridView ID="dgvPlanes" runat="server" CssClass="table table-dark table-hover" OnRowCommand="dgvPlanes_RowCommand" AutoGenerateColumns="false">
                         <Columns>
@@ -116,7 +116,7 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Button ID="btnEditarPlan" runat="server" Text="✏️" CommandName="Editar" CommandArgument='<%# Eval("IdPlan") %>' CssClass="btn btn-sm btn-warning" />
-                                    <asp:Button ID="btnEliminarPlan" runat="server" Text="🗑️" CommandName="Eliminar" CommandArgument='<%# Eval("IdPlan") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Esta acción no se puede deshacer.');"/>
+                                    <asp:Button ID="btnEliminarPlan" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdPlan") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
