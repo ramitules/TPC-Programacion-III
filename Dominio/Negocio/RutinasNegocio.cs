@@ -155,12 +155,14 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
+                    bool tieneDueño = !(datos.Lector["IdUsuario"] is DBNull);
                     rutina = new Rutina() {
                         IdRutina = int.Parse(id),
                         Nombre = datos.Lector["Nombre"].ToString(),
-                        Cliente = (ClienteCompleto && !(datos.Lector["IdUsuario"] is DBNull))
+                        Cliente = (ClienteCompleto && tieneDueño)
                             ? new ClienteNegocio().Get(datos.Lector["IdUsuario"].ToString())
                             : null,
+                        IdUsuarioPropietario = tieneDueño ? int.Parse(datos.Lector["IdUsuario"].ToString()) : (int?)null,
                         FechaCreacion = DateTime.Parse(datos.Lector["FechaCreacion"].ToString()),
                         Dia = datos.Lector["Dia"].ToString(),
                         Activo = true
