@@ -307,7 +307,7 @@ namespace Negocio
                     RutinaEjercicio re = new RutinaEjercicio();
 
                     re.IdRutinaEjercicio = Convert.ToInt32(datos.Lector["IdRutinaEjercicio"]);
-                    re.ObjetivoKG = datos.Lector["ObjetivoKG"] is DBNull ? 0 : int.Parse(datos.Lector["ObjetivoKG"].ToString());
+                    re.ObjetivoKG = datos.Lector["ObjetivoKG"] is DBNull ? 0 : Convert.ToSingle(datos.Lector["ObjetivoKG"]);
                     re.ObjetivoSeries = Convert.ToInt32(datos.Lector["ObjetivoSeries"]);
                     re.ObjetivoRepeticiones = Convert.ToInt32(datos.Lector["ObjetivoRepeticiones"]);
                     re.OrdenEjercicio = Convert.ToInt32(datos.Lector["OrdenEjercicio"]);

@@ -19,7 +19,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT * FROM Planes");
+                datos.SetearConsulta("SELECT * FROM Planes WHERE Activo = 1");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -54,7 +54,7 @@ namespace Negocio
 
             try
             {
-                datos.SetearConsulta("SELECT * FROM Planes WHERE IdPlanes = @ID");
+                datos.SetearConsulta("SELECT * FROM Planes WHERE IdPlanes = @ID AND Activo = 1");
                 datos.setearParametro("@ID", ID);
                 datos.ejecutarLectura();
 
