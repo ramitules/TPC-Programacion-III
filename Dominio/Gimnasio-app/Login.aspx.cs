@@ -53,7 +53,7 @@ namespace Gimnasio_app
                             //Session.Add("usuario", recepcionista);
                             Response.Redirect("~/perfilRecepcionista.aspx", false);
                             Session.Add("usuario", usuario);
-                            //Response.Redirect("~/PanelEntrenador.aspx", false);
+                            Response.Redirect("~/PanelEntrenador.aspx", false);
                             break;
                         default:
                             break;

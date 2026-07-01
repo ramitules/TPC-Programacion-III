@@ -404,6 +404,27 @@ BEGIN
 END
 GO
 
+-- Obtener la sesion de entrenamiento en curso de un cliente (si existe).
+-- Una sesion se considera "en curso" mientras no fue finalizada: sp_CrearSesionEntrenamiento
+-- la crea con FechaHoraFin = FechaHoraInicio, y FinSesionEntrenamiento recien ahi actualiza FechaHoraFin.
+CREATE PROCEDURE sp_SesionActivaDeCliente (@IdUsuario INT)
+AS
+BEGIN
+	SELECT TOP 1
+		SE.IdSesionesEntrenamiento	AS IdSesion,
+		SE.FechaHoraInicio			AS FechaHoraInicio,
+		SE.FechaHoraFin				AS FechaHoraFin,
+		SE.IdRutina					AS IdRutina,
+		R.Nombre					AS NombreRutina
+	FROM SesionesEntrenamiento SE
+	LEFT JOIN Rutinas R
+		ON SE.IdRutina = R.IdRutinas
+	WHERE SE.IdUsuario = @IdUsuario
+		AND SE.FechaHoraFin = SE.FechaHoraInicio
+	ORDER BY SE.FechaHoraInicio DESC
+END
+GO
+
 -- Obtener las series completadas de una sesion, con el ejercicio y su grupo muscular.
 -- Ordenadas por nombre de ejercicio para que el agrupado quede contiguo.
 CREATE PROCEDURE sp_SeriesDeSesionAgrupadas (@IdSesion INT)
@@ -595,7 +616,7 @@ GO
 CREATE PROCEDURE sp_Traer_Ejercicios
 AS
 BEGIN
-SELECT E.IdEjercicios, E.Nombre, E.IdGrupoMuscular, GM.Nombre AS GrupoMuscular, E.LinkExplicacion FROM Ejercicios E
+SELECT E.IdEjercicios, E.Nombre, E.IdGrupoMuscular, GM.Nombre AS GrupoMuscular, E.LinkExplicacion, E.Activo FROM Ejercicios E
 INNER JOIN GruposMusculares GM ON E.IdGrupoMuscular = GM.IdGruposMusculares
 END;
 GO
@@ -614,7 +635,7 @@ GO
 CREATE PROCEDURE sp_Traer_Grupos_Musculares
 AS
 BEGIN
-SELECT IdGruposMusculares, Nombre FROM GruposMusculares
+SELECT IdGruposMusculares, Nombre, Activo FROM GruposMusculares
 END;
 GO
 
@@ -623,7 +644,7 @@ GO
 CREATE PROCEDURE sp_Traer_Planes
 AS
 BEGIN
-SELECT IdPlanes, Nombre, PrecioMensual, DuracionDias FROM Planes
+SELECT IdPlanes, Nombre, PrecioMensual, DuracionDias, Activo FROM Planes
 END;
 GO
 
@@ -644,5 +665,24 @@ CREATE PROCEDURE sp_Activa_Usuario
 AS
   BEGIN
     UPDATE Usuarios SET Activo = 1 WHERE IdUsuarios = @IdUsuario
+END;
+GO
+
+
+--Activa e inactiva un usuario dependiendo de su estado actual (si esta activo lo inactiva y viceversa)
+CREATE PROCEDURE sp_Activar_Inactivar_Usuario
+  @IdUsuario INT
+AS
+  BEGIN
+	DECLARE @Activo INT
+    SET @Activo = (SELECT Activo FROM Usuarios WHERE IdUsuarios = @IdUsuario)
+	IF @Activo = 1
+	  BEGIN
+	    UPDATE Usuarios SET Activo = 0 WHERE IdUsuarios = @IdUsuario
+	  END
+	ELSE
+	  BEGIN
+	    UPDATE Usuarios SET Activo = 1 WHERE IdUsuarios = @IdUsuario
+	  END
 END;
 GO

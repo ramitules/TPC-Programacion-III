@@ -15,5 +15,6 @@ namespace Dominio
         public GrupoMuscular() { IdGrupoMuscular = 0; }
         public int IdGrupoMuscular { get; set; }
         public string NombreGrupoMuscular { get; set; }
+        public bool Activo { get; set; }
     }
 }

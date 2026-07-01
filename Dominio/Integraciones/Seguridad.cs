@@ -51,7 +51,7 @@ namespace Integraciones
             {
                 datos.SetearConsultaSP("sp_logueo");
                 datos.setearParametro("@Email", email);
-                //datos.setearParametro("@Pass", pass);
+                datos.setearParametro("@Pass", pass);
                 datos.ejecutarLectura();
                 //string contraseia = HashContrasenia.Hashear(pass);
                 //Object algo = datos.Lector.Read();

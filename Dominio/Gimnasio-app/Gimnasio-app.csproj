@@ -353,6 +353,7 @@
       <DependentUpon>Socios.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="SesionActivaHelper.cs" />
     <Compile Include="Rutinas.aspx.cs">
       <DependentUpon>Rutinas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -324,5 +324,9 @@ namespace Gimnasio_app
             }
         }
 
+        protected void dgvEjercicios_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+
+        }
     }
 }

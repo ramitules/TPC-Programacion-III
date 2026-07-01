@@ -73,7 +73,7 @@
             <div class="tab-content mt-3">
                 <div class="tab-pane fade show active" id="ejercicios">
                     <asp:Button ID="btnNuevoEjercicio" runat="server" Text="+ Nuevo Ejercicio" CssClass="btn btn-primary mb-2" OnClick="btnNuevoEjercicio_Click" CommandArgument="Ejercicio" />
-                    <asp:GridView ID="dgvEjercicios" runat="server" CssClass="table table-dark table-hover" OnRowCommand="dgvEjercicios_RowCommand" AutoGenerateColumns="false">
+                    <asp:GridView ID="dgvEjercicios" runat="server" CssClass="table table-dark table-hover" OnRowCommand="dgvEjercicios_RowCommand" AutoGenerateColumns="false" OnRowDataBound="dgvEjercicios_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="IdEjercicio" HeaderText="Id" />
                             <asp:BoundField DataField="NombreEjercicio" HeaderText="Ejercicio" />
@@ -82,7 +82,7 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Button ID="btnEditarEjer" runat="server" Text="✏️" CommandName="Editar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass="btn btn-sm btn-warning" />
-                                    <asp:Button ID="btnEliminarEjer" runat="server" Text="🗑️" CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Esta acción no se puede deshacer.');"/>
+                                    <asp:Button ID="btnEliminarEjer" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>' OnClientClick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Esta acción no se puede deshacer.');"/>              
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>

@@ -17,5 +17,6 @@ namespace Dominio
         public string NombrePlan { get; set; }
         public float PrecioPlan { get; set; }
         public int DuracionDiasPlan { get; set; }
+        public bool Activo { get; set; }
     }
 }

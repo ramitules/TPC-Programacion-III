@@ -23,6 +23,14 @@ namespace Gimnasio_app
             if (!IsPostBack)
             {
                 Cliente cliente = (Cliente)Session["usuario"];
+
+                SesionEntrenamiento activa = SesionActivaHelper.Obtener(Session, cliente);
+                if (activa != null && activa.Rutina != null)
+                {
+                    Response.Redirect("DetalleRutina?id=" + activa.Rutina.IdRutina, false);
+                    return;
+                }
+
                 RutinasNegocio negocio = new RutinasNegocio();
                 rptPropias.DataSource = negocio.AgruparPorDia(negocio.GetRutinasUsuario(cliente));
                 rptPropias.DataBind();
