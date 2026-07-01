@@ -26,10 +26,10 @@ namespace Negocio
                 {
                     Plan plan = new Plan()
                     {
-                        IdPlan = int.Parse(datos.Lector["IdPlanes"].ToString()),
+                        IdPlan = Convert.ToInt32(datos.Lector["IdPlanes"]),
                         NombrePlan = datos.Lector["Nombre"].ToString(),
-                        PrecioPlan = float.Parse(datos.Lector["PrecioMensual"].ToString()),
-                        DuracionDiasPlan = int.Parse(datos.Lector["DuracionDias"].ToString())
+                        PrecioPlan = Convert.ToSingle(datos.Lector["PrecioMensual"]),
+                        DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionDias"])
                     };
                     planes.Add(plan);
                 }
@@ -60,10 +60,10 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    plan.IdPlan = int.Parse(datos.Lector["IdPlanes"].ToString());
+                    plan.IdPlan = Convert.ToInt32(datos.Lector["IdPlanes"]);
                     plan.NombrePlan = datos.Lector["Nombre"].ToString();
-                    plan.PrecioPlan = float.Parse(datos.Lector["PrecioMensual"].ToString());
-                    plan.DuracionDiasPlan = int.Parse(datos.Lector["DuracionDias"].ToString());
+                    plan.PrecioPlan = Convert.ToSingle(datos.Lector["PrecioMensual"]);
+                    plan.DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionDias"]);
                     break;
                 }
             }

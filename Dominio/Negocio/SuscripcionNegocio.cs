@@ -30,16 +30,16 @@ namespace Negocio
 
                 while (datos.Lector.Read())
                 {
-                    suscripcion.IdSuscripcion = int.Parse(datos.Lector["IdSuscripcion"].ToString());
-                    suscripcion.FechaInicio = DateTime.Parse(datos.Lector["FechaInicio"].ToString());
-                    suscripcion.FechaFin = DateTime.Parse(datos.Lector["FechaVencimiento"].ToString());
+                    suscripcion.IdSuscripcion = Convert.ToInt32(datos.Lector["IdSuscripcion"]);
+                    suscripcion.FechaInicio = Convert.ToDateTime(datos.Lector["FechaInicio"]);
+                    suscripcion.FechaFin = Convert.ToDateTime(datos.Lector["FechaVencimiento"]);
                     suscripcion.Estado = estado;
                     suscripcion.Plan = new Plan()
                     {
-                        IdPlan = int.Parse(datos.Lector["IdPlan"].ToString()),
+                        IdPlan = Convert.ToInt32(datos.Lector["IdPlan"]),
                         NombrePlan = datos.Lector["NombrePlan"].ToString(),
-                        PrecioPlan = float.Parse(datos.Lector["PrecioPlan"].ToString()),
-                        DuracionDiasPlan = int.Parse(datos.Lector["DuracionPlan"].ToString())
+                        PrecioPlan = Convert.ToSingle(datos.Lector["PrecioPlan"]),
+                        DuracionDiasPlan = Convert.ToInt32(datos.Lector["DuracionPlan"])
                     };
                 }
             }
