@@ -42,14 +42,19 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
                     <h5 class="card-title">Rutinas Asignadas</h5>
-                    <asp:GridView ID="gvRutinas" runat="server" AutoGenerateColumns="false"
-                        CssClass="table table-hover align-middle mb-0"
-                        HeaderStyle-CssClass="table-primary text-white"
-                        GridLines="None">
+                    <asp:GridView ID="gvRutinas" runat="server" AutoGenerateColumns="false" CssClass="table table-hover align-middle mb-0"
+                        HeaderStyle-CssClass="table-primary text-white" GridLines="None">
                         <Columns>
                             <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
                             <asp:BoundField DataField="FechaCreacion" HeaderText="Fecha de Creación" DataFormatString="{0:dd/MM/yyyy}" />
                             <asp:BoundField DataField="Dia" HeaderText="Día" />
+                            <asp:TemplateField HeaderText="Acciones">
+                                <ItemTemplate>
+                                    <a href='PanelEntrenadorDetalleRutina.aspx?id=<%# Eval("IdRutina") %>&origen=PanelEntrenadorClienteDetalle&idCliente=<%# Session["idClienteDetalle"] %>' class="btn btn-sm btn-outline-info">
+                                        <i class="bi bi-eye"></i> Ver
+                                    </a>
+                                </ItemTemplate>
+                            </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
                 </div>
