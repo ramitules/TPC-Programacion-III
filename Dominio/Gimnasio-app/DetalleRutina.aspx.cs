@@ -32,20 +32,21 @@ namespace Gimnasio_app
 
             if (!IsPostBack)
             {
-                if (HaySesionActiva(id))
+                Cliente cliente = (Cliente)Session["usuario"];
+                SesionEntrenamiento activa = SesionActivaHelper.Obtener(Session, cliente);
+
+                // Hay una sesion en curso, pero de otra rutina: redirigir a esa rutina en modo activo.
+                if (activa != null && activa.Rutina != null && activa.Rutina.IdRutina.ToString() != id)
+                {
+                    Response.Redirect("DetalleRutina?id=" + activa.Rutina.IdRutina, false);
+                    return;
+                }
+
+                if (activa != null)
                     CargarModoActivo(id);
                 else
                     CargarResumen(id);
             }
-        }
-
-        /// <summary>
-        /// Indica si hay una sesion de entrenamiento en curso para la rutina indicada.
-        /// </summary>
-        private bool HaySesionActiva(string idRutina)
-        {
-            SesionEntrenamiento activa = (SesionEntrenamiento)Session["sesionActiva"];
-            return activa != null && activa.Rutina != null && activa.Rutina.IdRutina.ToString() == idRutina;
         }
 
         /// <summary>
