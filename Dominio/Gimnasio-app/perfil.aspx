@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="Gimnasio_app.Perfil" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Perfil.aspx.cs" Inherits="Gimnasio_app.Perfil" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="space-y-6">
@@ -58,6 +58,9 @@
                             { %>
                         <asp:Button ID="btnCancelarDatos" OnClick="btnCancelarDatos_click" Text="Cancelar" CssClass="btn btn-outline-warning" runat="server" />
                         <%} %>
+                    </div>
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalCambiarPass">Cambiar contraseña</button>
                     </div>
                     <div class="mb-3 mt-4">
                         <asp:Button ID="btnDarDeBaja" OnClick="btnDarDeBaja_click" Text="Dar de baja mi cuenta" CssClass="btn btn-outline-danger" runat="server"
@@ -178,6 +181,40 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
+    <asp:UpdatePanel ID="upCambiarPass" runat="server">
+        <ContentTemplate>
+            <div class="modal fade" id="modalCambiarPass" tabindex="-1" aria-labelledby="modalCambiarPassLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalCambiarPassLabel">Cambiar contraseña</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña actual</label>
+                                <asp:TextBox runat="server" ID="txtPassActual" CssClass="form-control" TextMode="Password" autocomplete="off" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nueva contraseña</label>
+                                <asp:TextBox runat="server" ID="txtPassNueva" CssClass="form-control" TextMode="Password" autocomplete="off" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirmar nueva contraseña</label>
+                                <asp:TextBox runat="server" ID="txtPassNuevaConfirmar" CssClass="form-control" TextMode="Password" autocomplete="off" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <asp:Button ID="btnConfirmarCambioPass" runat="server" Text="Guardar" CssClass="btn btn-success"
+                                OnClick="btnConfirmarCambioPass_click" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
     <script type="text/javascript">
         (function () {
             // Ids de cliente resueltos por ASP.NET (el modal vive dentro de un UpdatePanel)
@@ -212,10 +249,9 @@
                 if (cvv && !cvv.dataset.bound) { cvv.addEventListener('input', formatearCvv); cvv.dataset.bound = '1'; }
             }
 
-            // Evita backdrops grises colgados al re-renderizar el modal dentro del UpdatePanel.
+            // Evita backdrops grises colgados al re-renderizar un modal dentro de un UpdatePanel.
             function sincronizarBackdrops() {
-                var modal = document.getElementById('modalPago');
-                var visible = modal && modal.classList.contains('show');
+                var visible = document.querySelector('.modal.show') !== null;
                 var backdrops = document.querySelectorAll('.modal-backdrop');
 
                 if (!visible) {
