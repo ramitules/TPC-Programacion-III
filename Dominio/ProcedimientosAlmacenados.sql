@@ -776,3 +776,37 @@ AS
 	       VALUES(@Nombre, @IdGrupoMuscular, @LinkExplicacion)
 END;
 GO
+
+
+CREATE PROCEDURE sp_Modificar_Grupo_Muscular
+  @IdGrupoMuscular INT,
+  @Nombre VARCHAR(50)
+AS
+  BEGIN
+    UPDATE GruposMusculares SET Nombre = @Nombre WHERE IdGruposMusculares = @IdGrupoMuscular
+END;
+GO
+
+
+CREATE PROCEDURE sp_Modificar_Ejercicio
+  @IdEjercicio INT,
+  @Nombre VARCHAR(50),
+  @IdGrupoMuscular INT,
+  @LinkExplicacion VARCHAR(250)
+AS
+  BEGIN
+    UPDATE Ejercicios SET Nombre = @Nombre, IdGrupoMuscular = @IdGrupoMuscular, LinkExplicacion = @LinkExplicacion WHERE IdEjercicios = @IdEjercicio
+END;
+GO
+
+
+CREATE PROCEDURE sp_Modificar_Plan
+  @IdPlan INT,
+  @Nombre VARCHAR(50),
+  @PrecioMensual DECIMAL (8,2),
+  @DuracionDias VARCHAR(250)
+AS
+  BEGIN
+    UPDATE Planes SET Nombre = @Nombre, PrecioMensual = @PrecioMensual, DuracionDias = @DuracionDias WHERE IdPlanes = @IdPlan
+END;
+GO

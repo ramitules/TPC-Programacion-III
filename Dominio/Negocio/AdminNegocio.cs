@@ -363,7 +363,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -384,7 +384,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -405,7 +405,7 @@ namespace Negocio
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             finally
             {
@@ -437,7 +437,7 @@ namespace Negocio
             AccesoADatos datos = new AccesoADatos();
             try
             {
-                datos.SetearConsultaSP("sp_Crear_Ejercicio");
+                datos.SetearConsultaSP("sp_Crear_Ejercicios");
                 datos.setearParametro("@Nombre", ejercicio.NombreEjercicio);
                 datos.setearParametro("@IdGrupoMuscular", ejercicio.GrupoMuscular.IdGrupoMuscular);
                 datos.setearParametro("@LinkExplicacion", ejercicio.LinkExplicacion);

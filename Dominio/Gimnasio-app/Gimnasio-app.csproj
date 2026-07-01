@@ -260,12 +260,14 @@
     </Compile>
     <Compile Include="PanelEntrenadorAsignarRutina.aspx.cs">
       <DependentUpon>PanelEntrenadorAsignarRutina.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorAsignarRutina.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorAsignarRutina.aspx</DependentUpon>
     </Compile>
     <Compile Include="PanelEntrenadorClienteDetalle.aspx.cs">
       <DependentUpon>PanelEntrenadorClienteDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorClienteDetalle.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorClienteDetalle.aspx</DependentUpon>
@@ -279,18 +281,21 @@
     </Compile>
     <Compile Include="PanelEntrenadorDetalleRutina.aspx.cs">
       <DependentUpon>PanelEntrenadorDetalleRutina.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorDetalleRutina.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorDetalleRutina.aspx</DependentUpon>
     </Compile>
     <Compile Include="PanelEntrenadorProgresoCliente.aspx.cs">
       <DependentUpon>PanelEntrenadorProgresoCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorProgresoCliente.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorProgresoCliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="PanelEntrenadorProgresoSesionDetalle.aspx.cs">
       <DependentUpon>PanelEntrenadorProgresoSesionDetalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorProgresoSesionDetalle.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorProgresoSesionDetalle.aspx</DependentUpon>
@@ -326,6 +331,7 @@
     </Compile>
     <Compile Include="PanelEntrenadorRutinasAsignadas.aspx.cs">
       <DependentUpon>PanelEntrenadorRutinasAsignadas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorRutinasAsignadas.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorRutinasAsignadas.aspx</DependentUpon>

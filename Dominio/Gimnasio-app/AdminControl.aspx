@@ -60,14 +60,17 @@
     </div>
     <br />
 
-    
-    
+
+
     <asp:UpdatePanel ID="panelGeneral">
         <ContentTemplate>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item"><asp:LinkButton ID="btnTabEjercicios" runat="server" CssClass="nav-link active" OnClick="btnTabEjercicios_Click" CommandArgument="ejercicios">Ejercicios</asp:LinkButton></li>
-                <li class="nav-item"><asp:LinkButton ID="btnTabMusculos" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="musculos">Grupos Musculares</asp:LinkButton></li>
-                <li class="nav-item"><asp:LinkButton ID="btnTabPlanes" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="planes">Planes</asp:LinkButton></li>
+                <li class="nav-item">
+                    <asp:LinkButton ID="btnTabEjercicios" runat="server" CssClass="nav-link active" OnClick="btnTabEjercicios_Click" CommandArgument="ejercicios">Ejercicios</asp:LinkButton></li>
+                <li class="nav-item">
+                    <asp:LinkButton ID="btnTabMusculos" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="musculos">Grupos Musculares</asp:LinkButton></li>
+                <li class="nav-item">
+                    <asp:LinkButton ID="btnTabPlanes" runat="server" CssClass="nav-link" OnClick="btnTabEjercicios_Click" CommandArgument="planes">Planes</asp:LinkButton></li>
             </ul>
 
             <div class="tab-content mt-3">
@@ -82,7 +85,7 @@
                             <asp:TemplateField>
                                 <ItemTemplate>
                                     <asp:Button ID="btnEditarEjer" runat="server" Text="✏️" CommandName="Editar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass="btn btn-sm btn-warning" />
-                                    <asp:Button ID="btnEliminarEjer" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>'/>              
+                                    <asp:Button ID="btnEliminarEjer" runat="server" Text='<%# (bool)Eval("Activo") ? "Desactivar 🗑️" : "Activar" %>' CommandName="Eliminar" CommandArgument='<%# Eval("IdEjercicio") %>' CssClass='<%# (bool)Eval("Activo") ? "btn btn-danger" : "btn btn-success" %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -123,47 +126,54 @@
                     </asp:GridView>
                 </div>
             </div>
-            <asp:Panel ID="pnlFormularioABM" runat="server" Visible="false" CssClass="card bg-dark text-white mt-4 border-secondary">
-                <div class="card-header border-secondary">
-                    <asp:Label ID="lblTituloForm" runat="server" Font-Bold="true" CssClass="h5 text-warning"></asp:Label>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Nombre / Descripción:</label>
-                        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control bg-secondary text-white border-0"></asp:TextBox>
-                    </div>
+            <asp:UpdatePanel ID="upAdminControl" runat="server">
+                <ContentTemplate>
 
-                    <div id="divCamposPlan" runat="server" visible="false">
-                        <div class="mb-3">
-                            <label class="form-label">Precio Mensual:</label>
-                            <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control bg-secondary text-white border-0" placeholder="0.00"></asp:TextBox>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Días Mensuales:</label>
-                            <asp:TextBox ID="txtDias" runat="server" CssClass="form-control bg-secondary text-white border-0" placeholder="30"></asp:TextBox>
-                        </div>
+                    <div class="tab-content mt-3">
                     </div>
+                        <asp:Panel ID="pnlFormularioABM" runat="server" Visible="false" CssClass="card bg-dark text-white mt-4 border-secondary">
+                            <div class="card-header border-secondary">
+                                <asp:Label ID="lblTituloForm" runat="server" Font-Bold="true" CssClass="h5 text-warning"></asp:Label>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nombre / Descripción:</label>
+                                    <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control bg-secondary text-white border-0"></asp:TextBox>
+                                </div>
 
-                    <div id="divCamposEjercicio" runat="server" visible="false">
-                        <div class="mb-3">
-                            <label class="form-label">Link de Explicación (URL):</label>
-                            <asp:TextBox ID="txtLink" runat="server" CssClass="form-control bg-secondary text-white border-0"></asp:TextBox>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Grupo Muscular:</label>
-                            <asp:DropDownList ID="ddlGrupoMuscular" DataTextField="NombreGrupoMuscular" DataValueField="IdGrupoMuscular" runat="server" CssClass="form-select bg-secondary text-white border-0"></asp:DropDownList>
-                        </div>
-                    </div>
+                                <div id="divCamposPlan" runat="server" visible="false">
+                                    <div class="mb-3">
+                                        <label class="form-label">Precio Mensual:</label>
+                                        <asp:TextBox ID="txtPrecio" runat="server" CssClass="form-control bg-secondary text-white border-0" placeholder="0.00"></asp:TextBox>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Días Mensuales:</label>
+                                        <asp:TextBox ID="txtDias" runat="server" CssClass="form-control bg-secondary text-white border-0" placeholder="30"></asp:TextBox>
+                                    </div>
+                                </div>
 
-                    <asp:HiddenField ID="hfIdEntidad" runat="server" />
-                    <asp:HiddenField ID="hfTipoEntidad" runat="server" />
+                                <div id="divCamposEjercicio" runat="server" visible="false">
+                                    <div class="mb-3">
+                                        <label class="form-label">Link de Explicación (URL):</label>
+                                        <asp:TextBox ID="txtLink" runat="server" CssClass="form-control bg-secondary text-white border-0"></asp:TextBox>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Grupo Muscular:</label>
+                                        <asp:DropDownList ID="ddlGrupoMuscular" DataTextField="NombreGrupoMuscular" DataValueField="IdGrupoMuscular" runat="server" CssClass="form-select bg-secondary text-white border-0"></asp:DropDownList>
+                                    </div>
+                                </div>
 
-                    <div class="mt-4">
-                        <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar Cambios" CssClass="btn btn-success me-2" OnClick="btnGuardar_Click"/>
-                        <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-outline-light" OnClick="btnCancelar_Click"/>
-                    </div>
-                </div>
-            </asp:Panel>
+                                <asp:HiddenField ID="hfIdEntidad" runat="server" />
+                                <asp:HiddenField ID="hfTipoEntidad" runat="server" />
+
+                                <div class="mt-4">
+                                    <asp:Button ID="btnGuardar" runat="server" Text="💾 Guardar Cambios" CssClass="btn btn-success me-2" OnClick="btnGuardar_Click" />
+                                    <asp:Button ID="btnCancelar" runat="server" Text="❌ Cancelar" CssClass="btn btn-outline-light" OnClick="btnCancelar_Click" />
+                                </div>
+                            </div>
+                        </asp:Panel>
+                </ContentTemplate>
+            </asp:UpdatePanel>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

@@ -81,12 +81,12 @@ namespace Gimnasio_app
             else if (accion == "Eliminar")
             {
                 negocio.eliminarEjercicio(idEjercicio);
+                List<Ejercicio> listaEjercicios = negocio.listarEjercicios();
+                Session["listaEjercicios"] = listaEjercicios;   
+                dgvEjercicios.DataSource = listaEjercicios;
+                dgvEjercicios.DataBind();
+                pnlFormularioABM.Visible = false;
             }
-            List<Ejercicio> listaEjercicios = negocio.listarEjercicios();
-            Session["listaEjercicios"] = listaEjercicios;   
-            dgvEjercicios.DataSource = listaEjercicios;
-            dgvEjercicios.DataBind();
-            pnlFormularioABM.Visible = false;
 
         }
 
@@ -118,12 +118,12 @@ namespace Gimnasio_app
             else if (accion == "Eliminar")
             {
                 negocio.eliminarGrupoMuscular(idGrupoMuscular);
+                List<GrupoMuscular> listaGruposMusculares = negocio.listarGruposMusculares();
+                Session["listaGruposMusculares"] = listaGruposMusculares;
+                dgvGruposMusculares.DataSource = listaGruposMusculares;
+                dgvGruposMusculares.DataBind();
+                pnlFormularioABM.Visible = false;
             }
-            List<GrupoMuscular> listaGruposMusculares = negocio.listarGruposMusculares();
-            Session["listaGruposMusculares"] = listaGruposMusculares;
-            dgvGruposMusculares.DataSource = listaGruposMusculares;
-            dgvGruposMusculares.DataBind();
-            pnlFormularioABM.Visible = false;
         }
 
         protected void dgvPlanes_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -155,12 +155,12 @@ namespace Gimnasio_app
             else if (accion == "Eliminar")
             {
                 negocio.eliminarPlan(idPlan);
+                List<Plan> listaPlan = negocio.listarPlanes();
+                Session["listaPlanes"] = listaPlan;
+                dgvPlanes.DataSource = listaPlan;
+                dgvPlanes.DataBind();
+                pnlFormularioABM.Visible = false;
             }
-            List<Plan> listaPlan = negocio.listarPlanes();
-            Session["listaPlanes"] = listaPlan;
-            dgvPlanes.DataSource = listaPlan;
-            dgvPlanes.DataBind();
-            pnlFormularioABM.Visible = false;
         }
         protected void btnNuevoEjercicio_Click(object sender, EventArgs e)
         {
@@ -242,9 +242,13 @@ namespace Gimnasio_app
                         ejer.GrupoMuscular = new GrupoMuscular { IdGrupoMuscular = Convert.ToInt32(ddlGrupoMuscular.SelectedValue) };
 
                         if (editar)
+                        {
                             negocio.modificarEjercicio(ejer); // O el nombre de tu método de UPDATE
+                        }
                         else
+                        {
                             negocio.crearEjercicio(ejer);     // O el nombre de tu método de INSERT
+                        }
 
                         // Recargamos la grilla y la sesión de Ejercicios
                         Session["listaEjercicios"] = negocio.listarEjercicios();
@@ -254,13 +258,16 @@ namespace Gimnasio_app
 
                     case "Musculo":
                         GrupoMuscular grupo = new GrupoMuscular();
-                        if (editar) grupo.IdGrupoMuscular = idEntidad;
-                        grupo.NombreGrupoMuscular = txtNombre.Text.Trim();
-
                         if (editar)
+                        {
+                            grupo.IdGrupoMuscular = idEntidad;
+                            grupo.NombreGrupoMuscular = txtNombre.Text.Trim();                            
                             negocio.modificarGrupoMuscular(grupo);
+                        }
                         else
+                        {
                             negocio.crearGrupoMuscular(grupo);
+                        }
 
                         // Recargamos la grilla y la sesión de Músculos
                         Session["listaGruposMusculares"] = negocio.listarGruposMusculares();
@@ -276,9 +283,13 @@ namespace Gimnasio_app
                         plan.DuracionDiasPlan = Convert.ToInt32(txtDias.Text.Trim());
 
                         if (editar)
+                        {
                             negocio.modificarPlan(plan);
+                        }
                         else
+                        {
                             negocio.crearPlan(plan);
+                        }
 
                         // Recargamos la grilla y la sesión de Planes (corregido el nombre de la sesión)
                         Session["listaPlanes"] = negocio.listarPlanes();
