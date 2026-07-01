@@ -105,13 +105,19 @@
     <Content Include="Ejercicios.aspx" />
     <Content Include="GrupMuscPlanesYEjercicios.aspx" />
     <Content Include="GruposMusculares.aspx" />
+    <Content Include="PanelEntrenadorAsignarRutina.aspx" />
+    <Content Include="PanelEntrenadorClienteDetalle.aspx" />
     <Content Include="PanelEntrenadorCrearRutina.aspx" />
+    <Content Include="PanelEntrenadorDetalleRutina.aspx" />
+    <Content Include="PanelEntrenadorProgresoCliente.aspx" />
+    <Content Include="PanelEntrenadorProgresoSesionDetalle.aspx" />
     <Content Include="PanelEntrenadorRutinas.aspx" />
     <Content Include="PanelEntrenador.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="HistorialDeEntrenamiento.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
+    <Content Include="PanelEntrenadorRutinasAsignadas.aspx" />
     <Content Include="perfil.aspx" />
     <Content Include="Planes.aspx" />
     <Content Include="Records.aspx" />
@@ -252,12 +258,42 @@
     <Compile Include="GruposMusculares.aspx.designer.cs">
       <DependentUpon>GruposMusculares.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PanelEntrenadorAsignarRutina.aspx.cs">
+      <DependentUpon>PanelEntrenadorAsignarRutina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorAsignarRutina.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorAsignarRutina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorClienteDetalle.aspx.cs">
+      <DependentUpon>PanelEntrenadorClienteDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorClienteDetalle.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorClienteDetalle.aspx</DependentUpon>
+    </Compile>
     <Compile Include="PanelEntrenadorCrearRutina.aspx.cs">
       <DependentUpon>PanelEntrenadorCrearRutina.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="PanelEntrenadorCrearRutina.aspx.designer.cs">
       <DependentUpon>PanelEntrenadorCrearRutina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorDetalleRutina.aspx.cs">
+      <DependentUpon>PanelEntrenadorDetalleRutina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorDetalleRutina.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorDetalleRutina.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorProgresoCliente.aspx.cs">
+      <DependentUpon>PanelEntrenadorProgresoCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorProgresoCliente.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorProgresoCliente.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorProgresoSesionDetalle.aspx.cs">
+      <DependentUpon>PanelEntrenadorProgresoSesionDetalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorProgresoSesionDetalle.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorProgresoSesionDetalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="PanelEntrenadorRutinas.aspx.cs">
       <DependentUpon>PanelEntrenadorRutinas.aspx</DependentUpon>
@@ -287,6 +323,12 @@
     </Compile>
     <Compile Include="FormularioAdmins.aspx.designer.cs">
       <DependentUpon>FormularioAdmins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorRutinasAsignadas.aspx.cs">
+      <DependentUpon>PanelEntrenadorRutinasAsignadas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PanelEntrenadorRutinasAsignadas.aspx.designer.cs">
+      <DependentUpon>PanelEntrenadorRutinasAsignadas.aspx</DependentUpon>
     </Compile>
     <Compile Include="RegistrarUsuario.aspx.cs">
       <DependentUpon>RegistrarUsuario.aspx</DependentUpon>
