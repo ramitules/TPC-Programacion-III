@@ -138,6 +138,9 @@ GO
 CREATE TABLE AccesoUsuarios (  -- Guarda el codigo de usuario y su contraseña para el acceso y/o demas validaciones
 	IdUsuarios				INT NOT NULL,
 	Pass		 			VARCHAR (200) NOT NULL,
+	CodigoReset				VARCHAR (200) NULL,  -- hash del codigo de recuperacion de contraseña (mismo formato que Pass)
+	CodigoResetExpira		DATETIME NULL,
+	CodigoResetIntentos		TINYINT NOT NULL DEFAULT 0,
 	FOREIGN KEY(IdUsuarios) REFERENCES Usuarios (IdUsuarios)
 );
 GO

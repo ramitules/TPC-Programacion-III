@@ -1,7 +1,9 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,6 +15,10 @@ namespace Integraciones
 {
     public abstract class Seguridad
     {
+        // Para recuperacion de contrasenia
+        private const int CodigoResetVigenciaMinutos = 15;
+        private const int CodigoResetMaxIntentos = 5;
+        private const int CodigoResetDigitos = 6;
         public static bool SessionActiva(object user)
         {
             if (user is null) return false;
@@ -102,6 +108,146 @@ namespace Integraciones
             {
                 datos.cerrarConexion();
             }
+        }
+
+        // Genera y envia por mail un codigo de recuperacion de contrasenia.
+        // Si el email no corresponde a un usuario activo, no hace nada.
+        public static void SolicitarRecuperacion(string email)
+        {
+            AccesoADatos datos = new AccesoADatos();
+            bool existeUsuario;
+            try
+            {
+                datos.SetearConsultaSP("sp_ExisteEmail");
+                datos.setearParametro("@Email", email);
+                datos.ejecutarLectura();
+                existeUsuario = datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrió un error al solicitar recuperación (Seguridad.SolicitarRecuperacion()):", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            if (!existeUsuario)
+                return;
+
+            string codigo = GenerarCodigoNumerico(CodigoResetDigitos);
+            string hashCodigo = HashContrasenia.Hashear(codigo);
+
+            datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_GuardarCodigoReset");
+                datos.setearParametro("@Email", email);
+                datos.setearParametro("@CodigoHash", hashCodigo);
+                datos.setearParametro("@Expira", DateTime.Now.AddMinutes(CodigoResetVigenciaMinutos));
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al guardar el codigo de recuperacion (Seguridad.SolicitarRecuperacion()):", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            try
+            {
+                var mail = new EmailService();
+                mail.armarCorreo(email, "Recuperacion de contraseña",
+                    $"Tu codigo de recuperacion es <b>{codigo}</b>. Vence en {CodigoResetVigenciaMinutos} minutos.");
+                mail.enviarCorreo();
+            }
+            catch (Exception)
+            {
+                // No se propaga: una falla de SMTP no debe filtrar si el email existe.
+            }
+        }
+
+        // Valida el codigo de recuperacion y, si es correcto, aplica la nueva contrasenia.
+        // Devuelve false ante codigo incorrecto, vencido, agotado (por intentos) o email inexistente,
+        // sin distinguir el motivo para no dar pistas a quien este probando codigos.
+        public static bool RestablecerContrasenia(string email, string codigo, string passNueva)
+        {
+            int idUsuario;
+            string hashGuardado;
+            DateTime? expira;
+            int intentos;
+
+            AccesoADatos datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_ObtenerCodigoReset");
+                datos.setearParametro("@Email", email);
+                datos.ejecutarLectura();
+
+                if (!datos.Lector.Read())
+                    return false;
+
+                idUsuario = Convert.ToInt32(datos.Lector["IdUsuarios"]);
+                hashGuardado = datos.Lector["CodigoReset"].ToString();
+                expira = datos.Lector["CodigoResetExpira"] as DateTime?;
+                intentos = Convert.ToInt32(datos.Lector["CodigoResetIntentos"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al restablecer la contrasenia (Seguridad.RestablecerContrasenia()):", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            if (hashGuardado == null || expira == null || DateTime.Now > expira.Value || intentos >= CodigoResetMaxIntentos)
+                return false;
+
+            if (!HashContrasenia.Verificar(codigo, hashGuardado))
+            {
+                datos = new AccesoADatos();
+                try
+                {
+                    datos.SetearConsultaSP("sp_IncrementarIntentosCodigoReset");
+                    datos.setearParametro("@IdUsuarios", idUsuario);
+                    datos.ejecutarAccion();
+                }
+                finally
+                {
+                    datos.cerrarConexion();
+                }
+                return false;
+            }
+
+            datos = new AccesoADatos();
+            try
+            {
+                datos.SetearConsultaSP("sp_ActualizarPasswordConCodigo");
+                datos.setearParametro("@IdUsuarios", idUsuario);
+                datos.setearParametro("@PassHash", HashContrasenia.Hashear(passNueva));
+                datos.ejecutarAccion();
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return true;
+        }
+
+        private static string GenerarCodigoNumerico(int digitos)
+        {
+            byte[] bytes = new byte[4];
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(bytes);
+            }
+            uint valor = BitConverter.ToUInt32(bytes, 0);
+            int max = (int)Math.Pow(10, digitos);
+            return (valor % max).ToString(new string('0', digitos));
         }
     }
 }

@@ -17,4 +17,8 @@
 
 
     <asp:Button ID="btnLogin" runat="server" Text="Entrar" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
+
+    <div class="mt-3">
+        <a href="RecuperarContrasenia.aspx">¿Olvidaste tu contraseña?</a>
+    </div>
 </asp:Content>

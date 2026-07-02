@@ -476,6 +476,62 @@ WHERE Email = @Email AND Activo = 1
 END
 GO
 
+--Recuperacion de contraseña: verifica si existe un usuario activo con ese email,
+--sin revelar el resultado al usuario final (se usa solo para decidir si se manda el mail).
+CREATE PROCEDURE sp_ExisteEmail
+	@Email VARCHAR(150)
+AS
+BEGIN
+	SELECT IdUsuarios FROM Usuarios WHERE Email = @Email AND Activo = 1
+END
+GO
+
+--Guarda el hash del codigo de recuperacion de 6 digitos y su vencimiento para el usuario con ese email.
+CREATE PROCEDURE sp_GuardarCodigoReset
+	@Email VARCHAR(150),
+	@CodigoHash VARCHAR(200),
+	@Expira DATETIME
+AS
+BEGIN
+	UPDATE AccesoUsuarios
+	SET CodigoReset = @CodigoHash, CodigoResetExpira = @Expira, CodigoResetIntentos = 0
+	WHERE IdUsuarios = (SELECT IdUsuarios FROM Usuarios WHERE Email = @Email AND Activo = 1)
+END
+GO
+
+--Trae el hash del codigo de recuperacion vigente para el email.
+CREATE PROCEDURE sp_ObtenerCodigoReset
+	@Email VARCHAR(150)
+AS
+BEGIN
+	SELECT a.IdUsuarios, a.CodigoReset, a.CodigoResetExpira, a.CodigoResetIntentos
+	FROM AccesoUsuarios a
+	INNER JOIN Usuarios u ON u.IdUsuarios = a.IdUsuarios
+	WHERE u.Email = @Email AND u.Activo = 1
+END
+GO
+
+--Registra un intento fallido de codigo de recuperacion (para cortar por fuerza bruta).
+CREATE PROCEDURE sp_IncrementarIntentosCodigoReset
+	@IdUsuarios INT
+AS
+BEGIN
+	UPDATE AccesoUsuarios SET CodigoResetIntentos = CodigoResetIntentos + 1 WHERE IdUsuarios = @IdUsuarios
+END
+GO
+
+--Aplica la nueva contrasenia (ya hasheada) y limpia el codigo de recuperacion usado.
+CREATE PROCEDURE sp_ActualizarPasswordConCodigo
+	@IdUsuarios INT,
+	@PassHash VARCHAR(200)
+AS
+BEGIN
+	UPDATE AccesoUsuarios
+	SET Pass = @PassHash, CodigoReset = NULL, CodigoResetExpira = NULL, CodigoResetIntentos = 0
+	WHERE IdUsuarios = @IdUsuarios
+END
+GO
+
 --Crear Usuario (Admin, Entrenador)
 CREATE PROCEDURE sp_CrearUsuario (
 	@Nombre VARCHAR(70),
