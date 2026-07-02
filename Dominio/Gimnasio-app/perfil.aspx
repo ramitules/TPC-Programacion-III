@@ -111,7 +111,8 @@
 
 
                     <div class="mb-3">
-                        <asp:Button ID="btnCancelarSuscripcion" OnClick="btnCancelarSuscripcion_click" runat="server" Text="Cancelar Suscripcion" CssClass="btn btn-outline-danger" />
+                        <asp:Button ID="btnCancelarSuscripcion" OnClick="btnCancelarSuscripcion_click" runat="server" Text="Cancelar Suscripcion" CssClass="btn btn-outline-danger"
+                            OnClientClick="return confirm('¿Estas seguro que deseas cancelar la suscripcion? Esta accion no se puede deshacer.');"/>
                     </div>
                 </div>
 

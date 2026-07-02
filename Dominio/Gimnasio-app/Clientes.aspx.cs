@@ -81,7 +81,7 @@ namespace Gimnasio_app
                     texto = "Vencida";
                     break;
 
-                case EstadoSuscripcion.CANCELADA: /
+                case EstadoSuscripcion.CANCELADA:
                     claseCss = "bg-secondary";  
                     texto = "Cancelada";
                     break;
